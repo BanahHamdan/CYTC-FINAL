@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'verify.dart';
+import 'login.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _SignupState extends State<Signup> {
   late FocusNode _confirmPasswordFocusNode;
   late FocusNode _phoneNumberFocusNode;
   late FocusNode _cityFocusNode;
+  late FocusNode _bloodTypeFocusNode;
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _SignupState extends State<Signup> {
     _confirmPasswordFocusNode = FocusNode();
     _phoneNumberFocusNode = FocusNode();
     _cityFocusNode = FocusNode();
+    _bloodTypeFocusNode = FocusNode();
   }
 
   @override
@@ -35,228 +38,66 @@ class _SignupState extends State<Signup> {
     _confirmPasswordFocusNode.dispose();
     _phoneNumberFocusNode.dispose();
     _cityFocusNode.dispose();
+    _bloodTypeFocusNode.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
       body: Stack(
         children: [
-          Container(
-            color: Colors.white,
-          ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Image.asset(
-              'assets/Logo.png', 
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.only(bottom: 25),
-              decoration: BoxDecoration(
-                color: Color(0xFF9BCB3D),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
+          SingleChildScrollView(
+            // Make the entire body scrollable
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16, bottom: 20),
+                    child: Image.asset(
+                      'assets/Logo.png',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Text(
-                        'انشاء حساب جديد',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  // height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.all(5), // Adjust padding as needed
+                  // margin: const EdgeInsets.only(bottom: 30),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF9BCB3D),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50.0),
+                      topRight: Radius.circular(50.0),
                     ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _emailFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_emailFocusNode);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'البريد الالكتروني',
-                        hintText: 'ادخل البريد الالكتروني',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 26),
+                    child: Column(
+                      children: [
+                        Text(
+                          'قم بتعبئة المعلومات اللازمة لانشاء الحساب', // Add your text here
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _emailFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
+                        SizedBox(height: 20), // Add some spacing after the text
+                        ...buildTextFields(),
+                        ...buildButtons(context),
+                      ],
+                      // children: buildTextFields() + buildButtons(context),
                     ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _usernameFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_usernameFocusNode);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'اسم المستخدم',
-                        hintText: 'ادخل اسم المستخدم',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _usernameFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _passwordFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_passwordFocusNode);
-                        });
-                      },
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'كلمة المرور',
-                        hintText: 'ادخل كلمة المرور',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _passwordFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _confirmPasswordFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
-                        });
-                      },
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'تأكيد كلمة المرور',
-                        hintText: 'ادخل تأكيد كلمة المرور',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _confirmPasswordFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _phoneNumberFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'رقم الهاتف',
-                        hintText: 'ادخل رقم الهاتف',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _phoneNumberFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      focusNode: _cityFocusNode,
-                      onTap: () {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(_cityFocusNode);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'المدينة',
-                        hintText: 'ادخل اسم المدينة التي تسكن بها',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        labelStyle: TextStyle(
-                          color: _cityFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigate to the Verify page
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => VerifyPage()));
-                      },
-                      child: Text(
-                        'انشىء الحساب',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFF29F3D),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           Positioned(
@@ -264,7 +105,10 @@ class _SignupState extends State<Signup> {
             left: 16,
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                ); // Navigate back to the previous page
               },
               icon: Icon(Icons.arrow_back),
               color: Colors.white,
@@ -275,12 +119,157 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
+
+
+ List<Widget> buildTextFields() {
+  return [
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _emailFocusNode,
+      decoration: InputDecoration(
+        // labelText: 'البريد الالكتروني',
+        hintText: 'البريد الالكتروني',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _usernameFocusNode,
+      decoration: InputDecoration(
+        // labelText: 'اسم المستخدم',
+        hintText: 'اسم المستخدم',
+        filled: true,
+        fillColor: Colors.white, 
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _passwordFocusNode,
+      obscureText: true,
+      decoration: InputDecoration(
+        // labelText: 'كلمة المرور',
+        hintText: 'كلمة المرور',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _phoneNumberFocusNode,
+      decoration: InputDecoration(
+        // labelText: 'رقم الهاتف',
+        hintText: 'رقم الهاتف',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _cityFocusNode,
+      decoration: InputDecoration(
+        // labelText: 'المدينة',
+        hintText: 'المدينة',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextField(
+      focusNode: _bloodTypeFocusNode,
+      decoration: InputDecoration(
+        // labelText: 'فصيلة الدم',
+        hintText: 'فصيلة الدم',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+    SizedBox(height: 30),
+  ];
 }
 
-
-
-// void main() {
-//   runApp(MaterialApp(
-//     home: Signup(),
-//   ));
-// }
+  List<Widget> buildButtons(BuildContext context) {
+  return [
+    ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VerifyPage()),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xFFF29F3D),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      ),
+      child: Text(
+        'تسجيل',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    SizedBox(height: 10),
+    TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      },
+      child: Text(
+        'هل لديك حساب؟ قم بتسجيل الدخول',
+        style: TextStyle(
+          color: Colors.white,
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    ),
+  ];
+}
+}

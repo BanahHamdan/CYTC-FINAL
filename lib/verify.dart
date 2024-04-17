@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'package:cytc/Signup.dart';
 import 'package:cytc/main.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,10 @@ class VerifyPage extends StatelessWidget {
             bottom: 22,
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Navigate back
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Signup()),
+                );
               },
               icon: Icon(Icons.arrow_back),
               color: Colors.white,

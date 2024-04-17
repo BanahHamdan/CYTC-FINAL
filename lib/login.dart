@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cytc/forgotPassword.dart';
+import 'package:cytc/homePage.dart';
+import 'package:cytc/main.dart';
+
+import 'forgotPassword.dart';
 import 'package:flutter/material.dart';
 import 'Signup.dart';
 // import 'forgotPassword.dart';
@@ -95,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
+                        
                         labelStyle: TextStyle(
                           color: _emailFocusNode.hasFocus ? Color(0xFFF29F3D) : Colors.black, // Change color conditionally
                         ),
@@ -129,7 +133,10 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        // Login button functionality
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => homePage()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFFF29F3D), // Match the design color
@@ -204,7 +211,10 @@ class _LoginPageState extends State<LoginPage> {
             left: 16,
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Navigate back to the previous page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WelcomePage()),
+                ); // Navigate back to the previous page
               },
               icon: Icon(Icons.arrow_back),
               color: Colors.white,

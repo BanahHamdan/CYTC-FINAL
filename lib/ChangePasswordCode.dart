@@ -2,6 +2,7 @@
 
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cytc/modifyPassword.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordCode extends StatelessWidget {
@@ -54,6 +55,12 @@ class ChangePasswordCode extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
+                        hintStyle: TextStyle(
+                          color: Colors.grey, // Default hint color
+                        ),
+                        labelStyle: TextStyle(
+                          color: Colors.black, // Black label color
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -65,7 +72,7 @@ class ChangePasswordCode extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ChangePasswordCode()),
+                              MaterialPageRoute(builder: (context) => modifyPasswordPage()),
                             );                          
                           },
 
