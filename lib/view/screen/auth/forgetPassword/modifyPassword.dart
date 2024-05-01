@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+ // ignore_for_file: prefer_const_constructors
 
-import 'package:cytc/ChangePasswordCode.dart';
-import 'package:cytc/login.dart';
+import 'package:cytc/view/screen/auth/forgetPassword/ChangePasswordCode.dart';
+// import 'package:cytc/view/forgotPassword.dart';
+import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
 
-class forgotPassword extends StatelessWidget {
+class modifyPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class forgotPassword extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'هل نسيت كلمة المرور؟',
+                      'تغيير كلمة المرور',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -38,10 +39,35 @@ class forgotPassword extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     TextField(
+                      obscureText: true,
                       cursorColor: Color(0xFFF29F3D),
                       decoration: InputDecoration(
-                        labelText: 'ادخل بريدك الالكتروني',
-                        hintText: 'ادخل بريدك الالكتروني',
+                        labelText: 'ادخل كلمة المرور الجديدة',
+                        hintText: 'ادخل كلمة المرور الجديدة',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        hintStyle: TextStyle(
+                          color: Colors.grey, // Default hint color
+                        ),
+                        labelStyle: TextStyle(
+                          color: Colors.black, // Orange label color
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      obscureText: true,
+                      cursorColor: Color(0xFFF29F3D),
+                      decoration: InputDecoration(
+                        labelText: 'اعد كتابة كلمة المرور',
+                        hintText: 'اعد كتابة كلمة المرور',
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -60,30 +86,30 @@ class forgotPassword extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ChangePasswordCode()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFF29F3D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => homePage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFF29F3D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        // minimumSize: Size(double.infinity, 50), // Adjust button size here
+                      ),
+                      child: Container(
+                         child: Center(
                           child: Text(
-                            'ارسل رمز التحقق',
+                            'تأكيد الكلمة الجديدة',
                             style: TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -97,7 +123,7 @@ class forgotPassword extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => ChangePasswordCode()),
                 );
               },
               icon: Icon(Icons.arrow_back),

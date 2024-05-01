@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'verify.dart';
-import 'login.dart';
+import 'package:cytc/view/screen/auth/login.dart';
 
 class Signup extends StatefulWidget {
   @override

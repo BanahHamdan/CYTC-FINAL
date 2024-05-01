@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
-import 'package:cytc/Signup.dart';
-import 'package:cytc/main.dart';
+import 'package:cytc/view/screen/auth/Signup.dart';
+// import 'package:cytc/view/main.dart';
 import 'package:flutter/material.dart';
+
+import '../../../main.dart';
 
 class VerifyPage extends StatelessWidget {
   @override
