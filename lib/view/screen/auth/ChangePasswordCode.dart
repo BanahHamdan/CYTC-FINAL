@@ -21,7 +21,7 @@ class ChangePasswordCode extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.9, // Set width of the green box to 80% of the screen width
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9BCB3D),
+                  color: Color(0xFF9FBB73),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -39,7 +39,7 @@ class ChangePasswordCode extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     TextField(
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       decoration: InputDecoration(
                         labelText: 'رمز التحقق',
                         hintText: 'ادخل رمز التحقق ',
@@ -50,7 +50,7 @@ class ChangePasswordCode extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFF29F3D),
+                            color: Color(0xFFF3B664),
                             width: 2.0,
                           ),
                           borderRadius: BorderRadius.circular(20),
@@ -77,7 +77,7 @@ class ChangePasswordCode extends StatelessWidget {
                           },
 
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFF29F3D),
+                            backgroundColor: Color(0xFFF3B664),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -104,7 +104,7 @@ class ChangePasswordCode extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back),
-              color: Color(0xFF9BCB3D),
+              color: Color(0xFF9FBB73),
               iconSize: 32,
             ),
           ),

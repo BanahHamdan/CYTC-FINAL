@@ -19,7 +19,12 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
+  # sdk: '>=3.3.4 <4.0.0'
+
+# environment:
   sdk: '>=3.0.6 <4.0.0'
+
+  # sdk: '>=1.20.1 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,8 +37,11 @@ dependencies:
     sdk: flutter
 
   carousel_slider: ^4.2.1
-
   expandable: ^5.0.1
+  flutter_animated_cards: ^0.0.2
+  expandable_search_bar: ^0.0.1
+  flip_card: ^0.6.0
+  # google_maps_flutter: ^0.5.21+12
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -42,7 +50,10 @@ dependencies:
   dartz: ^0.10.1
   http: ^1.1.0
   get: ^4.6.5
-  
+  # google_maps_flutter: ^2.5.3
+  # map_view:
+  # google_maps_webservice: ^0.0.19
+
 
 dev_dependencies:
   flutter_test:
@@ -64,13 +75,14 @@ flutter:
     - assets/welcome.jpg
     - assets/Logo.png
     - assets/banah.jpg
-    - assets/slider1.jpg
-    - assets/slider2.jpg
-    - assets/slider3.jpg
-    - assets/slider6.jpg
-    - assets/slider7.jpg
-    - assets/slider8.jpg
-    - assets/slider10.jpg
+    - assets/homePage/
+    - assets/homePage/slider1.jpg
+    - assets/homePage/slider2.jpg
+    - assets/homePage/slider3.jpg
+    - assets/homePage/slider6.jpg
+    - assets/homePage/slider7.jpg
+    - assets/homePage/slider8.jpg
+    - assets/homePage/slider10.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

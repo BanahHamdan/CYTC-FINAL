@@ -1,11 +1,16 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_new, avoid_unnecessary_containers, sort_child_properties_last
 // import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cytc/view/calender.dart';
+import 'package:cytc/view/chat.dart';
+import 'package:cytc/view/posts.dart';
 import 'package:flutter/material.dart';
+import 'package:flip_card/flip_card.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class homePage extends StatefulWidget {
   @override
@@ -14,166 +19,247 @@ class homePage extends StatefulWidget {
   homePage({Key? key}) : super(key: key);
 }
 
+///////////////text with icon in the emergensies//////////////////
+Widget buildTextWithIcon(
+    {required String text, IconData? icon, required BuildContext context}) {
+  return GestureDetector(
+    onTap: () {
+      // Navigate to the desired page
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => homePage()),
+      );
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end, // Align icon and text
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 17,
+          ),
+        ),
+        SizedBox(width: 8), // Add some spacing between icon and text
+        Icon(
+          icon,
+          color: Color(0xFFF3B664), // Icon color
+          size: 24, // Icon size
+        ),
+      ],
+    ),
+  );
+}
+
+//////////////////////ل اول وحدة///////////////////////
+class CategoryBoxFirst extends StatelessWidget {
+  final String categoryName;
+  final String imagePath;
+  final VoidCallback onTap;
+
+  const CategoryBoxFirst({
+    required this.categoryName,
+    required this.imagePath,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        // width: 180,
+        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xFF9FBB73)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              imagePath,
+              height: 130,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 5),
+            Directionality(
+              textDirection:
+                  TextDirection.rtl, // Set text direction to right-to-left
+              child: Text(
+                categoryName,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+////////////////////////////للاربعة اللي تحت/////////////////////////////
+class CategoryBox extends StatelessWidget {
+  final String categoryName;
+  final String imagePath;
+  final VoidCallback onTap;
+
+  const CategoryBox({
+    required this.categoryName,
+    required this.imagePath,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        width: 180, // Adjust the width as needed
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xFF9FBB73)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(
+              imagePath,
+              height: 130, // Adjust the height as needed
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: Text(
+                categoryName,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+////////////////////////////////////////////////////
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Location Details'),
+//         ),
+//         body: LocationDetails(),
+//       ),
+//     );
+//   }
+// }
+
 class _homePageState extends State<homePage> {
+  // int _currentPageIndex = 0;
+   int selectTab = 3; // Set default selected tab to homePage
+  late Widget selectPageView;
+
+  @override
+  void initState() {
+    super.initState();
+    selectPageView = homePage();
+  }
+
   bool showSecondText = false;
   List<bool> _isOpen = [false, false];
-
-//////////for search////////////////
+// Define a TextEditingController to control the text field
+  TextEditingController textEditingController = TextEditingController();
   bool isSearchBarVisible = false;
-  // void toggleSearchBarVisibility() {
-  //   setState(() {
-  //     isSearchBarVisible = !isSearchBarVisible;
-  //   });
-  // }
-  /////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       /////////////////////////navBar///////////////////////////
-      backgroundColor: Color(0xFF9BCB3D),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: Color(0xFFF29F3D),
-        animationDuration: Duration(milliseconds: 300),
-        // onTap: (index){
-        // },
-        items: [
-          Icon(Icons.calendar_month, color: Colors.white),
-          Icon(Icons.chat, color: Colors.white),
-          Icon(Icons.notifications, color: Colors.white),
-          Icon(Icons.home, color: Colors.white),
-        ],
-      ),
-      //////////////////////////////////////////////////////////
+      //   backgroundColor: Colors.white,
+      //   color: Color(0xFFF3B664),
+      //   animationDuration: Duration(milliseconds: 300),
+      //   onTap: (index) {
+      //     setState(() {
+      //       selectTab = index; // Update selected tab
+      //       // Update selected page based on tab index
+      //       switch (index) {
+      //         case 0:
+      //           selectPageView = CalendarPage();
+      //           break;
+      //         case 1:
+      //           selectPageView = ChatPage();
+      //           break;
+      //         case 2:
+      //           selectPageView = ReactionPage();
+      //           break;
+      //         case 3:
+      //           selectPageView = homePage();
+      //           break;
+      //       }
+      //     });
+      //   },
+      //   items: [
+      //     Icon(Icons.calendar_month, color: Colors.white),
+      //     Icon(Icons.chat, color: Colors.white),
+      //     Icon(Icons.add_reaction, color: Colors.white),
+      //     Icon(Icons.home, color: Colors.white),
+      //   ],
+      //   index: selectTab, // Set initial selected tab
+      // ),
 
-      appBar: AppBar(
-        backgroundColor:
-            Colors.transparent, // Set background color to transparent
-        elevation: 0, // Remove elevation
-        leading: IconButton(
-          icon: Icon(Icons.menu), // Burger menu icon
-          onPressed: () {
-            // Add functionality for burger menu
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search), // Search icon
-            onPressed: () {
-              // Add functionality to show search bar
-            },
-          ),
-          GestureDetector(
-            onTap: () {
-              // Add functionality to navigate to profile page
-            },
-            child: Container(
-              // padding: EdgeInsets.only(top: 20),
-              margin: EdgeInsets.only(right: 20),
-              width: 40, // Adjust the width as needed
-              height: 40, // Adjust the height as needed
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
-                image: DecorationImage(
-                  image: AssetImage('assets/banah.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ), // Remove the app bar
+
+      // backgroundColor: Color(0xFF9FBB73),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   backgroundColor: Colors.white,
+      //   color: Color(0xFFF3B664),
+      //   animationDuration: Duration(milliseconds: 300),
+        // onTap: (index) {
+        //   // Navigate to the desired page based on the tapped icon
+        //   switch (index) {
+        //     case 0:
+        //       Navigator.push(
+        //           context, MaterialPageRoute(builder: (_) => CalendarPage()));
+        //       break;
+        //     case 1:
+        //       Navigator.push(
+        //           context, MaterialPageRoute(builder: (_) => ChatPage()));
+        //       break;
+        //     case 2:
+        //       Navigator.push(
+        //           context, MaterialPageRoute(builder: (_) => ReactionPage()));
+        //       break;
+        //     case 3:
+        //       Navigator.push(
+        //           context, MaterialPageRoute(builder: (_) => homePage()));
+        //       break;
+        //   }
+        // },
+        // items: [
+        //   Icon(Icons.calendar_month, color: Colors.white),
+        //   Icon(Icons.chat, color: Colors.white),
+        //   Icon(Icons.add_reaction, color: Colors.white),
+        //   Icon(Icons.home, color: Colors.white),
+        // ],
+      // ),
+      //////////////////////////////////////////////////////////
+      // appBar
+      backgroundColor: Color(0xFF9FBB73),      // bottomNavigationBar: CurvedNavigationBar(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ////////app bar ,
-            Visibility(
-              visible:
-                  isSearchBarVisible, // Control the visibility of the search bar
-              child: Expanded(
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(77, 0, 10, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      prefixIcon: Icon(Icons.search),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-// GestureDetector(
-//   onTap: () {
-//     // Add functionality to navigate to profile page
-//   },
-//   child: Container(
-//     // padding: EdgeInsets.only(top: 20),
-//     margin: EdgeInsets.only(right: 20),
-//     width: 40, // Adjust the width as needed
-//     height: 40, // Adjust the height as needed
-//     decoration: BoxDecoration(
-//       shape: BoxShape.circle,
-//       border: Border.all(color: Color(0xFFF29F3D), width: 2),
-//       image: DecorationImage(
-//         image: AssetImage('assets/banah.jpg'),
-//         fit: BoxFit.cover,
-//       ),
-//     ),
-//   ),
-// ),
-
-            // Container(
-            //   padding: EdgeInsets.symmetric(vertical: 38), // Added padding
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Expanded(
-            //         child: Container(
-            //           margin: EdgeInsets.fromLTRB(77, 0, 10, 0),
-            //           decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(30),
-            //           ),
-            //           child: TextField(
-            //             decoration: InputDecoration(
-            //               hintText: 'Search...',
-            //               prefixIcon: Icon(Icons.search),
-            //               border: InputBorder.none,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       GestureDetector(
-            //         onTap: () {
-            //           // Add functionality to navigate to profile page
-            //         },
-            //         child: Container(
-            //           // padding: EdgeInsets.only(top: 20),
-            // margin: EdgeInsets.only(right: 20),
-            // width: 55,
-            // height: 55,
-            // decoration: BoxDecoration(
-            //   shape: BoxShape.circle,
-            //   border: Border.all(color: Color(0xFFCF3333), width: 2),
-            //   image: DecorationImage(
-            //     image: AssetImage('assets/banah.jpg'), // Replace with actual profile image
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
 
 ///////////////////////slider////////////////////////////
             Container(
@@ -187,7 +273,7 @@ class _homePageState extends State<homePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: AssetImage("assets/slider10.jpg"),
+                        image: AssetImage("assets/homePage/slider10.jpg"),
                         // image: NetworkImage("https://picsum.photos/id/240/200/300"),
                         fit: BoxFit.cover,
                       ),
@@ -200,7 +286,7 @@ class _homePageState extends State<homePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: AssetImage("assets/slider1.jpg"),
+                        image: AssetImage("assets/homePage/slider1.jpg"),
                         // image: NetworkImage("https://picsum.photos/id/241/200/300"),
                         fit: BoxFit.cover,
                       ),
@@ -213,7 +299,7 @@ class _homePageState extends State<homePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: AssetImage("assets/slider8.jpg"),
+                        image: AssetImage("assets/homePage/slider8.jpg"),
                         // image: NetworkImage("https://picsum.photos/id/242/200/300"),
                         fit: BoxFit.cover,
                       ),
@@ -226,7 +312,7 @@ class _homePageState extends State<homePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: AssetImage("assets/slider6.jpg"),
+                        image: AssetImage("assets/homePage/slider6.jpg"),
                         // image: NetworkImage("https://picsum.photos/id/243/200/300"),
                         fit: BoxFit.cover,
                       ),
@@ -239,7 +325,7 @@ class _homePageState extends State<homePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: AssetImage("assets/slider7.jpg"),
+                        image: AssetImage("assets/homePage/slider7.jpg"),
                         // image: NetworkImage("https://picsum.photos/id/244/200/300"),
                         fit: BoxFit.cover,
                       ),
@@ -260,9 +346,9 @@ class _homePageState extends State<homePage> {
                 ),
               ),
             ),
-////////////////////////////////////////////////////////////////
 
-///////////////////////////volunteer of the month///////////////
+////////////////////////////////////////////////////////////
+
             Container(
               padding: EdgeInsets.only(bottom: 10), // Adjust padding as needed
               decoration: BoxDecoration(
@@ -275,601 +361,410 @@ class _homePageState extends State<homePage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(
-                          'متطوع الشهر',
-                          style: TextStyle(
-                            color: Color(0xFF9BCB3D),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        // padding: EdgeInsets.only(top: 20),
-                        // margin: EdgeInsets.only(right: 6),
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: Color(0xFF9BCB3D), width: 5),
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/banah.jpg'), // Replace with actual profile image
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
+//////////////////////////اعلانات هامة/////////////////////
+                    // Container with 'حالات طارئة' text and icon
                     Container(
-                      // Inner container properties
-                      // margin: EdgeInsets.all(20), // Add margin for spacing
-                      margin: EdgeInsets.fromLTRB(110, 5, 110, 20),
+                      margin: EdgeInsets.fromLTRB(220, 20, 25, 10),
                       decoration: BoxDecoration(
-                        color: Color(0xFF9BCB3D),
+                        color: Color(0xFFF3B664),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Center(
-                        child: Text(
-                          'بانه حمدان',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                          ),
-                        ),
+                      child: Row(
+                        textDirection: TextDirection.rtl,
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceBetween, // Align icon and text
+                        children: [
+                          Row(// Added Row to contain text and icon
+                              children: [
+                            Text(
+                              '  حالات طارئة ',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0, 0, 10, 0), // Add padding for the icon
+                              child: Icon(
+                                Icons.warning, // Icon for emergency cases
+                                color: Colors.white,
+                              ),
+                            ),
+                          ]),
+                          SizedBox(
+                              width:
+                                  10), // Add some space between the text and the next widget
+                        ],
                       ),
                     ),
-///////////////////////////////////////////////////////////
-//////////////////////////اعلانات هامة/////////////////////////////////
+                    // Container with emergency texts and icons
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 35, 25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          buildTextWithIcon(
+                            text: 'مطلوب وحدات دم بشكل عاجل',
+                            icon: Icons.bloodtype_outlined, // Blood icon
+                            context: context,
+                          ),
+                          buildTextWithIcon(
+                            text: 'مطلوب مسعفين بشكل طارئ',
+                            icon: Icons
+                                .medical_services_outlined, // Medical services icon
+                            context: context,
+                          ),
+                        ],
+                      ),
+                    ),
+
+///////////////////////////////////////////////////////
+
+/////////////////////////volunteer of the month///////////////
+                    Column(
+                      children: [
+                        // Volunteer of the Month
+                        FlipCard(
+                          direction: FlipDirection.HORIZONTAL,
+                          front: Container(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'متطوع الشهر المثالي',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 0), // Spacer
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Color(0xFF9FBB73), width: 5),
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/banah.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5), // Spacer
+                                  Container(
+                                    margin:
+                                        EdgeInsets.fromLTRB(120, 0, 120, 20),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF9FBB73),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'بانه حمدان',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          back: Container(
+                            // child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر. يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد ',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+/////////////////////////////////////////////////////////////////
                     SizedBox(height: 20),
-                    Container(),
-///////////////////////////////////////////////////////////
-
 ////////////////////////////من نحن///////////////////////////////
-                    Padding(
-                      padding: EdgeInsets.only(
-                          right: 20,
-                          top: 0,
-                          left: 20,
-                          bottom: 0), // Adjust padding as needed
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Color(0xFFF29F3D), width: 2.0),
-                              // left: BorderSide(color: Colors.white, width: 2.0),
-                              // right:
-                              //     BorderSide(color: Colors.white, width: 2.0),
-                              // bottom: BorderSide(
-                              //     color: Color(0xFFF29F3D), width: 2.0),
-                            ),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ExpansionPanelList(
-                              animationDuration: Duration(seconds: 1),
-                              dividerColor: Colors.green,
-                              elevation: 1,
-                              expandedHeaderPadding: EdgeInsets.all(8),
-                              children: [
-                                ExpansionPanel(
-                                  headerBuilder: (context, isOpen) {
-                                    return ListTile(
-                                      title: Text(
-                                        "من نحن؟",
-                                        style: TextStyle(
-                                          color: Color(
-                                              0xFFF29F3D), // Change font color
-                                          fontSize: 25.0, // Change font size
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  body: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8.0),
-                                    child: Text(
-                                      "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
-                                      style: TextStyle(
-                                        color: Color(0xFFF29F3D),
-                                        fontSize: 17.0,
-                                      ),
-                                    ),
-                                  ),
-                                  isExpanded: _isOpen[0],
-                                  canTapOnHeader: true,
-                                ),
-                              ],
-                              expansionCallback: (panelIndex, isOpen) {
-                                setState(() {
-                                  _isOpen[panelIndex] = !isOpen;
-                                });
-                              },
-                            ),
-                          ),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        CategoryBoxFirst(
+                          categoryName: 'شارك معنا وانضم الى عائلتنا   ',
+                          imagePath: 'assets/homePage/joinus2.jpg',
+                          onTap: () {
+                            // Add navigation functionality
+                            // print('Category 1 clicked');
+                          },
                         ),
-                      ),
-                    ),
-                    //////
-                    Padding(
-                      padding: EdgeInsets.only(
-                          right: 20,
-                          top: 0,
-                          left: 20,
-                          bottom: 0), // Adjust padding as needed
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Color(0xFFF29F3D), width: 2.0),
-                              // left: BorderSide(color: Colors.white, width: 2.0),
-                              // right:
-                              //     BorderSide(color: Colors.white, width: 2.0),
-                              // bottom: BorderSide(
-                              //     color: Colors.white, width: 2.0),
-                            ),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ExpansionPanelList(
-                              animationDuration: Duration(seconds: 1),
-                              dividerColor: Colors.green,
-                              elevation: 1,
-                              expandedHeaderPadding: EdgeInsets.all(8),
-                              children: [
-                                ExpansionPanel(
-                                  headerBuilder: (context, isOpen) {
-                                    return ListTile(
-                                      title: Text(
-                                        "شارك معنا, وانضم الى عائلتنا",
-                                        style: TextStyle(
-                                          color: Color(
-                                              0xFFF29F3D), // Change font color
-                                          fontSize: 25.0, // Change font size
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  body: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8.0),
-                                    child: Text(
-                                      "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
-                                      style: TextStyle(
-                                        color: Color(0xFFF29F3D),
-                                        fontSize: 17.0,
-                                      ),
-                                    ),
-                                  ),
-                                  isExpanded: _isOpen[0],
-                                  canTapOnHeader: true,
-                                ),
-                              ],
-                              expansionCallback: (panelIndex, isOpen) {
-                                setState(() {
-                                  _isOpen[panelIndex] = !isOpen;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
+                        // وحدة وحدة وكبار
+                        // CategoryBox(
+                        //   categoryName: 'حملات التبرع بالدم',
+                        //   imagePath: 'assets/homePage/blood1.jpg',
+                        //   onTap: () {
+                        //     // Add navigation functionality
+                        //     print('Category 2 clicked');
+                        //   },
+                        // ),
+                        // CategoryBox(
+                        //   categoryName: 'المهرجانات',
+                        //   imagePath: 'assets/homePage/fest2.jpg',
+                        //   onTap: () {
+                        //     // Add navigation functionality
+                        //     print('Category 3 clicked');
+                        //   },
+                        // ),
+                        // CategoryBox(
+                        //   categoryName: 'شاركنا اقتراحاتك وافكارك',
+                        //   imagePath: 'assets/homePage/joinus3.jpg',
+                        //   onTap: () {
+                        //     // Add navigation functionality
+                        //     print('Category 4 clicked');
+                        //   },
+                        // ),
+                        // CategoryBox(
+                        //   categoryName: 'تقديم طلب تدريب للخريجين',
+                        //   imagePath: 'assets/homePage/grad.jpg',
+                        //   onTap: () {
+                        //     // Add navigation functionality
+                        //     print('Category 5 clicked');
+                        //   },
+                        // ),
+                      ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          right: 20,
-                          top: 0,
-                          left: 20,
-                          bottom: 25), // Adjust padding as needed
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Color(0xFFF29F3D), width: 2.0),
-                              // left: BorderSide(color: Colors.white, width: 2.0),
-                              // right:
-                              //     BorderSide(color: Colors.white, width: 2.0),
-                              bottom: BorderSide(
-                                  color: Color(0xFFF29F3D), width: 2.0),
-                            ),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ExpansionPanelList(
-                              animationDuration: Duration(seconds: 1),
-                              dividerColor: Colors.green,
-                              elevation: 1,
-                              expandedHeaderPadding: EdgeInsets.all(8),
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: ListBody(
+                          // padding: EdgeInsets.all(20.0),
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ExpansionPanel(
-                                  headerBuilder: (context, isOpen) {
-                                    return ListTile(
-                                      title: Text(
-                                        "شراكاتنا مع الجامعات",
-                                        style: TextStyle(
-                                          color: Color(
-                                              0xFFF29F3D), // Change font color
-                                          fontSize: 25.0, // Change font size
-                                        ),
-                                      ),
-                                    );
+                                CategoryBox(
+                                  categoryName: 'تعرف على حملات التبرع بالدم',
+                                  imagePath: 'assets/homePage/blood1.jpg',
+                                  onTap: () {
+                                    // Add navigation functionality
                                   },
-                                  body: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8.0),
-                                    child: Text(
-                                      "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
-                                      style: TextStyle(
-                                        color: Color(0xFFF29F3D),
-                                        fontSize: 17.0,
-                                      ),
-                                    ),
-                                  ),
-                                  isExpanded: _isOpen[0],
-                                  canTapOnHeader: true,
+                                ),
+                                CategoryBox(
+                                  categoryName: 'المهرجانات',
+                                  imagePath: 'assets/homePage/fest2.jpg',
+                                  onTap: () {
+                                    // Add navigation functionality
+                                  },
                                 ),
                               ],
-                              expansionCallback: (panelIndex, isOpen) {
-                                setState(() {
-                                  _isOpen[panelIndex] = !isOpen;
-                                });
-                              },
+                            ),
+                            SizedBox(height: 10), // Spacer between rows
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CategoryBox(
+                                  categoryName: 'شاركنا اقتراحاتك وافكارك',
+                                  imagePath: 'assets/homePage/joinus3.jpg',
+                                  onTap: () {
+                                    // Add navigation functionality
+                                  },
+                                ),
+                                CategoryBox(
+                                  categoryName: 'تقديم طلب تدريب للخريجين',
+                                  imagePath: 'assets/homePage/grad.jpg',
+                                  onTap: () {
+                                    // Add navigation functionality
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                    SizedBox(height: 50),
+////////////////////////////////////////////////////////////////////
+                    Container(
+                      color: Color(0xFF9FBB73), // Green background color
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    'مركز تدريب الشباب المجتمعي',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 5, left: 10),
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.white, width: 2),
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/Logo.png'),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
+                          SizedBox(height: 10.0),
+                          Center(
+                            child: Text(
+                              "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                          ),
+                          SizedBox(height: 5.0),
+                          // SizedBox(
+                          //   height: 100, // Adjust the height as needed
+                          //   child: GoogleMap(
+                          //     initialCameraPosition: CameraPosition(
+                          //       target: LatLng(37.7749, -122.4194),
+                          //       zoom: 12,
+                          //     ),
+                          //     markers: {
+                          //       Marker(
+                          //         markerId: MarkerId('location'),
+                          //         position: LatLng(37.7749, -122.4194),
+                          //         infoWindow: InfoWindow(
+                          //           title: 'Location',
+                          //         ),
+                          //       ),
+                          //     },
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ),
+////////////////////////////////////////////////////////////////////
+                    Container(
+                      color: Color.fromARGB(255, 102, 121, 72),
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.facebook), // Burger menu icon
+                            onPressed: () {
+                              // Add functionality for burger menu
+                            },
+                          ),
+                          Container(
+                            // margin: EdgeInsets.only(right: 20),
+                            width: 35, // Adjust the width as needed
+                            height: 35, // Adjust the height as needed
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                              image: DecorationImage(
+                                image: AssetImage('assets/Logo.png'),
+                                // fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.phone), // Burger menu icon
+                            onPressed: () {
+                              // Add functionality for burger menu
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+////////////////////////////////////////////////////////////////////
 
-                    ///
-
-                    //     Container(
-                    //       child:GestureDetector(
-                    //         onTap: () {
-                    //           setState(() {
-                    //             showSecondText = !showSecondText; // Toggle the value
-                    //           });
-                    //           // Add navigation functionality
-                    //         },
-                    //           child: Padding(
-                    //             padding: EdgeInsets.only(right: 20, top: 10, left: 20), // Add your desired padding
-
-                    //             child: Container(
-                    //               decoration: BoxDecoration(
-                    //                 border: Border(
-                    //                   bottom: BorderSide(
-                    //                     color: Color.fromARGB(232, 244, 195, 138), // Set border color
-                    //                     width: 2.0, // Set border width
+                    // //////
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //       right: 20,
+                    //       top: 0,
+                    //       left: 20,
+                    //       bottom: 0), // Adjust padding as needed
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(20.0),
+                    //     child: Container(
+                    //       // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    //       decoration: BoxDecoration(
+                    //         border: Border(
+                    //           top: BorderSide(
+                    //               color: Color(0xFFF3B664), width: 2.0),
+                    //           // left: BorderSide(color: Colors.white, width: 2.0),
+                    //           // right:
+                    //           //     BorderSide(color: Colors.white, width: 2.0),
+                    //           bottom: BorderSide(
+                    //               color: Color(0xFFF3B664), width: 2.0),
+                    //         ),
+                    //       ),
+                    //       child: Directionality(
+                    //         textDirection: TextDirection.rtl,
+                    //         child: ExpansionPanelList(
+                    //           animationDuration: Duration(seconds: 1),
+                    //           dividerColor: Colors.green,
+                    //           elevation: 1,
+                    //           expandedHeaderPadding: EdgeInsets.all(8),
+                    //           children: [
+                    //             ExpansionPanel(
+                    //               headerBuilder: (context, isOpen) {
+                    //                 return ListTile(
+                    //                   title: Text(
+                    //                     "",
+                    //                     style: TextStyle(
+                    //                         color: Color(
+                    //                             0xFFF3B664), // Change font color
+                    //                         fontSize: 20.0, // Change font size
+                    //                         fontWeight: FontWeight.bold),
                     //                   ),
-                    //                   ),
-                    //               ),
-                    //             child: Row(
-                    //               mainAxisAlignment: MainAxisAlignment.end,
-                    //               children: [
-                    //                 Text(
-                    //                   'من نحن؟',
-                    //                   textDirection: TextDirection.rtl,
+                    //                 );
+                    //               },
+                    //               body: Padding(
+                    //                 padding: EdgeInsets.symmetric(
+                    //                     horizontal: 16.0, vertical: 8.0),
+                    //                 child: Text(
+                    //                   "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
                     //                   style: TextStyle(
-                    //                     color: Color(0xFFF29F3D),
-                    //                     fontSize: 40,
-                    //                     fontWeight: FontWeight.bold,
+                    //                     color: Color(0xFFF3B664),
+                    //                     fontSize: 17.0,
                     //                   ),
                     //                 ),
-                    //                 SizedBox(width: 10), // Add space between icon and text
-                    //                 Icon(
-                    //                   Icons.arrow_drop_down_circle_outlined, // Replace with your desired icon
-                    //                   color: Color(0xFFF29F3D), // Set icon color
-                    //                   size: 40,
-                    //                   // DecoratedBox(
-                    //                   //   decoration: BoxDecoration(
-                    //                   //     border: Border(bottom: BorderSide(color: Color.fromARGB(232, 244, 195, 138), width: 2.0)), // Add border to the bottom side
-                    //                   //   ),
-                    //                 ),
-                    //               ],
-                    //            ),
-                    //          ),
-                    //         ),
-                    //       ),
-                    //     ),
-
-                    //   if (showSecondText)
-                    //   Container(
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //     child: Padding(
-                    //       padding: EdgeInsets.only(right: 20, top: 0, left: 20),
-                    //       child: Text(
-                    //         'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم',
-                    //         textDirection: TextDirection.rtl,
-                    //         style: TextStyle(
-                    //           color: Color(0xFFF29F3D),
-                    //           fontSize: 17,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-///////////////////////////////////////////////////////////
-
-/////////////////////////////خيارات//////////////////////////////
-                    // SizedBox(height: 20),
-                    // Container(
-                    //   child: Padding(
-                    //     padding: EdgeInsets.only(
-                    //         right: 30,
-                    //         top: 5,
-                    //         left: 5), // Add your desired padding
-                    //     child: Text(
-                    //       textDirection: TextDirection.rtl,
-                    //       'شارك معنا, وانضم الى عائلتنا!',
-                    //       style: TextStyle(
-                    //         color: Color(0xFF9BCB3D), // Set hyperlink color
-                    //         fontSize: 25,
-                    //         // decoration: TextDecoration.underline,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   // Inner container properties
-                    //   // margin: EdgeInsets.all(20), // Add margin for spacing
-                    //   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFF9BCB3D),
-                    //     borderRadius: BorderRadius.circular(50),
-                    //   ),
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //     child: Padding(
-                    //       padding: EdgeInsets.only(
-                    //           right: 15,
-                    //           top: 5,
-                    //           left: 5), // Add your desired padding
-                    //       child: Text(
-                    //         textDirection: TextDirection.rtl,
-                    //         'دورات وانشطة',
-                    //         style: TextStyle(
-                    //           color: Colors.white, // Set hyperlink color
-                    //           fontSize: 20,
-                    //           // decoration: TextDecoration.underline,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-
-                    // SizedBox(height: 5),
-                    // Container(
-                    //   // Inner container properties
-                    //   // margin: EdgeInsets.all(20), // Add margin for spacing
-                    //   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFF9BCB3D),
-                    //     borderRadius: BorderRadius.circular(50),
-                    //   ),
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //     child: Padding(
-                    //       padding: EdgeInsets.only(
-                    //           right: 15,
-                    //           top: 5,
-                    //           left: 5), // Add your desired padding
-                    //       child: Text(
-                    //         textDirection: TextDirection.rtl,
-                    //         'تطوع معنا',
-                    //         style: TextStyle(
-                    //           color: Colors.white, // Set hyperlink color
-                    //           fontSize: 20,
-                    //           // decoration: TextDecoration.underline,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    /////////////////////////////
-                    // SizedBox(height: 5),
-                    // Container(
-                    //   // Inner container properties
-                    //   // margin: EdgeInsets.all(20), // Add margin for spacing
-                    //   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFF9BCB3D),
-                    //     borderRadius: BorderRadius.circular(50),
-                    //   ),
-                    //   child:GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //       child: Padding(
-                    //         padding:  EdgeInsets.only(right: 15, top: 5, left: 5), // Add your desired padding
-                    //         child: Text(
-                    //           textDirection: TextDirection.rtl,
-                    //           'انجازات المركز',
-                    //           style: TextStyle(
-                    //             color: Colors.white, // Set hyperlink color
-                    //             fontSize: 20,
-                    //         // decoration: TextDecoration.underline,
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   ),
-                    // ),
-
-                    // SizedBox(height: 5),
-                    // Container(
-                    //   // Inner container properties
-                    //   // margin: EdgeInsets.all(20), // Add margin for spacing
-                    //   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFF9BCB3D),
-                    //     borderRadius: BorderRadius.circular(50),
-                    //   ),
-                    //   child:GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //       child: Padding(
-                    //         padding:  EdgeInsets.only(right: 15, top: 5, left: 5), // Add your desired padding
-                    //         child: Text(
-                    //           textDirection: TextDirection.rtl,
-                    //           'شراكاتنا مع الجامعات',
-                    //           style: TextStyle(
-                    //             color: Colors.white, // Set hyperlink color
-                    //             fontSize: 20,
-                    //         // decoration: TextDecoration.underline,
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   ),
-                    // ),
-
-                    // SizedBox(height: 5),
-                    // Container(
-                    //   // Inner container properties
-                    //   // margin: EdgeInsets.all(20), // Add margin for spacing
-                    //   margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFF9BCB3D),
-                    //     borderRadius: BorderRadius.circular(50),
-                    //   ),
-                    //   child:GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //       child: Padding(
-                    //         padding:  EdgeInsets.only(right: 15, top: 5, left: 5), // Add your desired padding
-                    //         child: Text(
-                    //           textDirection: TextDirection.rtl,
-                    //           'شاركنا ب اقتراحاتك',
-                    //           style: TextStyle(
-                    //             color: Colors.white, // Set hyperlink color
-                    //             fontSize: 20,
-                    //         // decoration: TextDecoration.underline,
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   ),
-                    // ),
-///////////////////////////////////////////////////////////
-
-////////////////////////footer////////////////////////////
-                    // SizedBox(height: 250),
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     color: Color(
-                    //         0xFF9BCB3D), // Set the background color to orange
-                    //   ),
-                    //   child: Padding(
-                    //     padding: EdgeInsets.only(
-                    //         right: 20, top: 50, left: 20, bottom: 150),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //       children: [
-                    //         Column(
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           children: [
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 // Add navigation functionality
-                    //               },
-                    //               child: Text(
-                    //                 'First Link 1',
-                    //                 style: TextStyle(
-                    //                   color: Colors.white,
-                    //                   fontSize: 16,
-                    //                   decoration: TextDecoration.underline,
-                    //                 ),
                     //               ),
-                    //             ),
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 // Add navigation functionality
-                    //               },
-                    //               child: Text(
-                    //                 'First Link 2',
-                    //                 style: TextStyle(
-                    //                   color: Colors.white,
-                    //                   fontSize: 16,
-                    //                   decoration: TextDecoration.underline,
-                    //                 ),
-                    //               ),
+                    //               isExpanded: _isOpen[0],
+                    //               canTapOnHeader: true,
                     //             ),
                     //           ],
+                    //           expansionCallback: (panelIndex, isOpen) {
+                    //             setState(() {
+                    //               _isOpen[panelIndex] = !isOpen;
+                    //             });
+                    //           },
                     //         ),
-                    //         Column(
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           children: [
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 // Add navigation functionality
-                    //               },
-                    //               child: Text(
-                    //                 'Second Link 1',
-                    //                 style: TextStyle(
-                    //                   color: Colors.white,
-                    //                   fontSize: 16,
-                    //                   decoration: TextDecoration.underline,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 // Add navigation functionality
-                    //               },
-                    //               child: Text(
-                    //                 'Second Link 2',
-                    //                 style: TextStyle(
-                    //                   color: Colors.white,
-                    //                   fontSize: 16,
-                    //                   decoration: TextDecoration.underline,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-/////////////////////////////////////////////////////
-                    // Container(
-                    //   child:GestureDetector(
-                    //     onTap: () {
-                    //       // Add navigation functionality
-                    //     },
-                    //       child: Padding(
-                    //         padding:  EdgeInsets.only(right: 20, top: 0, left: 0), // Add your desired padding
-                    //         child: Text(
-                    //           textDirection: TextDirection.rtl,
-                    //           'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم',
-                    //           style: TextStyle(
-                    //             color: Color(0xFFF29F3D), // Set hyperlink color
-                    //             fontSize: 17,
-                    //             fontWeight: FontWeight.bold,
-                    //             // decoration: TextDecoration.underline,
                     //       ),
                     //     ),
-                    //   ),
                     //   ),
                     // ),
                   ]),

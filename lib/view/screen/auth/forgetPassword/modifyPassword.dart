@@ -21,7 +21,7 @@ class modifyPasswordPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.9,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9BCB3D),
+                  color: Color(0xFF9FBB73),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -40,7 +40,7 @@ class modifyPasswordPage extends StatelessWidget {
                     SizedBox(height: 30),
                     TextField(
                       obscureText: true,
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       decoration: InputDecoration(
                         labelText: 'ادخل كلمة المرور الجديدة',
                         hintText: 'ادخل كلمة المرور الجديدة',
@@ -50,7 +50,7 @@ class modifyPasswordPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+                          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         hintStyle: TextStyle(
@@ -64,7 +64,7 @@ class modifyPasswordPage extends StatelessWidget {
                     SizedBox(height: 20),
                     TextField(
                       obscureText: true,
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       decoration: InputDecoration(
                         labelText: 'اعد كتابة كلمة المرور',
                         hintText: 'اعد كتابة كلمة المرور',
@@ -74,7 +74,7 @@ class modifyPasswordPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+                          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         hintStyle: TextStyle(
@@ -94,7 +94,7 @@ class modifyPasswordPage extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFF29F3D),
+                        backgroundColor: Color(0xFFF3B664),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -127,7 +127,7 @@ class modifyPasswordPage extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.arrow_back),
-              color: Color(0xFF9BCB3D),
+              color: Color(0xFF9FBB73),
               iconSize: 32,
             ),
           ),

@@ -71,7 +71,7 @@ class _SignupState extends State<Signup> {
                   padding: EdgeInsets.all(5), // Adjust padding as needed
                   // margin: const EdgeInsets.only(bottom: 30),
                   decoration: BoxDecoration(
-                    color: Color(0xFF9BCB3D),
+                    color: Color(0xFF9FBB73),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(50.0),
                       topRight: Radius.circular(50.0),
@@ -135,7 +135,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -152,7 +152,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -170,7 +170,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -187,7 +187,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -204,7 +204,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -221,7 +221,7 @@ class _SignupState extends State<Signup> {
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFF3B664), width: 2.0),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
@@ -240,7 +240,7 @@ class _SignupState extends State<Signup> {
         );
       },
       style: ElevatedButton.styleFrom(
-        primary: Color(0xFFF29F3D),
+        backgroundColor: Color(0xFFF3B664),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

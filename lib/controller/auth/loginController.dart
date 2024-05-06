@@ -1,65 +1,58 @@
-// import 'package:flutter/material.dart';
-// import '../../core/constants/routes.dart';
-// import '../../data/auth/login.dart';
-// // import '/global.dart' as globals;
+import 'dart:convert';
 
-// import '../../core/class/statusrequest.dart';
-// // import '../../core/constant/color.dart';
-// import '../../core/functions/handlingdatacontroller.dart';
-// // import '../../data/datasource/remote/auth/login.dart';
-// // import '/core/constant/routes.dart';
-// import 'package:get/get.dart';
-
+import 'package:cytc/linkapi.dart';
 import 'package:get/get.dart';
 
-import '../../core/class/statusrequest.dart';
 import '../../core/constants/routes.dart';
-import '../../core/functions/handlingdatacontroller.dart';
-import '../../data/auth/login.dart';
+import 'package:http/http.dart' as http;
 
 class LoginController {
-  // This method simulates a login process.
-  // You can replace it with your actual login logic.
-  static Future<void> login(String email, String password) async {
-    LoginData loginData = LoginData(Get.find());
-    StatusRequest statusRequest = StatusRequest.none;
-    var response = await loginData.postData(email, password);
-    statusRequest = handlingData(response);
-    print('Email: $email');
-    print('Password: $password');
-    if (statusRequest == StatusRequest.success) {
-      if (response['status'] == true) {
-        if (response['role'] == '0') {
-          // if user is normal
-          Get.offNamed(RouteApp.home, arguments: {
-            'id': response['user']['_id'],
-            'email': response['user']['email'],
-            'role': response['user']['role'],
-          });
-        } else if (response['role'] == '1') {
-          // paramidic
-          Get.offNamed(RouteApp.home, arguments: {
-            'id': response['user']['_id'],
-            'email': response['user']['email'],
-            'role': response['user']['role'],
-          });
-        } else if (response['role'] == '2') {
-          // admin
-          Get.offNamed(RouteApp.home, arguments: {
-            'id': response['user']['_id'],
-            'email': response['user']['email'],
-            'role': response['user']['role'],
-          });
-        }
-      } else if (response['status'] == false) {
-        print("login faild");
-        
+  static login(String email, String password) async {
+    // String apiUrl = 'http://10.0.2.2:9999/user/signin';
+
+    try {
+      // Create a map containing the email and password
+      Map<String, String> body = {
+        'email': email,
+        'password': password,
+      };
+      print(" 1 ");
+
+      // Convert the body to JSON
+      String jsonBody = json.encode(body);
+      print(" 2 ");
+      // Make a POST request to the API endpoint
+      http.Response response = await http.post(
+        Uri.parse(LinkApp.login),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonBody,
+      );
+      print(" 3 ");
+
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Parse the response JSON
+        Map<String, dynamic> responseData = json.decode(response.body);
+
+        print('Login successful:');
+        print(responseData); // responseData
+        // Get.offNamed(RouteApp.signup,arguments: []);
+        Get.toNamed("/home");
+        // Get.offNamed(RouteApp.home, arguments: {
+        //   'email': email,
+        //   'id': responseData["id"],
+        //   'name': responseData["name"],
+        //   'role': responseData["role"],
+        // });
       } else {
-        print("no status in api");
-        
+        print('Login failed. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
       }
-    } else {
-      print("else login");
+    } catch (error) {
+      // Handle any errors that occurred during the request
+      print('Error during login request: $error');
     }
   }
 }
@@ -74,7 +67,7 @@ class LoginController {
 
 //   // late TextEditingController email;
 //   // late TextEditingController password;
- 
+
 //   StatusRequest statusRequest = StatusRequest.none;
 
 //   LoginData loginData = LoginData(Get.find());

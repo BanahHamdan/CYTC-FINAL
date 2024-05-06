@@ -15,7 +15,7 @@ class VerifyPage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Container(
-              color: Color(0xFF9BCB3D), // Set green color as background
+              color: Color(0xFF9FBB73), // Set green color as background
             ),
           ),
           Positioned(
@@ -79,7 +79,7 @@ class VerifyPage extends StatelessWidget {
                     ),
                     ),
                   style: ElevatedButton.styleFrom(
-                    primary:Color(0xFFF29F3D),
+                    backgroundColor: Color(0xFFF3B664),
                     shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
                     ),

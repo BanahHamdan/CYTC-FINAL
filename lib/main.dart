@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cytc/view/buttonBar.dart';
+import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'view/screen/auth/login.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: WelcomePage(),
     );
@@ -43,7 +46,7 @@ class WelcomePage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 30),
               decoration: BoxDecoration(
-                color: Color(0xFF9BCB3D), 
+                color: Color(0xFF9FBB73), 
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50.0),
                   topRight: Radius.circular(50.0),
@@ -54,11 +57,11 @@ class WelcomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(builder: (context) => bar()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFF29F3D),
+                    backgroundColor: Color(0xFFF3B664),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),

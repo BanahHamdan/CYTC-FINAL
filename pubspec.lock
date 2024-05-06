@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.1"
+  expandable_search_bar:
+    dependency: "direct main"
+    description:
+      name: expandable_search_bar
+      sha256: "8f1bde484317a00805b6ada0dde4e3656f5a8dd28959e8cd0835149da3682c02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   fake_async:
     dependency: transitive
     description:
@@ -89,11 +97,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  flip_card:
+    dependency: "direct main"
+    description:
+      name: flip_card
+      sha256: ac079be6474e7005c1ea770a168194d207d5a24c88a463a0eb9fe838846fc517
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animated_cards:
+    dependency: "direct main"
+    description:
+      name: flutter_animated_cards
+      sha256: "2589470b4c34db0667b58f15b8b5a28f3fdc60f25a6bbacd1f1a7eef0ee88dbe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:

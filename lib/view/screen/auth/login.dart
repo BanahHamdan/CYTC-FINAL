@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:cytc/view/homePage.dart';
@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _passwordController;
   late FocusNode _emailFocusNode;
   late FocusNode _passwordFocusNode;
+  LoginController loginController = LoginController();
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
               padding: EdgeInsets.only(bottom: 80),
               decoration: BoxDecoration(
-                color: Color(0xFF9BCB3D),
+                color: Color(0xFF9FBB73),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50.0),
                   topRight: Radius.circular(50.0),
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       focusNode: _emailFocusNode,
                       onTap: _handleFocusChange,
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       decoration: InputDecoration(
                         labelText: 'البريد الالكتروني',
                         hintText: 'ادخل البريد الالكتروني',
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFF29F3D),
+                            color: Color(0xFFF3B664),
                             width: 2.0,
                           ),
                           borderRadius: BorderRadius.circular(20),
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
                       onTap: _handleFocusChange,
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'كلمة المرور',
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFF29F3D),
+                            color: Color(0xFFF3B664),
                             width: 2.0,
                           ),
                           borderRadius: BorderRadius.circular(20),
@@ -137,71 +138,68 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () async {
-                        String email = _emailController.text;
-                        String password = _passwordController.text;
+                      onPressed:()=> LoginController.login(_emailController.text , _passwordController.text)
+                      // () async {
+                        // String email = _emailController.text;
+                        // String password = _passwordController.text;
 
-                        String apiUrl = 'http://10.0.2.2:9999/user/signin';
+                        // String apiUrl = 'http://10.0.2.2:9999/user/signin';
 
-                        try {
-                          // Create a map containing the email and password
-                          Map<String, String> body = {
-                            'email': email,
-                            'password': password,
-                          };
-                          print(" 1 ");
+                        // try {
+                        //   // Create a map containing the email and password
+                        //   Map<String, String> body = {
+                        //     'email': email,
+                        //     'password': password,
+                        //   };
+                        //   print(" 1 ");
 
-                          // Convert the body to JSON
-                          String jsonBody = json.encode(body);
-                          print(" 2 ");
-                          // Make a POST request to the API endpoint
-                          http.Response response = await http.post(
-                            Uri.parse(apiUrl),
-                            headers: <String, String>{
-                              'Content-Type': 'application/json',
-                            },
-                            body: jsonBody,
-                          );
-                          print(" 3 ");
+                        //   // Convert the body to JSON
+                        //   String jsonBody = json.encode(body);
+                        //   print(" 2 ");
+                        //   // Make a POST request to the API endpoint
+                        //   http.Response response = await http.post(
+                        //     Uri.parse(apiUrl),
+                        //     headers: <String, String>{
+                        //       'Content-Type': 'application/json',
+                        //     },
+                        //     body: jsonBody,
+                        //   );
+                        //   print(" 3 ");
 
-                          // Check if the request was successful (status code 200)
-                          if (response.statusCode == 200) {
-                            // Parse the response JSON
-                            Map<String, dynamic> responseData =
-                                json.decode(response.body);
+                        //   // Check if the request was successful (status code 200)
+                        //   if (response.statusCode == 200) {
+                        //     // Parse the response JSON
+                        
+                        //     Map<String, dynamic> responseData =
+                        //         json.decode(response.body);
 
-                            // You can handle the response data here, such as saving user tokens,
-                            // navigating to the home page, etc.
+                        //     // You can handle the response data here, such as saving user tokens,
+                        //     // navigating to the home page, etc.
 
-                            // For demonstration purposes, let's print the response data
-                            print('Login successful:');
-                            print(responseData["role"]);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => homePage()),
-                            );
-                          } else {
-                            // If the request was not successful, handle the error
-                            // You can handle different status codes here, such as 400 for invalid credentials, etc.
-                            print(
-                                'Login failed. Status code: ${response.statusCode}');
-                            print('Response body: ${response.body}');
-                          }
-                        } catch (error) {
-                          // Handle any errors that occurred during the request
-                          print('Error during login request: $error');
-                        }
+                        //     // For demonstration purposes, let's print the response data
+                        //     print('Login successful:');
+                        //     print(responseData["role"]);
+                        //     // ignore: use_build_context_synchronously
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => homePage()),
+                        //     );
+                        //   } else {
+                        //     // If the request was not successful, handle the error
+                        //     // You can handle different status codes here, such as 400 for invalid credentials, etc.
+                        //     print(
+                        //         'Login failed. Status code: ${response.statusCode}');
+                        //     print('Response body: ${response.body}');
+                        //   }
+                        // } catch (error) {
+                        //   // Handle any errors that occurred during the request
+                        //   print('Error during login request: $error');
                         // }
-
-                        // Example navigation to home page
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => homePage()),
-                        // );
-                      },
+                      // }
+                      ,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFF29F3D),
+                        backgroundColor: Color(0xFFF3B664),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

@@ -20,7 +20,7 @@ class forgotPassword extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.9,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9BCB3D),
+                  color: Color(0xFF9FBB73),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -38,7 +38,7 @@ class forgotPassword extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     TextField(
-                      cursorColor: Color(0xFFF29F3D),
+                      cursorColor: Color(0xFFF3B664),
                       decoration: InputDecoration(
                         labelText: 'ادخل بريدك الالكتروني',
                         hintText: 'ادخل بريدك الالكتروني',
@@ -48,7 +48,8 @@ class forgotPassword extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFF29F3D), width: 2.0),
+                          borderSide:
+                              BorderSide(color: Color(0xFFF3B664), width: 2.0),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         hintStyle: TextStyle(
@@ -67,11 +68,12 @@ class forgotPassword extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ChangePasswordCode()),
+                              MaterialPageRoute(
+                                  builder: (context) => ChangePasswordCode()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFF29F3D),
+                            backgroundColor: Color(0xFFF3B664),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -101,7 +103,7 @@ class forgotPassword extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.arrow_back),
-              color: Color(0xFF9BCB3D),
+              color: Color(0xFF9FBB73),
               iconSize: 32,
             ),
           ),
