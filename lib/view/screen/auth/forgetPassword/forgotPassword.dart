@@ -20,7 +20,7 @@ class forgotPassword extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.9,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9FBB73),
+                  color: Color(0xFF071533),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -32,16 +32,18 @@ class forgotPassword extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 30),
                     TextField(
-                      cursorColor: Color(0xFFF3B664),
+                      textAlign: TextAlign.right,
+                      cursorColor: Color(0xFFf3c344),
                       decoration: InputDecoration(
-                        labelText: 'ادخل بريدك الالكتروني',
-                        hintText: 'ادخل بريدك الالكتروني',
+                        // contentPadding: EdgeInsets.fromLTRB(
+                        //     180, 20, 10, 20), // Adjust padding
+                        hintText: 'ادخل البريد الالكتروني',
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -49,15 +51,15 @@ class forgotPassword extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFFF3B664), width: 2.0),
+                              BorderSide(color: Color(0xFFf3c344), width: 3.0),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        hintStyle: TextStyle(
-                          color: Colors.grey, // Default hint color
-                        ),
-                        labelStyle: TextStyle(
-                          color: Colors.black, // Black label color
-                        ),
+                        // hintStyle: TextStyle(
+                        //   color: Colors.grey, // Default hint color
+                        // ),
+                        // labelStyle: TextStyle(
+                        //   color: Colors.black, // Black label color
+                        // ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -73,7 +75,7 @@ class forgotPassword extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFF3B664),
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -81,6 +83,7 @@ class forgotPassword extends StatelessWidget {
                           child: Text(
                             'ارسل رمز التحقق',
                             style: TextStyle(
+                              color: Color(0xFF071533),
                               fontSize: 20.0,
                             ),
                           ),
@@ -103,7 +106,7 @@ class forgotPassword extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.arrow_back),
-              color: Color(0xFF9FBB73),
+              color: Color(0xFF071533),
               iconSize: 32,
             ),
           ),

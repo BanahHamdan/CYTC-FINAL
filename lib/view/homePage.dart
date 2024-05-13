@@ -3,20 +3,20 @@
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter/material.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:cytc/view/calender.dart';
-import 'package:cytc/view/chat.dart';
-import 'package:cytc/view/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class homePage extends StatefulWidget {
+  final  userId;
+  final userRole;
   @override
   _homePageState createState() => _homePageState();
 
-  homePage({Key? key}) : super(key: key);
+  const homePage({Key? key, required this.userId, required this.userRole,})
+      : super(key: key);
 }
 
 ///////////////text with icon in the emergensies//////////////////
@@ -27,7 +27,11 @@ Widget buildTextWithIcon(
       // Navigate to the desired page
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => homePage()),
+        MaterialPageRoute(
+            builder: (context) => homePage(
+                  userId: null,
+                  userRole: null,
+                )),
       );
     },
     child: Row(
@@ -36,14 +40,14 @@ Widget buildTextWithIcon(
         Text(
           text,
           style: TextStyle(
-            color: Colors.black,
+            color: Color(0xFF071533),
             fontSize: 17,
           ),
         ),
         SizedBox(width: 8), // Add some spacing between icon and text
         Icon(
           icon,
-          color: Color(0xFFF3B664), // Icon color
+          color: Color(0xFF52a895), // Icon color
           size: 24, // Icon size
         ),
       ],
@@ -58,6 +62,7 @@ class CategoryBoxFirst extends StatelessWidget {
   final VoidCallback onTap;
 
   const CategoryBoxFirst({
+    super.key,
     required this.categoryName,
     required this.imagePath,
     required this.onTap,
@@ -70,19 +75,22 @@ class CategoryBoxFirst extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         // width: 180,
-        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 110.0),
+        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF9FBB73)),
-          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: Color(0xFF071533)),
+          borderRadius: BorderRadius.circular(25.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              imagePath,
-              height: 130,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                imagePath,
+                height: 130,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: 5),
             Directionality(
@@ -91,7 +99,7 @@ class CategoryBoxFirst extends StatelessWidget {
               child: Text(
                 categoryName,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -123,16 +131,19 @@ class CategoryBox extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         width: 180, // Adjust the width as needed
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF9FBB73)),
-          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: Color(0xFF071533)),
+          borderRadius: BorderRadius.circular(25.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-              imagePath,
-              height: 130, // Adjust the height as needed
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                imagePath,
+                height: 130, // Adjust the height as needed
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: 10),
             Center(
@@ -150,6 +161,7 @@ class CategoryBox extends StatelessWidget {
     );
   }
 }
+
 ////////////////////////////////////////////////////
 // class MyApp extends StatelessWidget {
 //   @override
@@ -165,15 +177,18 @@ class CategoryBox extends StatelessWidget {
 //   }
 // }
 
-class _homePageState extends State<homePage> {
+class _homePageState extends State<homePage> with TickerProviderStateMixin {
   // int _currentPageIndex = 0;
-   int selectTab = 3; // Set default selected tab to homePage
+  int selectTab = 3; // Set default selected tab to homePage
   late Widget selectPageView;
 
   @override
   void initState() {
     super.initState();
-    selectPageView = homePage();
+    selectPageView = homePage(
+      userId: null,
+      userRole: null,
+    );
   }
 
   bool showSecondText = false;
@@ -185,172 +200,162 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /////////////////////////navBar///////////////////////////
-      //   backgroundColor: Colors.white,
-      //   color: Color(0xFFF3B664),
-      //   animationDuration: Duration(milliseconds: 300),
-      //   onTap: (index) {
-      //     setState(() {
-      //       selectTab = index; // Update selected tab
-      //       // Update selected page based on tab index
-      //       switch (index) {
-      //         case 0:
-      //           selectPageView = CalendarPage();
-      //           break;
-      //         case 1:
-      //           selectPageView = ChatPage();
-      //           break;
-      //         case 2:
-      //           selectPageView = ReactionPage();
-      //           break;
-      //         case 3:
-      //           selectPageView = homePage();
-      //           break;
-      //       }
-      //     });
-      //   },
-      //   items: [
-      //     Icon(Icons.calendar_month, color: Colors.white),
-      //     Icon(Icons.chat, color: Colors.white),
-      //     Icon(Icons.add_reaction, color: Colors.white),
-      //     Icon(Icons.home, color: Colors.white),
-      //   ],
-      //   index: selectTab, // Set initial selected tab
-      // ),
-
-
-      // backgroundColor: Color(0xFF9FBB73),
-      // bottomNavigationBar: CurvedNavigationBar(
-      //   backgroundColor: Colors.white,
-      //   color: Color(0xFFF3B664),
-      //   animationDuration: Duration(milliseconds: 300),
-        // onTap: (index) {
-        //   // Navigate to the desired page based on the tapped icon
-        //   switch (index) {
-        //     case 0:
-        //       Navigator.push(
-        //           context, MaterialPageRoute(builder: (_) => CalendarPage()));
-        //       break;
-        //     case 1:
-        //       Navigator.push(
-        //           context, MaterialPageRoute(builder: (_) => ChatPage()));
-        //       break;
-        //     case 2:
-        //       Navigator.push(
-        //           context, MaterialPageRoute(builder: (_) => ReactionPage()));
-        //       break;
-        //     case 3:
-        //       Navigator.push(
-        //           context, MaterialPageRoute(builder: (_) => homePage()));
-        //       break;
-        //   }
-        // },
-        // items: [
-        //   Icon(Icons.calendar_month, color: Colors.white),
-        //   Icon(Icons.chat, color: Colors.white),
-        //   Icon(Icons.add_reaction, color: Colors.white),
-        //   Icon(Icons.home, color: Colors.white),
-        // ],
-      // ),
-      //////////////////////////////////////////////////////////
-      // appBar
-      backgroundColor: Color(0xFF9FBB73),      // bottomNavigationBar: CurvedNavigationBar(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ////////app bar ,
-
-///////////////////////slider////////////////////////////
+///////////////////////Image container////////////////////////
             Container(
-              padding: EdgeInsets.only(
-                  top: 0.99, bottom: 40), // Adjust padding as needed
-              child: CarouselSlider(
-                items: [
-                  //  1st Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/homePage/slider10.jpg"),
-                        // image: NetworkImage("https://picsum.photos/id/240/200/300"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  //2nd Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/homePage/slider1.jpg"),
-                        // image: NetworkImage("https://picsum.photos/id/241/200/300"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  //3rd Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/homePage/slider8.jpg"),
-                        // image: NetworkImage("https://picsum.photos/id/242/200/300"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  //4th Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/homePage/slider6.jpg"),
-                        // image: NetworkImage("https://picsum.photos/id/243/200/300"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  //5th Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/homePage/slider7.jpg"),
-                        // image: NetworkImage("https://picsum.photos/id/244/200/300"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-
-                //Slider Container properties
-                options: CarouselOptions(
-                  height: 180.0,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enableInfiniteScroll: true,
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  viewportFraction: 0.7,
+              height: 270, // Adjust height as needed
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/mainYellow.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
+// icons //
+            Positioned(
+              top: 27,
+              left: 20,
+              child: IconButton(
+                icon: Icon(Icons.menu, color: Colors.white),
+                onPressed: () {
+                  // Add your onPressed logic here
+                },
+              ),
+            ),
+
+            Positioned(
+              top: 35,
+              right: 5,
+              child: GestureDetector(
+                onTap: () {
+                  // Add functionality to navigate to profile page
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  width: 35, // Adjust the width as needed
+                  height: 35, // Adjust the height as needed
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                    image: DecorationImage(
+                      image: AssetImage('assets/banah.jpg'),
+                      // fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 28,
+              right: 60,
+              child: IconButton(
+                onPressed: () {
+                  // Add functionality for notification icon
+                },
+                padding:
+                    EdgeInsets.zero, // Remove padding around the icon button
+                icon: Container(
+                  padding: EdgeInsets.all(4),
+                  // decoration: BoxDecoration(
+                  //   color:
+                  //       Color(0xFFEC8F5E), // Notification icon background color
+                  //   shape: BoxShape.circle,
+                  // ),
+                  child: Icon(
+                    Icons.notifications, // Notification icon
+                    color: Colors.white, // Notification icon color
+                    // size: 17,
+                  ),
+                ),
+              ),
+            ),
+            // Second icon at the top right corner
+            Positioned(
+              top: 30,
+              right: 90,
+              child: Visibility(
+                visible: !isSearchBarVisible,
+                child: IconButton(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      isSearchBarVisible = !isSearchBarVisible;
+                    });
+                  },
+                ),
+              ),
+            ),
+            // Positioned(
+            //   top: 20,
+            //   right: 20,
+            Visibility(
+              visible:
+                  isSearchBarVisible, // Control the visibility of the search bar
+              child: Expanded(
+                child: Container(
+                  height: 35,
+                  margin: EdgeInsets.fromLTRB(100, 35, 100, 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: TextField(
+                    textAlign: TextAlign.right,
+                    controller:
+                        textEditingController, // Assign the TextEditingController to the TextField
+                    cursorColor:
+                        Color(0xFF071533), // Customize the color of the cursor
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 0),
+                      hintText: '...ابحث',
+                      hintStyle: TextStyle(
+                          color: Colors
+                              .grey), // Customize the color of the hint text
+                      prefixIcon: Icon(Icons.search,
+                          color: Color(0xFF071533)), // Search icon
+                      border: InputBorder.none,
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear,
+                            color: Color(0xFF071533),
+                            size: 20), // Clear icon to clear the search text
+                        onPressed: () {
+                          setState(() {
+                            // Clear the search text and hide the search bar
+                            isSearchBarVisible = false;
+                            // Clear the text field
+                            // You need to define the TextEditingController for this
+                            // textEditingController.clear();
+                          });
+                        },
+                      ),
+                    ),
+                    // Define a TextEditingController to control the text field
+                    // controller: textEditingController,
+                    // Add more properties as needed
+                    // Add an onTap callback to the search icon to perform a search action
+                    onTap: () {
+                      // Perform search action here
+                      // You can access the search query using the TextEditingController
+                      // For example:
+                      // String searchQuery = textEditingController.text;
+                      // Perform search using the searchQuery
+                    },
+                  ),
+                ),
+              ),
+            ),
+            // ),
 
 ////////////////////////////////////////////////////////////
-
             Container(
-              padding: EdgeInsets.only(bottom: 10), // Adjust padding as needed
+              margin: EdgeInsets.only(top: 230),
+              // EdgeInsets.symmetric(
+              //     vertical: 230), // Adjust margins as needed
+              // padding: EdgeInsets.only(top: 100, bottom: 10, left: 0, right: 0),
+              padding: EdgeInsets.only(bottom: 0), // Adjust padding as needed
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -358,70 +363,71 @@ class _homePageState extends State<homePage> {
                   topRight: Radius.circular(50.0),
                 ),
               ),
+              // child: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
 //////////////////////////اعلانات هامة/////////////////////
                     // Container with 'حالات طارئة' text and icon
-                    Container(
-                      margin: EdgeInsets.fromLTRB(220, 20, 25, 10),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF3B664),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Row(
-                        textDirection: TextDirection.rtl,
-                        mainAxisAlignment: MainAxisAlignment
-                            .spaceBetween, // Align icon and text
-                        children: [
-                          Row(// Added Row to contain text and icon
-                              children: [
-                            Text(
-                              '  حالات طارئة ',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0, 0, 10, 0), // Add padding for the icon
-                              child: Icon(
-                                Icons.warning, // Icon for emergency cases
-                                color: Colors.white,
-                              ),
-                            ),
-                          ]),
-                          SizedBox(
-                              width:
-                                  10), // Add some space between the text and the next widget
-                        ],
-                      ),
-                    ),
-                    // Container with emergency texts and icons
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 35, 25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          buildTextWithIcon(
-                            text: 'مطلوب وحدات دم بشكل عاجل',
-                            icon: Icons.bloodtype_outlined, // Blood icon
-                            context: context,
-                          ),
-                          buildTextWithIcon(
-                            text: 'مطلوب مسعفين بشكل طارئ',
-                            icon: Icons
-                                .medical_services_outlined, // Medical services icon
-                            context: context,
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.fromLTRB(220, 20, 25, 10),
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFF52a895),
+                    //     borderRadius: BorderRadius.circular(50),
+                    //   ),
+                    //   child: Row(
+                    //     textDirection: TextDirection.rtl,
+                    //     mainAxisAlignment: MainAxisAlignment
+                    //         .spaceBetween, // Align icon and text
+                    //     children: [
+                    //       Row(// Added Row to contain text and icon
+                    //           children: [
+                    //         Text(
+                    //           '  حالات طارئة ',
+                    //           style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.bold,
+                    //             fontSize: 20,
+                    //           ),
+                    //         ),
+                    //         Padding(
+                    //           padding: const EdgeInsets.fromLTRB(
+                    //               0, 0, 10, 0), // Add padding for the icon
+                    //           child: Icon(
+                    //             Icons.warning, // Icon for emergency cases
+                    //             color: Colors.white,
+                    //           ),
+                    //         ),
+                    //       ]),
+                    //       SizedBox(
+                    //           width:
+                    //               10), // Add some space between the text and the next widget
+                    //     ],
+                    //   ),
+                    // ),
+                    // // Container with emergency texts and icons
+                    // Container(
+                    //   margin: EdgeInsets.fromLTRB(0, 0, 35, 25),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.end,
+                    //     children: [
+                    //       buildTextWithIcon(
+                    //         text: 'مطلوب وحدات دم بشكل عاجل',
+                    //         icon: Icons.bloodtype_outlined, // Blood icon
+                    //         context: context,
+                    //       ),
+                    //       buildTextWithIcon(
+                    //         text: 'مطلوب مسعفين بشكل طارئ',
+                    //         icon: Icons
+                    //             .medical_services_outlined, // Medical services icon
+                    //         context: context,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
 ///////////////////////////////////////////////////////
-
+                    SizedBox(height: 25),
 /////////////////////////volunteer of the month///////////////
                     Column(
                       children: [
@@ -435,7 +441,7 @@ class _homePageState extends State<homePage> {
                                   Text(
                                     'متطوع الشهر المثالي',
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: Color(0xFF071533),
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -444,33 +450,39 @@ class _homePageState extends State<homePage> {
                                   Container(
                                     width: 100,
                                     height: 100,
+                                    padding:
+                                        EdgeInsets.all(5.0), // Add padding here
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Color(0xFF9FBB73), width: 5),
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/banah.jpg'),
+                                          color: Color(0xFF071533), width: 2),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.asset(
+                                        'assets/banah.jpg',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
                                   SizedBox(height: 5), // Spacer
-                                  Container(
-                                    margin:
-                                        EdgeInsets.fromLTRB(120, 0, 120, 20),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF9FBB73),
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'بانه حمدان',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                  // Container(
+                                  //   margin:
+                                  //       EdgeInsets.fromLTRB(120, 0, 120, 20),
+                                  //   decoration: BoxDecoration(
+                                  //     color: Color(0xFFff9c0d),
+                                  //     borderRadius: BorderRadius.circular(50),
+                                  //   ),
+                                  Center(
+                                    child: Text(
+                                      // 'بانه حمدان',
+                                      widget.userId,
+                                      style: TextStyle(
+                                          color: Color(0xFF071533),
                                           fontSize: 20,
-                                        ),
-                                      ),
+                                          fontWeight: FontWeight.bold),
                                     ),
+                                    // ),
                                   ),
                                 ],
                               ),
@@ -484,7 +496,7 @@ class _homePageState extends State<homePage> {
                                 textAlign: TextAlign.center,
                                 'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر. يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد ',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Color(0xFF071533),
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -494,16 +506,101 @@ class _homePageState extends State<homePage> {
                         ),
                       ],
                     ),
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+                    SizedBox(height: 40),
+///////////////////////////حالات طارئة/////////////////////////
+                    Padding( 
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Container(
+                        width: 120,
+                        height: 150, // Increased height to accommodate text
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Color(0xFFf3c344), width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 50, // Adjust position as needed
+                              top: 8,
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => Page1()));
+                                },
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                        'assets/banah.jpg',
+                                        width: 120,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            8), // Add some space between image and text
+                                    Text(
+                                      'مطلوب مسعفين', // Add text under the first image
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 50, // Adjust position as needed
+                              top: 8,
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => Page2()));
+                                },
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                        'assets/banah.jpg',
+                                        width: 120,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            8), // Add some space between image and text
+                                    Text(
+                                      'مطلوب وحدات دم', // Add text under the second image
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+///////////////////////////////////////////////////////////////
                     SizedBox(height: 20),
-////////////////////////////من نحن///////////////////////////////
+////////////////////////////من نحن////////////////////////////
 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         CategoryBoxFirst(
-                          categoryName: 'شارك معنا وانضم الى عائلتنا   ',
-                          imagePath: 'assets/homePage/joinus2.jpg',
+                          categoryName:
+                              'شارك معنا وانضم الى عائلتنا                       ',
+                          imagePath: 'assets/homePage/slider1.jpg',
                           onTap: () {
                             // Add navigation functionality
                             // print('Category 1 clicked');
@@ -592,96 +689,121 @@ class _homePageState extends State<homePage> {
                         )),
                     SizedBox(height: 50),
 ////////////////////////////////////////////////////////////////////
-                    Container(
-                      color: Color(0xFF9FBB73), // Green background color
-                      padding: EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    'مركز تدريب الشباب المجتمعي',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 24.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 5, left: 10),
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: Colors.white, width: 2),
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/Logo.png'),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                    // Padding(
+                    //   padding: EdgeInsets.fromLTRB(
+                    //       5, 0, 5, 0), // Add space around the border
+                    ClipRRect(
+                      // borderRadius:
+                      // BorderRadius.circular(10.0), // Circular edges
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Green background color
+                          border: Border(
+                            top: BorderSide(color: Colors.black, width: 1.5),
+                            // left: BorderSide(color: Colors.black, width: 1.5),
+                            // right:
+                            //     BorderSide(color: Colors.black, width: 1.5),
                           ),
-                          SizedBox(height: 10.0),
-                          Center(
-                            child: Text(
-                              "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
+                        ),
+                        // color: Colors.white, // Green background color
+                        padding: EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              // color: Colors.white,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      'مركز تدريب الشباب المجتمعي',
+                                      style: TextStyle(
+                                        color: Color(0xFF071533),
+                                        fontSize: 24.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5, left: 10),
+                                    // width: 296,
+                                    // height: 170,
+                                    width: 80,
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.white, width: 2),
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/Logo.png'),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              textDirection: TextDirection.rtl,
                             ),
-                          ),
-                          SizedBox(height: 5.0),
-                          // SizedBox(
-                          //   height: 100, // Adjust the height as needed
-                          //   child: GoogleMap(
-                          //     initialCameraPosition: CameraPosition(
-                          //       target: LatLng(37.7749, -122.4194),
-                          //       zoom: 12,
-                          //     ),
-                          //     markers: {
-                          //       Marker(
-                          //         markerId: MarkerId('location'),
-                          //         position: LatLng(37.7749, -122.4194),
-                          //         infoWindow: InfoWindow(
-                          //           title: 'Location',
-                          //         ),
-                          //       ),
-                          //     },
-                          //   ),
-                          // ),
-                        ],
+                            // SizedBox(height: 0.0),
+                            Center(
+                              child: Text(
+                                "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
+                                style: TextStyle(
+                                  color: Color(0xFF071533),
+                                  fontSize: 16.0,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            // SizedBox(
+                            //   height: 100, // Adjust the height as needed
+                            //   child: GoogleMap(
+                            //     initialCameraPosition: CameraPosition(
+                            //       target: LatLng(37.7749, -122.4194),
+                            //       zoom: 12,
+                            //     ),
+                            //     markers: {
+                            //       Marker(
+                            //         markerId: MarkerId('location'),
+                            //         position: LatLng(37.7749, -122.4194),
+                            //         infoWindow: InfoWindow(
+                            //           title: 'Location',
+                            //         ),
+                            //       ),
+                            //     },
+                            //   ),
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
+                    // ),
 ////////////////////////////////////////////////////////////////////
+                    // Padding(
+                    //   padding: EdgeInsets.fromLTRB(
+                    //       5, 0, 5, 0), // Add space around the border
                     Container(
-                      color: Color.fromARGB(255, 102, 121, 72),
+                      color: Color(0xFFf3c344),
                       padding: EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.facebook), // Burger menu icon
+                            icon: Icon(Icons.facebook,
+                                color: Colors.white), // Burger menu icon
                             onPressed: () {
-                              // Add functionality for burger menu
+                              launch('https://www.facebook.com/cytc.nablus');
                             },
                           ),
                           Container(
                             // margin: EdgeInsets.only(right: 20),
+                            // width: 296,
+                            // height: 170,
                             width: 35, // Adjust the width as needed
                             height: 35, // Adjust the height as needed
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              // border: Border.all(color: Colors.white, width: 2),
                               image: DecorationImage(
                                 image: AssetImage('assets/Logo.png'),
                                 // fit: BoxFit.cover,
@@ -689,7 +811,8 @@ class _homePageState extends State<homePage> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.phone), // Burger menu icon
+                            icon: Icon(Icons.phone,
+                                color: Colors.white), // Burger menu icon
                             onPressed: () {
                               // Add functionality for burger menu
                             },
@@ -697,6 +820,7 @@ class _homePageState extends State<homePage> {
                         ],
                       ),
                     ),
+                    // ),
 ////////////////////////////////////////////////////////////////////
 
                     // //////
@@ -713,12 +837,12 @@ class _homePageState extends State<homePage> {
                     //       decoration: BoxDecoration(
                     //         border: Border(
                     //           top: BorderSide(
-                    //               color: Color(0xFFF3B664), width: 2.0),
+                    //               color: Color(0xFFFF0063), width: 2.0),
                     //           // left: BorderSide(color: Colors.white, width: 2.0),
                     //           // right:
                     //           //     BorderSide(color: Colors.white, width: 2.0),
                     //           bottom: BorderSide(
-                    //               color: Color(0xFFF3B664), width: 2.0),
+                    //               color: Color(0xFFFF0063), width: 2.0),
                     //         ),
                     //       ),
                     //       child: Directionality(
@@ -736,7 +860,7 @@ class _homePageState extends State<homePage> {
                     //                     "",
                     //                     style: TextStyle(
                     //                         color: Color(
-                    //                             0xFFF3B664), // Change font color
+                    //                             0xFFFF0063), // Change font color
                     //                         fontSize: 20.0, // Change font size
                     //                         fontWeight: FontWeight.bold),
                     //                   ),
@@ -748,7 +872,7 @@ class _homePageState extends State<homePage> {
                     //                 child: Text(
                     //                   "مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية قدرات ومواهب الشباب عن طريق انشاء دورات وفرص تطوعية لاتاحة المجال للشباب لاظهار ابداعهم",
                     //                   style: TextStyle(
-                    //                     color: Color(0xFFF3B664),
+                    //                     color: Color(0xFFFF0063),
                     //                     fontSize: 17.0,
                     //                   ),
                     //                 ),
@@ -769,6 +893,8 @@ class _homePageState extends State<homePage> {
                     // ),
                   ]),
             )
+            // ),
+            // ),
           ],
         ),
       ),

@@ -50,6 +50,9 @@ dependencies:
   dartz: ^0.10.1
   http: ^1.1.0
   get: ^4.6.5
+  url_launcher: ^6.1.14
+  # firebase_core: ^2.24.2
+  # cloud_firestore: ^4.14.0
   # google_maps_flutter: ^2.5.3
   # map_view:
   # google_maps_webservice: ^0.0.19
@@ -83,6 +86,11 @@ flutter:
     - assets/homePage/slider7.jpg
     - assets/homePage/slider8.jpg
     - assets/homePage/slider10.jpg
+    - assets/mainYellow.png
+    - assets/mainNavy.png
+    - assets/mainBlue.png
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

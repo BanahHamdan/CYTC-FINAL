@@ -1,112 +1,68 @@
-import 'package:flutter/material.dart';
+// // ignore_for_file: unnecessary_new
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CategoryPage(),
-    );
-  }
-}
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
 
-class CategoryPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Categories'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          CategoryBox(
-            categoryName: 'Category 1',
-            imagePath: 'assets/category1_image.jpg',
-            onTap: () {
-              // Add navigation functionality
-              print('Category 1 clicked');
-            },
-          ),
-          CategoryBox(
-            categoryName: 'Category 2',
-            imagePath: 'assets/category2_image.jpg',
-            onTap: () {
-              // Add navigation functionality
-              print('Category 2 clicked');
-            },
-          ),
-          CategoryBox(
-            categoryName: 'Category 3',
-            imagePath: 'assets/category3_image.jpg',
-            onTap: () {
-              // Add navigation functionality
-              print('Category 3 clicked');
-            },
-          ),
-          CategoryBox(
-            categoryName: 'Category 4',
-            imagePath: 'assets/category4_image.jpg',
-            onTap: () {
-              // Add navigation functionality
-              print('Category 4 clicked');
-            },
-          ),
-          CategoryBox(
-            categoryName: 'Category 5',
-            imagePath: 'assets/category5_image.jpg',
-            onTap: () {
-              // Add navigation functionality
-              print('Category 5 clicked');
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class Test extends StatefulWidget {
+//   @override
+//   _TestState createState() => _TestState();
+// }
 
-class CategoryBox extends StatelessWidget {
-  final String categoryName;
-  final String imagePath;
-  final VoidCallback onTap;
+// class _TestState extends State<Test> with TickerProviderStateMixin {
+//   late AnimationController _resizableController;
 
-  const CategoryBox({
-    required this.categoryName,
-    required this.imagePath,
-    required this.onTap,
-  });
+//   AnimatedBuilder getContainer() {
+//     return new AnimatedBuilder(
+//         animation: _resizableController,
+//         builder: (context, child) {
+//           return Container(
+//             // padding: EdgeInsets.fromLTRB(left, top, right, bottom),
+//             child: Text("SAMPLE"),
+//             decoration: BoxDecoration(
+//               shape: BoxShape.rectangle,
+//               borderRadius: BorderRadius.all(Radius.circular(20)),
+//               border: Border.all(
+//                   color: Color(0xFFff9c0d),
+//                   width: _resizableController.value * 4),
+//             ),
+//           );
+//         });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.symmetric(vertical: 10.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              imagePath,
-              height: 100,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 10),
-            Text(
-              categoryName,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   // @override
+//   // void initState() {
+//   //   _resizableController = new AnimationController(
+//   //     vsync: this,
+//   //     duration: new Duration(
+//   //       milliseconds: 1000,
+//   //     ),
+//   //   );
+//   //   _resizableController.addStatusListener((animationStatus) {
+//   //     switch (animationStatus) {
+//   //       case AnimationStatus.completed:
+//   //         _resizableController.reverse();
+//   //         break;
+//   //       case AnimationStatus.dismissed:
+//   //         _resizableController.forward();
+//   //         break;
+//   //       case AnimationStatus.forward:
+//   //         break;
+//   //       case AnimationStatus.reverse:
+//   //         break;
+//   //     }
+//   //   });
+//   //   _resizableController.forward();
+//   //   super.initState();
+//   // }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         backgroundColor: Colors.white,
+//         appBar: AppBar(
+//           title: Text("Test"),
+//           centerTitle: true,
+//         ),
+//         body: Center(child: getContainer()));
+//   }
+// }

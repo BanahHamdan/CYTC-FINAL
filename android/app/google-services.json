@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "914991346137",
+    "project_id": "cytc-d15d1",
+    "storage_bucket": "cytc-d15d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914991346137:android:6c65d42a70f733cfb669c8",
+        "android_client_info": {
+          "package_name": "com.cytc.cytc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDQ7Lo3Df2v8S_Pt1-MBfK6M-Ek_GvaqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

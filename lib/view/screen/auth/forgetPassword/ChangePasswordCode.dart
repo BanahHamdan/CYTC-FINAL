@@ -2,6 +2,7 @@
 
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cytc/view/screen/auth/forgetPassword/forgotPassword.dart';
 import 'package:cytc/view/screen/auth/forgetPassword/modifyPassword.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,11 @@ class ChangePasswordCode extends StatelessWidget {
           Positioned.fill(
             child: Center(
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.9, // Set width of the green box to 80% of the screen width
+                width: MediaQuery.of(context).size.width *
+                    0.9, // Set width of the green box to 80% of the screen width
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9FBB73),
+                  color: Color(0xFF071533),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -39,9 +41,10 @@ class ChangePasswordCode extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     TextField(
-                      cursorColor: Color(0xFFF3B664),
+                      textAlign: TextAlign.right,
+                      cursorColor: Color(0xFFf3c344),
                       decoration: InputDecoration(
-                        labelText: 'رمز التحقق',
+                        // labelText: 'رمز التحقق',
                         hintText: 'ادخل رمز التحقق ',
                         filled: true,
                         fillColor: Colors.white,
@@ -50,17 +53,17 @@ class ChangePasswordCode extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFFF3B664),
-                            width: 2.0,
+                            color: Color(0xFFf3c344),
+                            width: 3.0,
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        hintStyle: TextStyle(
-                          color: Colors.grey, // Default hint color
-                        ),
-                        labelStyle: TextStyle(
-                          color: Colors.black, // Black label color
-                        ),
+                        // hintStyle: TextStyle(
+                        //   color: Colors.grey, // Default hint color
+                        // ),
+                        // labelStyle: TextStyle(
+                        //   color: Colors.black, // Black label color
+                        // ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -68,24 +71,24 @@ class ChangePasswordCode extends StatelessWidget {
                       alignment: MainAxisAlignment.center, // Center the button
                       children: [
                         ElevatedButton(
-                          
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => modifyPasswordPage()),
-                            );                          
+                              MaterialPageRoute(
+                                  builder: (context) => modifyPasswordPage()),
+                            );
                           },
-
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFF3B664),
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           child: Text(
-                            'ارسال',
+                            'تحقق',
                             style: TextStyle(
                               fontSize: 20.0,
+                              color: Color(0xFF071533),
                             ),
                           ),
                         ),
@@ -101,10 +104,11 @@ class ChangePasswordCode extends StatelessWidget {
             left: 16,
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => forgotPassword()),);
               },
               icon: Icon(Icons.arrow_back),
-              color: Color(0xFF9FBB73),
+              color: Color(0xFF071533),
               iconSize: 32,
             ),
           ),

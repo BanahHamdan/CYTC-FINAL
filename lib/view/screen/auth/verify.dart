@@ -6,7 +6,24 @@ import 'package:flutter/material.dart';
 
 import '../../../main.dart';
 
-class VerifyPage extends StatelessWidget {
+
+class VerifyPage extends StatefulWidget {
+  final code;
+    // const bar({Key? key, required this.userId, required this.userRole});
+
+  const VerifyPage({super.key,required this.code});
+
+  @override
+  _VerifyPageState createState() => _VerifyPageState();
+}
+
+class _VerifyPageState extends State<VerifyPage> {  
+  void initState() {
+    super.initState();
+    print("---------------------");
+    print("code "+widget.code);
+    print("---------------------");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +32,7 @@ class VerifyPage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Container(
-              color: Color(0xFF9FBB73), // Set green color as background
+              color: Color(0xFF071533), // Set green color as background
             ),
           ),
           Positioned(
@@ -39,7 +56,7 @@ class VerifyPage extends StatelessWidget {
               children: [
                 Text(
                   'ادخل رمز التحقق',
-                  style: TextStyle(fontSize: 30, color: Colors.white), // Set text color to white
+                  style: TextStyle(fontSize: 25, color: Colors.white), // Set text color to white
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -73,13 +90,14 @@ class VerifyPage extends StatelessWidget {
                     );                  
                   },
                   child: Text(
-                    'ارسال',
+                    'تحقق',
                     style: TextStyle(
                       fontSize: 20,
+                      color: Color(0xFF071533),
                     ),
                     ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFF3B664),
+                    backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
                     ),
@@ -119,7 +137,7 @@ class VerificationBox extends StatelessWidget {
       width: 40,
       height: 50,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+        border: Border.all(color: Color(0xFF071533)),
         borderRadius: BorderRadius.circular(10),
       ),
       alignment: Alignment.center,

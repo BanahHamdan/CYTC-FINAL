@@ -1,4 +1,5 @@
-class LinkApp {
+// request link to server (URIs)
+class LinkApi {
   static const String server = "http://10.0.2.2:9999";
   
   //==================== user =================================

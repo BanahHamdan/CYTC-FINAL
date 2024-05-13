@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cytc/view/buttonBar.dart';
-import 'package:cytc/view/homePage.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'view/screen/auth/login.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async{
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
 }
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +36,7 @@ class WelcomePage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/welcome.jpg'), 
+                image: AssetImage('assets/welcome.jpg'),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.only(),
@@ -46,7 +49,7 @@ class WelcomePage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 30),
               decoration: BoxDecoration(
-                color: Color(0xFF9FBB73), 
+                color: Color(0xFF071533), //navy: 0xFF071533 , yellow: 0xFFf3c344
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50.0),
                   topRight: Radius.circular(50.0),
@@ -57,18 +60,21 @@ class WelcomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => bar()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFF3B664),
+                    backgroundColor: Colors.white, // F0EA90   CF3333  9BCB3D
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
+                      // side: BorderSide(
+                          // color: Colors.black, width: 1), // Add border here
                     ),
                   ),
                   child: Text(
                     'تسجيل الدخول',
                     style: TextStyle(
+                      color: Color(0xFF071533),
                       fontSize: 20.0,
                     ),
                   ),
