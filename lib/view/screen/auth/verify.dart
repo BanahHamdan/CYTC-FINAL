@@ -18,6 +18,7 @@ class VerifyPage extends StatefulWidget {
 }
 
 class _VerifyPageState extends State<VerifyPage> {  
+  @override
   void initState() {
     super.initState();
     print("---------------------");
@@ -68,7 +69,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       VerificationBox(),
                       SizedBox(width: 10),
                       VerificationBox(),
@@ -131,6 +132,8 @@ class _VerifyPageState extends State<VerifyPage> {
 }
 
 class VerificationBox extends StatelessWidget {
+  const VerificationBox({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

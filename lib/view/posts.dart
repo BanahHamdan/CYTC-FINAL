@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:cytc/view/calender.dart';
-import 'package:cytc/view/chat.dart';
-import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
 
 class ReactionPage extends StatefulWidget {
+  const ReactionPage({super.key});
+
   @override
   _ReactionPageState createState() => _ReactionPageState();
 }

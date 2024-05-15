@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:cytc/view/events.dart';
+import 'package:cytc/view/events_joinUs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,25 +48,25 @@ class WelcomePage extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
+            child: Padding(
               padding: EdgeInsets.symmetric(vertical: 30),
-              decoration: BoxDecoration(
-                color: Color(0xFF071533), //navy: 0xFF071533 , yellow: 0xFFf3c344
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   color: Color(0xFF071533), //navy: 0xFF071533 , yellow: 0xFFf3c344
+              //   borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(50.0),z
+              //     topRight: Radius.circular(50.0),
+              //   ),
+              // ),
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(builder: (context) => JoinUs()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // F0EA90   CF3333  9BCB3D
+                    backgroundColor: Color(0xFFf3c344), // F0EA90   CF3333  9BCB3D
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       // side: BorderSide(

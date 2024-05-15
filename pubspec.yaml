@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   carousel_slider: ^4.2.1
   expandable: ^5.0.1
   flutter_animated_cards: ^0.0.2
@@ -73,7 +74,15 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+flutter: 
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: Fonts/Amiri-Bold.ttf
+        - asset: Fonts/Amiri-BoldItalic.ttf
+        - asset: Fonts/Amiri-Italic.ttf
+        - asset: Fonts/Amiri-Regular.ttf 
+
   assets:
     - assets/welcome.jpg
     - assets/Logo.png
@@ -89,8 +98,8 @@ flutter:
     - assets/mainYellow.png
     - assets/mainNavy.png
     - assets/mainBlue.png
-
-
+  
+    
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

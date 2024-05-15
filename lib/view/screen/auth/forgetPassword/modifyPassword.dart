@@ -1,12 +1,13 @@
  // ignore_for_file: prefer_const_constructors
 
-import 'package:cytc/view/buttonBar.dart';
 import 'package:cytc/view/screen/auth/forgetPassword/ChangePasswordCode.dart';
 // import 'package:cytc/view/forgotPassword.dart';
 import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
 
 class modifyPasswordPage extends StatelessWidget {
+  const modifyPasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

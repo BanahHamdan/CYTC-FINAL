@@ -4,6 +4,8 @@ import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
 
 class ChatApp extends StatelessWidget {
+  const ChatApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,10 +28,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<String> _user1Messages = [];
-  List<String> _user2Messages = [];
+  final List<String> _user1Messages = [];
+  final List<String> _user2Messages = [];
 
-  TextEditingController _messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

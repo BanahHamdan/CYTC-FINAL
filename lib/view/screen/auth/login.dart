@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
   int validateAddress(String address) {
     String patttern = r'(^[a-zA-Z0-9 ,.-]*$)';
     RegExp regExp = RegExp(patttern);
-    if (address.isEmpty || address.length == 0) {
+    if (address.isEmpty || address.isEmpty) {
       return 1;
     } else if (address.length < 10) {
       return 3;

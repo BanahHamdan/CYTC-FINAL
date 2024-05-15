@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Signup extends StatefulWidget {
+  const Signup({super.key});
+
   @override
   _SignupState createState() => _SignupState();
 }
@@ -86,8 +88,8 @@ class _SignupState extends State<Signup> {
 
       var jsonResponse = jsonDecode(response.body);
 
-      print("status : " + jsonResponse['status'].toString());
-      print("code : " + jsonResponse['verifyCode'].toString());
+      print("status : ${jsonResponse['status']}");
+      print("code : ${jsonResponse['verifyCode']}");
 
       if (jsonResponse['status']) {
         // TODO pass token
@@ -337,12 +339,12 @@ class _SignupState extends State<Signup> {
       ElevatedButton(
         onPressed: () {
           // بدنا نعمل فنكشن لل api
-          print("email : " + _emailController.text);
-          print("username : " + _usernameController.text);
-          print("password : " + _passwordController.text);
-          print("phoneNumber : " + _phoneNumberController.text);
-          print("city : " + _cityController.text);
-          print("bloodType : " + _bloodTypeController.text);
+          print("email : ${_emailController.text}");
+          print("username : ${_usernameController.text}");
+          print("password : ${_passwordController.text}");
+          print("phoneNumber : ${_phoneNumberController.text}");
+          print("city : ${_cityController.text}");
+          print("bloodType : ${_bloodTypeController.text}");
           SignupReq();
           // Navigator.push(
           //   context,

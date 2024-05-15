@@ -7,6 +7,8 @@ import 'package:cytc/view/screen/auth/forgetPassword/modifyPassword.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordCode extends StatelessWidget {
+  const ChangePasswordCode({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

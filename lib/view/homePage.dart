@@ -3,6 +3,7 @@
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter/material.dart';
 
+import 'package:cytc/view/events.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,13 +11,16 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class homePage extends StatefulWidget {
-  final  userId;
+  final userId;
   final userRole;
   @override
   _homePageState createState() => _homePageState();
 
-  const homePage({Key? key, required this.userId, required this.userRole,})
-      : super(key: key);
+  const homePage({
+    Key? key,
+    required this.userId,
+    required this.userRole,
+  }) : super(key: key);
 }
 
 ///////////////text with icon in the emergensies//////////////////
@@ -118,6 +122,7 @@ class CategoryBox extends StatelessWidget {
   final VoidCallback onTap;
 
   const CategoryBox({
+    super.key,
     required this.categoryName,
     required this.imagePath,
     required this.onTap,
@@ -192,7 +197,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
   }
 
   bool showSecondText = false;
-  List<bool> _isOpen = [false, false];
+  final List<bool> _isOpen = [false, false];
 // Define a TextEditingController to control the text field
   TextEditingController textEditingController = TextEditingController();
   bool isSearchBarVisible = false;
@@ -201,6 +206,8 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        //  child: AspectRatio(   ///
+        // aspectRatio: 16 / 9, ///
         child: Stack(
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -509,7 +516,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
 ///////////////////////////////////////////////////////////////
                     SizedBox(height: 40),
 ///////////////////////////حالات طارئة/////////////////////////
-                    Padding( 
+                    Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: Container(
                         width: 120,
@@ -602,7 +609,12 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                               'شارك معنا وانضم الى عائلتنا                       ',
                           imagePath: 'assets/homePage/slider1.jpg',
                           onTap: () {
-                            // Add navigation functionality
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => eventsPage(),
+                                  ),
+                            );
                             // print('Category 1 clicked');
                           },
                         ),
@@ -898,6 +910,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
           ],
         ),
       ),
+      // ),
     );
   }
 }
