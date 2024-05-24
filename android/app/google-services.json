@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225784897790",
+    "project_id": "cytc-firebase",
+    "storage_bucket": "cytc-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225784897790:android:f990c2519c940e215085af",
+        "android_client_info": {
+          "package_name": "com.example.cytc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxFqmYFNenVQQgY3fxhmwZQ5fhJd44gAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

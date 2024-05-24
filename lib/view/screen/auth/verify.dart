@@ -4,7 +4,7 @@ import 'package:cytc/view/screen/auth/Signup.dart';
 // import 'package:cytc/view/main.dart';
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
+import '../../main.dart';
 
 
 class VerifyPage extends StatefulWidget {

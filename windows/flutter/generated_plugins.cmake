@@ -3,6 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  cloud_firestore
+  emoji_picker_flutter
+  file_selector_windows
+  firebase_core
+  firebase_storage
   url_launcher_windows
 )
 

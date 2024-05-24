@@ -3,7 +3,13 @@
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter/material.dart';
 
-import 'package:cytc/view/events.dart';
+import 'package:cytc/view/screen/Emergencies/Paramedics.dart';
+import 'package:cytc/view/screen/Emergencies/bloodDonation.dart';
+import 'package:cytc/view/screen/mainPages/Campaigns/Campaigns_list(1).dart';
+import 'package:cytc/view/screen/mainPages/Events/events_main(1).dart';
+import 'package:cytc/view/screen/mainPages/Festivals/Fest_main(1).dart';
+import 'package:cytc/view/screen/mainPages/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/view/screen/mainPages/University/University_main(1).dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -184,7 +190,7 @@ class CategoryBox extends StatelessWidget {
 
 class _homePageState extends State<homePage> with TickerProviderStateMixin {
   // int _currentPageIndex = 0;
-  int selectTab = 3; // Set default selected tab to homePage
+  int selectTab = 0; // Set default selected tab to homePage
   late Widget selectPageView;
 
   @override
@@ -204,7 +210,32 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    /////////////////////////////////////////
+    final _drawerItems = [
+      ListTile(
+        title: Text('Our Programs'),
+        onTap: () => print('Our Programs'),
+      ),
+      ListTile(
+        title: Text('Donation Opportunities'),
+        onTap: () => print('Donation Opportunities'),
+      ),
+      ListTile(
+        title: Text('Endowment'),
+        onTap: () => print('Endowment'),
+      ),
+      ListTile(
+        title: Text('Home'),
+        onTap: () => print('Home'),
+      ),
+    ];
+    ////////////////////////////////////////
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: _drawerItems,
+        ),
+      ),
       body: SingleChildScrollView(
         //  child: AspectRatio(   ///
         // aspectRatio: 16 / 9, ///
@@ -222,16 +253,16 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
               ),
             ),
 // icons //
-            Positioned(
-              top: 27,
-              left: 20,
-              child: IconButton(
-                icon: Icon(Icons.menu, color: Colors.white),
-                onPressed: () {
-                  // Add your onPressed logic here
-                },
-              ),
-            ),
+            // Positioned(
+            //   top: 27,
+            //   left: 20,
+            //   child: IconButton(
+            //     icon: Icon(Icons.menu, color: Colors.white),
+            //     onPressed: () {
+            //       // Add your onPressed logic here
+            //     },
+            //   ),
+            // ),
 
             Positioned(
               top: 35,
@@ -418,11 +449,11 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                     //   child: Column(
                     //     crossAxisAlignment: CrossAxisAlignment.end,
                     //     children: [
-                    //       buildTextWithIcon(
-                    //         text: 'مطلوب وحدات دم بشكل عاجل',
-                    //         icon: Icons.bloodtype_outlined, // Blood icon
-                    //         context: context,
-                    //       ),
+                          // buildTextWithIcon(
+                          //   text: 'مطلوب وحدات دم بشكل عاجل',
+                          //   icon: Icons.bloodtype_outlined, // Blood icon
+                          //   context: context,
+                          // ),
                     //       buildTextWithIcon(
                     //         text: 'مطلوب مسعفين بشكل طارئ',
                     //         icon: Icons
@@ -533,10 +564,10 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                               top: 8,
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => Page1()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ParamedicsPage()));
                                 },
                                 child: Column(
                                   children: [
@@ -565,10 +596,11 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                               top: 8,
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => Page2()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BloodDonationPage()));
                                 },
                                 child: Column(
                                   children: [
@@ -612,8 +644,8 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => eventsPage(),
-                                  ),
+                                builder: (context) => eventsPage(),
+                              ),
                             );
                             // print('Category 1 clicked');
                           },
@@ -665,14 +697,23 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                   categoryName: 'تعرف على حملات التبرع بالدم',
                                   imagePath: 'assets/homePage/blood1.jpg',
                                   onTap: () {
-                                    // Add navigation functionality
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => campaignPage()),
+                                    );
                                   },
                                 ),
                                 CategoryBox(
                                   categoryName: 'المهرجانات',
                                   imagePath: 'assets/homePage/fest2.jpg',
                                   onTap: () {
-                                    // Add navigation functionality
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              FestivalsPage()),
+                                    );
                                   },
                                 ),
                               ],
@@ -685,14 +726,24 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                   categoryName: 'شاركنا اقتراحاتك وافكارك',
                                   imagePath: 'assets/homePage/joinus3.jpg',
                                   onTap: () {
-                                    // Add navigation functionality
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              suggestionsPage()),
+                                    );
                                   },
                                 ),
                                 CategoryBox(
                                   categoryName: 'تقديم طلب تدريب للخريجين',
                                   imagePath: 'assets/homePage/grad.jpg',
                                   onTap: () {
-                                    // Add navigation functionality
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              universityTrainingPage()),
+                                    );
                                   },
                                 ),
                               ],

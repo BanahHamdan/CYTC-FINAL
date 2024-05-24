@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, library_private_types_in_public_api, use_build_context_synchronously, prefer_interpolation_to_compose_strings
 
 import 'package:cytc/linkapi.dart';
-import 'package:cytc/view/buttonBar.dart';
+import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:cytc/view/screen/auth/forgetPassword/forgotPassword.dart';
 import 'package:cytc/view/screen/auth/Signup.dart';
-import '../../../main.dart';
+import '../../main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
