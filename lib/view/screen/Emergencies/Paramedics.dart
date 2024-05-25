@@ -1,10 +1,12 @@
 // // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, prefer_const_literals_to_create_immutables
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
-import 'package:cytc/view/screen/Emergencies/MapView.dart';
+import 'package:cytc/view/screen/Emergencies/MapPage.dart';
+import 'package:cytc/view/screen/Emergencies/chooseeLocation.dart';
 import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 // import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
 class ParamedicsPage extends StatefulWidget {
@@ -212,25 +214,27 @@ class _ParamedicsPageState extends State<ParamedicsPage>
                           ],
                         ),
                         SizedBox(height: 20),
-                        // Text(
-                        //   'ملاحظة: يجب ان يكون قد مر على الاقل 3 شهور منذ اخر مرة قمت بالتبرع بالدم بها',
-                        //   style: TextStyle(
-                        //       fontSize: 14,
-                        //       fontFamily: 'Amiri',
-                        //       color: Color(0xFFd54043),
-                        //       fontWeight: FontWeight.bold),
-                        //   textAlign: TextAlign.center,
-                        // ),
-                        // SizedBox(height: 20),
-
+///////////////////////////////////////
                         ElevatedButton(
-                          onPressed: () {
-                             Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MapPage()));
+                          onPressed: () async {
+                            final chosenLocation = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChooseLocationPage()),
+                            );
+
+                            if (chosenLocation != null) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MapPage(destination: chosenLocation),
+                                ),
+                              );
+                            }
                           },
-                          child: Text(
+                           child: Text(
                             'احصل على خريطة المنطقة',
                             style: TextStyle(
                               fontSize: 15,
@@ -249,8 +253,36 @@ class _ParamedicsPageState extends State<ParamedicsPage>
                                   15.0), // Adjust the radius as needed
                             ),
                           ),
-                          // icon: FaIcon(FontAwesomeIcons.clipboardQuestion),
                         ),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //      Get.to(() => MapPage());
+                        //     //  Navigator.push(
+                        //     //           context,
+                        //     //           MaterialPageRoute(
+                        //     //               builder: (context) => MapPage(destination: chosenLocation),
+                        // )
+                        // );
+                        //   },
+                          // child: Text(
+                          //   'احصل على خريطة المنطقة',
+                          //   style: TextStyle(
+                          //     fontSize: 15,
+                          //     fontFamily: 'Amiri',
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
+                        //   style: ElevatedButton.styleFrom(
+                        //     backgroundColor: Color(0xFF071533),
+                        //     padding: EdgeInsets.all(15),
+                        //     textStyle: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(
+                        //           15.0), // Adjust the radius as needed
+                        //     ),
+                        //   ),
                         // ),
                       ],
                     ),

@@ -404,10 +404,10 @@ class _LoginPageState extends State<LoginPage> {
             left: 16,
             child: IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WelcomePage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => WelcomePage()),
+                // );
               },
               icon: Icon(Icons.arrow_back),
               color: Colors.white,

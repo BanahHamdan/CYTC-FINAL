@@ -85,10 +85,10 @@ class _VerifyPageState extends State<VerifyPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()),
-                    );                  
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => WelcomePage()),
+                    // );                  
                   },
                   child: Text(
                     'تحقق',

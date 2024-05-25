@@ -48,6 +48,13 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 
+	<string>NSLocationWhenInUseUsageDescription</string>
+	<key>want to display location on map and track it</key>
+	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
+	<key>want to display location on map and track it</key>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to show your position on the map</string>
+
 	<!-- <key>io.flutter.embedded_views_preview</key>
     <true/>
     <key>NSLocationWhenInUseUsageDescription</key>

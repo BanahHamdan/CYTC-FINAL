@@ -1,3 +1,4 @@
+// // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cytc/view/homeTest.dart';
@@ -116,14 +117,30 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
   }
 }
 
-// // ignore_for_file: prefer_const_constructors
 
-// import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
+
+
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'screen/bottomBarPages/calender.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:cytc/view/screen/Emergencies/MapView.dart'; // Adjust the import path as necessary
 
-// void main() {
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   if (kIsWeb) {
+//     await Firebase.initializeApp(
+//       options: FirebaseOptions(
+//         apiKey: "AIzaSyCOO9-sZ1L0KFisEpTgST8CCNAktbyzP4c",
+//         appId: "1:225784897790:web:a95ff1c13d0ee2b95085af",
+//         messagingSenderId: "225784897790",
+//         projectId: "cytc-firebase",
+//         storageBucket: "cytc-firebase.appspot.com", // Make sure to add the storage bucket here
+//       ),
+//     );
+//   } else {
+//     await Firebase.initializeApp();
+//   }
 //   runApp(MyApp());
 // }
 
@@ -145,55 +162,109 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       body: Stack(
-//         children: [
-//           Center( // Center the image
-//             child: Container(
-//               width: 400, // Set the desired width
-//               height: 400, // Set the desired height
-//               decoration: BoxDecoration(
-//                 image: DecorationImage(
-//                   image: AssetImage('assets/Logo.png'),
-//                   fit: BoxFit.contain, // Adjust based on your preference
-//                 ),
-//                 borderRadius: BorderRadius.only(),
-//               ),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () {
+//             Get.to(() => MapPage());
+//           },
+//           style: ElevatedButton.styleFrom(
+//             backgroundColor: Color(0xFFf3c344), // Button color
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(20),
 //             ),
 //           ),
-//           SizedBox(height: 100),
-//           // Positioned(
-//           //   bottom: 0,
-//           //   left: 0,
-//           //   right: 0,
-//           //   child: Padding(
-//           //     padding: EdgeInsets.symmetric(vertical: 30),
-//           //     child: Center(
-//           //       child: ElevatedButton(
-//           //         onPressed: () {
-//           //           Navigator.push(
-//           //             context,
-//           //             MaterialPageRoute(builder: (context) => bar(userId: '123', userRole: '0',)),
-//           //           );
-//           //         },
-//           //         style: ElevatedButton.styleFrom(
-//           //           backgroundColor: Color(0xFFf3c344), // Button color
-//           //           shape: RoundedRectangleBorder(
-//           //             borderRadius: BorderRadius.circular(20),
-//           //           ),
-//           //         ),
-//           //         child: Text(
-//           //           'تسجيل الدخول',
-//           //           style: TextStyle(
-//           //             color: Color(0xFF071533),
-//           //             fontSize: 20.0,
-//           //           ),
-//           //         ),
-//           //       ),
-//           //     ),
-//           //   ),
-//           // ),
-//         ],
+//           child: Text(
+//             'Open Map',
+//             style: TextStyle(
+//               color: Color(0xFF071533),
+//               fontSize: 20.0,
+//             ),
+//           ),
+//         ),
 //       ),
 //     );
 //   }
 // }
+
+
+// // // ignore_for_file: prefer_const_constructors
+
+// // import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
+// // import 'package:flutter/material.dart';
+// // import 'package:get/get.dart';
+// // // import 'screen/bottomBarPages/calender.dart';
+
+// // void main() {
+// //   runApp(MyApp());
+// // }
+
+// // class MyApp extends StatelessWidget {
+// //   const MyApp({super.key});
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return GetMaterialApp(
+// //       debugShowCheckedModeBanner: false,
+// //       home: WelcomePage(),
+// //     );
+// //   }
+// // }
+
+// // class WelcomePage extends StatelessWidget {
+// //   const WelcomePage({super.key});
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       body: Stack(
+// //         children: [
+// //           Center( // Center the image
+// //             child: Container(
+// //               width: 400, // Set the desired width
+// //               height: 400, // Set the desired height
+// //               decoration: BoxDecoration(
+// //                 image: DecorationImage(
+// //                   image: AssetImage('assets/Logo.png'),
+// //                   fit: BoxFit.contain, // Adjust based on your preference
+// //                 ),
+// //                 borderRadius: BorderRadius.only(),
+// //               ),
+// //             ),
+// //           ),
+// //           SizedBox(height: 100),
+// //           // Positioned(
+// //           //   bottom: 0,
+// //           //   left: 0,
+// //           //   right: 0,
+// //           //   child: Padding(
+// //           //     padding: EdgeInsets.symmetric(vertical: 30),
+// //           //     child: Center(
+// //           //       child: ElevatedButton(
+// //           //         onPressed: () {
+// //           //           Navigator.push(
+// //           //             context,
+// //           //             MaterialPageRoute(builder: (context) => bar(userId: '123', userRole: '0',)),
+// //           //           );
+// //           //         },
+// //           //         style: ElevatedButton.styleFrom(
+// //           //           backgroundColor: Color(0xFFf3c344), // Button color
+// //           //           shape: RoundedRectangleBorder(
+// //           //             borderRadius: BorderRadius.circular(20),
+// //           //           ),
+// //           //         ),
+// //           //         child: Text(
+// //           //           'تسجيل الدخول',
+// //           //           style: TextStyle(
+// //           //             color: Color(0xFF071533),
+// //           //             fontSize: 20.0,
+// //           //           ),
+// //           //         ),
+// //           //       ),
+// //           //     ),
+// //           //   ),
+// //           // ),
+// //         ],
+// //       ),
+// //     );
+// //   }
+// // }
