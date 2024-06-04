@@ -18,6 +18,8 @@ class _ParamedicsPageState extends State<ParamedicsPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _colorTween;
+  
+  get chosenLocation => null; ////////// from database
 
   @override
   void initState() {
@@ -216,8 +218,14 @@ class _ParamedicsPageState extends State<ParamedicsPage>
                         SizedBox(height: 20),
 ///////////////////////////////////////
                         ElevatedButton(
+
+                          // onPressed: () {
+                          //    Get.to(() => MapPage(destination: chosenLocation));
+                          // },
+
                           onPressed: () async {
-                            final chosenLocation = await Navigator.push(
+                            final
+                            chosenLocation = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ChooseLocationPage()),
@@ -254,6 +262,8 @@ class _ParamedicsPageState extends State<ParamedicsPage>
                             ),
                           ),
                         ),
+
+
                         // ElevatedButton(
                         //   onPressed: () {
                         //      Get.to(() => MapPage());

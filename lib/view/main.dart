@@ -9,11 +9,11 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screen/bottomBarPages/createpost.dart'; 
+import 'screen/bottomBarPages/createpost.dart';
+import 'package:cytc/view/screen/auth/login.dart';
+import 'screen/bottomBarPages/buttonBar.dart'; // Ensure this path is correct
 
-import 'screen/bottomBarPages/buttonBar.dart';  // Ensure this path is correct
-
- Future<void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -22,14 +22,13 @@ import 'screen/bottomBarPages/buttonBar.dart';  // Ensure this path is correct
         appId: "1:225784897790:web:a95ff1c13d0ee2b95085af",
         messagingSenderId: "225784897790",
         projectId: "cytc-firebase",
-        storageBucket: "cytc-firebase.appspot.com", // Make sure to add the storage bucket here
+        storageBucket:
+            "cytc-firebase.appspot.com", // Make sure to add the storage bucket here
       ),
     );
   } else {
     await Firebase.initializeApp();
   }
-
-
 
   runApp(MyApp());
 }
@@ -53,7 +52,8 @@ class WelcomePage extends StatefulWidget {
   _WelcomePageState createState() => _WelcomePageState();
 }
 
-class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStateMixin {
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -74,7 +74,7 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
       Get.to(() => bar(userId: '123', userRole: '0'));
-      // Get.to(() => Test2());
+      // Get.to(() => LoginPage());
     });
   }
 

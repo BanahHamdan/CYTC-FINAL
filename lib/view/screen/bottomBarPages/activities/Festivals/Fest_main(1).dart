@@ -1,17 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-
-import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: FestivalsPage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class FestivalsPage extends StatefulWidget {
   @override
@@ -19,38 +9,31 @@ class FestivalsPage extends StatefulWidget {
 }
 
 class _FestivalsPageState extends State<FestivalsPage> {
-  List<Case> cases = [
-    Case(
-      caseNumber: "مهرجان الربيع",
-      description:
-          "مهرجان الربيع هو مهرجان يقام سنويا للاحتفال في فصل الربيع وتفريح الاطفال, اذ يتواجد معنا مهرجين وامكانية الرسم على وجوه الاطفال",
-      location: "متنزه جمال عبد الناصر",
-      date: "20 مايو 2024",
-      time: "5:00 - 8:00 PM",
-      // donationStatus: "80 ر.ق من 63,000 ر.ق",
-      // progressValue: 0.0,
-      // supportersCount: 4,
-      // remainingAmount: "62,920 ر.ق",
-    ),
-    // Case(
-    //   caseNumber: "204133",
-    //   description:
-    //       "الحالة شاب في مقتبل العمر، يعمل براتب ثابت ولكن ترهقه الديون والالتزامات الشهرية فهو يعول والدته وإخوانه مما يجعله غير منتفع براتبه...",
-    //   location: "داخل قطر",
-    //   date: "21 مايو 2024",
-    //   time: "10:30 AM",
-    //   donationStatus: "32,329 ر.ق من 151,200 ر.ق",
-    //   progressValue: 0.2,
-    //   supportersCount: 119,
-    //   remainingAmount: "118,871 ر.ق",
-    // ),
-  ];
+  List events = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchEvents();
+  }
+
+  Future<void> fetchEvents() async {
+    final response = await http
+        .get(Uri.parse('http://localhost:9999/event/interest/مهرجانات'));
+    if (response.statusCode == 200) {
+      setState(() {
+        events = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Failed to load events');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(105.0), // Set the height you want
+        preferredSize: Size.fromHeight(105.0),
         child: ClipRRect(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
@@ -58,9 +41,9 @@ class _FestivalsPageState extends State<FestivalsPage> {
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [ 
-                  Color(0xFFFBE66F),  //0xFFffe145
-                  Color(0xFFffe145),  //0xFFFFD700   اعتمدي اللي محطوط مش الكومنت
+                colors: [
+                  Color(0xFFFBE66F), //0xFFffe145
+                  Color(0xFFffe145), //0xFFFFD700
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -91,13 +74,7 @@ class _FestivalsPageState extends State<FestivalsPage> {
                                 size: 20,
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        bar(userId: null, userRole: null),
-                                  ),
-                                );
+                                Navigator.pop(context);
                               },
                             ),
                             IconButton(
@@ -211,109 +188,21 @@ class _FestivalsPageState extends State<FestivalsPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            ResultCount(count: cases.length),
-            ...cases.map((caseItem) {
-              return CaseCard(caseItem: caseItem);
-            }).toList(),
-            SizedBox(height: 20),
-            // QuickDonateButton(),
-          ],
+        child: ListView.builder(
+          itemCount: events.length,
+          itemBuilder: (context, index) {
+            return EventCard(event: events[index]);
+          },
         ),
       ),
     );
   }
 }
 
-class ResultCount extends StatelessWidget {
-  final int count;
+class EventCard extends StatelessWidget {
+  final Map<String, dynamic> event;
 
-  ResultCount({required this.count});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Icon(
-            Icons.emoji_emotions,
-            color: Color(0xFFf3c344),
-            size: 24,
-          ),
-          SizedBox(width: 8),
-          Text(
-            'لا تتردد في القدوم ومشاركتنا في هذه الانشطة',
-            // '$count عدد المهرجانات والاحتفالات المتاحة حاليا هو',
-            textAlign: TextAlign.right,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Amiri',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Widget build(BuildContext context) {
-//   return Padding(
-//     padding: const EdgeInsets.all(8.0),
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         Text(
-//           'لا تتردد في القدوم مشاركتنا في هذه الانشطة',
-//           textAlign: TextAlign.right,
-//           style: TextStyle(
-//             fontSize: 18,
-//             fontWeight: FontWeight.bold,
-//             fontFamily: 'Amiri',
-//           ),
-//         ),
-//         SizedBox(width: 8), // Add some spacing between the text and the icon
-//         Icon(
-//           Icons.emoji_emotions,
-//           color: Colors.amber,
-//           size: 24,
-//         ),
-//       ],
-//     ),
-//   );
-// }
-
-class Case {
-  final String caseNumber;
-  final String description;
-  final String location;
-  final String date;
-  final String time;
-  // final String donationStatus;
-  // final double progressValue;
-  // final int supportersCount;
-  // final String remainingAmount;
-
-  Case({
-    required this.caseNumber,
-    required this.description,
-    required this.location,
-    required this.date,
-    required this.time,
-    // required this.donationStatus,
-    // required this.progressValue,
-    // required this.supportersCount,
-    // required this.remainingAmount,
-  });
-}
-
-class CaseCard extends StatelessWidget {
-  final Case caseItem;
-
-  CaseCard({required this.caseItem});
+  EventCard({required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -336,15 +225,11 @@ class CaseCard extends StatelessWidget {
                     height: 60,
                     fit: BoxFit.cover,
                   ),
-                  // child: ImageIcon(
-                  //   AssetImage('assets/homePage/fest1.jpg'),
-                  //   size: 50,
-                  // ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    'حالة رقم : ${caseItem.caseNumber}',
+                    'اسم الحدث : ${event['name'] ?? 'بدون اسم'}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -355,10 +240,9 @@ class CaseCard extends StatelessWidget {
                 ),
               ],
             ),
-
             SizedBox(height: 10),
             Text(
-              caseItem.description,
+              event['description'] ?? 'بدون وصف',
               style: TextStyle(
                 fontSize: 14,
                 fontFamily: 'Amiri',
@@ -366,7 +250,6 @@ class CaseCard extends StatelessWidget {
               textAlign: TextAlign.right,
             ),
             SizedBox(height: 10),
-
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -374,8 +257,7 @@ class CaseCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      textAlign: TextAlign.right,
-                      caseItem.location,
+                      event['location'] ?? 'بدون موقع',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -391,8 +273,7 @@ class CaseCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      textAlign: TextAlign.right,
-                      caseItem.date,
+                      _formatDate(event['startDate'] ?? 'بدون تاريخ'),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -409,8 +290,7 @@ class CaseCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      textAlign: TextAlign.right,
-                      caseItem.time,
+                      event['time'] ?? 'بدون وقت',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -423,90 +303,19 @@ class CaseCard extends StatelessWidget {
                 ),
               ],
             ),
-
-            // SizedBox(height: 10),
-            // Wrap(
-            //   spacing: 8,
-            //   runSpacing: 4,
-            //   children: [
-            //     Chip(
-            //       label: Text(
-            //         'محدود الدخل',
-            //         style: TextStyle(color: Colors.white, fontFamily: 'Amiri'),
-            //       ),
-            //       backgroundColor: Colors.grey,
-            //     ),
-            //     Chip(
-            //       label: Text(
-            //         'الرعاية الاجتماعية',
-            //         style: TextStyle(color: Colors.white, fontFamily: 'Amiri'),
-            //       ),
-            //       backgroundColor: Colors.lightBlue,
-            //     ),
-            //     Chip(
-            //       label: Text(
-            //         'بقبل الزكاة',
-            //         style: TextStyle(color: Colors.white, fontFamily: 'Amiri'),
-            //       ),
-            //       backgroundColor: Colors.red,
-            //     ),
-            //   ],
-            // ),
-            SizedBox(height: 10),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: LinearProgressIndicator(
-            //         value: caseItem.progressValue,
-            //         backgroundColor: Colors.grey[300],
-            //         color: Colors.amber,
-            //       ),
-            //     ),
-            //     SizedBox(width: 10),
-            //     Text(
-            //       caseItem.donationStatus,
-            //       style: TextStyle(fontFamily: 'Amiri'),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(height: 10),
-            // Text(
-            //   'من ${caseItem.supportersCount} متبرع',
-            //   style: TextStyle(fontSize: 12, color: Colors.grey, fontFamily: 'Amiri'),
-            //   textAlign: TextAlign.right,
-            // ),
-            // SizedBox(height: 5),
-            // Text(
-            //   caseItem.remainingAmount,
-            //   style: TextStyle(fontSize: 12, color: Colors.grey, fontFamily: 'Amiri'),
-            //   textAlign: TextAlign.right,
-            // ),
           ],
         ),
       ),
     );
   }
+
+  String _formatDate(String dateStr) {
+    try {
+      final date = DateTime.parse(dateStr);
+      final formatter = DateFormat('yyyy-MM-dd');
+      return formatter.format(date);
+    } catch (e) {
+      return 'تاريخ غير صالح';
+    }
+  }
 }
-
-// class QuickDonateButton extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Align(
-//       alignment: Alignment.bottomLeft,
-//       child: ElevatedButton.icon(
-//         onPressed: () {},
-//         icon: Icon(Icons.rocket),
-//         label: Text('التبرع السريع', style: TextStyle(fontFamily: 'Amiri')),
-//         style: ElevatedButton.styleFrom(
-//           backgroundColor: Colors.pink, // background
-//           foregroundColor: Colors.white, // foreground
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(20),
-//           ),
-//           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//         ),
-//       ),
-//     );
-//   }
-// }
-

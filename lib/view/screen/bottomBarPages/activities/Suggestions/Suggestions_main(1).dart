@@ -1,17 +1,55 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 
-class suggestionsPage extends StatefulWidget {
+class SuggestionsPage extends StatefulWidget {
   @override
-  _suggestionsPageState createState() => _suggestionsPageState();
+  _SuggestionsPageState createState() => _SuggestionsPageState();
 }
 
-class _suggestionsPageState extends State<suggestionsPage> {
+class _SuggestionsPageState extends State<SuggestionsPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController messageController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  Future<void> submitSuggestion() async {
+    final String apiUrl = "http://localhost:9999/suggestion/create";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        "fullName": nameController.text,
+        "email": emailController.text,
+        "title": titleController.text,
+        "description": descriptionController.text,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Successfully added suggestion
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Suggestion added successfully!')),
+      );
+      // Clear the form fields
+      nameController.clear();
+      emailController.clear();
+      titleController.clear();
+      descriptionController.clear();
+    } else {
+      // Error occurred
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add suggestion')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +99,14 @@ class _suggestionsPageState extends State<suggestionsPage> {
                               onPressed: () {
                                 // Navigator.pop(context);
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => bar(userId: null, userRole: null,)),
-                                  );
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => bar(
+                                      userId: null,
+                                      userRole: null,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(
@@ -286,7 +328,6 @@ class _suggestionsPageState extends State<suggestionsPage> {
               ],
             ),
             SizedBox(height: 16),
-            //////////////////////////
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -307,7 +348,7 @@ class _suggestionsPageState extends State<suggestionsPage> {
                   SizedBox(height: 8),
                   TextField(
                     textAlign: TextAlign.right,
-                    controller: messageController,
+                    controller: titleController,
                     maxLines: 1,
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
@@ -335,10 +376,6 @@ class _suggestionsPageState extends State<suggestionsPage> {
                 ],
               ),
             ),
-
-
-            //////////////////////////
-
             SizedBox(height: 16),
             Container(
               padding: EdgeInsets.all(16),
@@ -356,11 +393,10 @@ class _suggestionsPageState extends State<suggestionsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // Icon(Icons.message, color: Color(0xFF071533), size: 40),
                   SizedBox(height: 8),
                   TextField(
                     textAlign: TextAlign.right,
-                    controller: messageController,
+                    controller: descriptionController,
                     maxLines: 5,
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
@@ -388,14 +424,13 @@ class _suggestionsPageState extends State<suggestionsPage> {
                 ],
               ),
             ),
-
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Handle form submission
+                _showParticipationDialog(context);
+                // submitSuggestion();
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF071533),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -416,3 +451,54 @@ class _suggestionsPageState extends State<suggestionsPage> {
     );
   }
 }
+
+void _showParticipationDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'عند ضغطك على زر تأكيد الارسال \n فأنت تقوم بتأكيد ارسالك للطلب',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF071533),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Amiri',
+                ),
+              ),         
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // submitSuggestion();
+                  // Handle donate button press
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF071533),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(15),
+                ),
+                child: Text(
+                  'تأكيد الارسال',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Amiri',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }

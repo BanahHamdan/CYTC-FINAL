@@ -438,10 +438,11 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  _showParticipationDialog(context);
                   // Handle form submission
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF071533),
+                  // primary: Color(0xFF071533),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -463,3 +464,54 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
     );
   }
 }
+
+
+void _showParticipationDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'عند ضغطك على زر تأكيد الارسال \n فأنت تقوم بتأكيد ارسالك للطلب',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF071533),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Amiri',
+                ),
+              ),         
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle donate button press
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF071533),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(18),
+                ),
+                child: Text(
+                  'تأكيد الارسال',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Amiri',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }

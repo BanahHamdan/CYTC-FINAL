@@ -5,7 +5,6 @@ import 'package:cytc/view/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:cytc/view/screen/auth/forgetPassword/forgotPassword.dart';
 import 'package:cytc/view/screen/auth/Signup.dart';
-import '../../main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

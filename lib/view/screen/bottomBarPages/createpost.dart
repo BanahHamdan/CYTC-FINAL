@@ -18,7 +18,8 @@ class _CreatePostState extends State<CreatePost> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference = FirebaseFirestore.instance.collection('posts_list');
+  CollectionReference _reference =
+      FirebaseFirestore.instance.collection('posts_list');
   String imageUrl = '';
 
   Future<void> uploadImage() async {
@@ -29,10 +30,12 @@ class _CreatePostState extends State<CreatePost> {
       );
 
       if (result != null && result.files.single.bytes != null) {
-        String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+        String uniqueFileName =
+            DateTime.now().millisecondsSinceEpoch.toString();
         Reference referenceRoot = FirebaseStorage.instance.ref();
         Reference referenceDirImages = referenceRoot.child('postsImages');
-        Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+        Reference referenceImageToUpload =
+            referenceDirImages.child(uniqueFileName);
 
         await referenceImageToUpload.putData(
           result.files.single.bytes!,
@@ -48,10 +51,12 @@ class _CreatePostState extends State<CreatePost> {
       XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
 
       if (file != null) {
-        String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+        String uniqueFileName =
+            DateTime.now().millisecondsSinceEpoch.toString();
         Reference referenceRoot = FirebaseStorage.instance.ref();
         Reference referenceDirImages = referenceRoot.child('postsImages');
-        Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+        Reference referenceImageToUpload =
+            referenceDirImages.child(uniqueFileName);
 
         await referenceImageToUpload.putFile(
           File(file.path),
@@ -65,9 +70,8 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   Future<void> createPost() async {
-
     // var response = await http.post(Uri.parse(LinkApi.login);
-        final String apiUrl = "http://localhost:9999/posts/create";
+    final String apiUrl = "http://localhost:9999/posts/create";
 
     if (key.currentState?.validate() ?? false) {
       Map<String, dynamic> postData = {

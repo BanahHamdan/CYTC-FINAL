@@ -1,21 +1,40 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:cytc/view/screen/mainPages/Campaigns/Campaigns_details(2).dart';
-import 'package:cytc/view/screen/mainPages/Events/events_details(3).dart';
-import 'package:cytc/view/screen/mainPages/Events/events_main(1).dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'Campaigns_details(2).dart';
 
-class campaignPage extends StatefulWidget {
-  const campaignPage({super.key});
+class CampaignPage extends StatefulWidget {
+  const CampaignPage({super.key});
 
   @override
-  _campaignPageState createState() => _campaignPageState();
+  _CampaignPageState createState() => _CampaignPageState();
 }
 
-class _campaignPageState extends State<campaignPage> {
+class _CampaignPageState extends State<CampaignPage> {
   bool isSearchBarVisible = false;
   TextEditingController textEditingController = TextEditingController();
+  List campaigns = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCampaigns();
+  }
+
+  Future<void> fetchCampaigns() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:9999/event/interest/حملات'));
+    if (response.statusCode == 200) {
+      setState(() {
+        campaigns = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Failed to load campaigns');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,14 +81,9 @@ class _campaignPageState extends State<campaignPage> {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => eventsPage()),
-                                  );
+                                  // Add functionality here if needed
                                 },
                               ),
-                              // SizedBox(width: 0),
                               IconButton(
                                 icon: Icon(
                                   Icons.menu,
@@ -116,9 +130,7 @@ class _campaignPageState extends State<campaignPage> {
                                   // Add functionality to navigate to profile page
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right:
-                                          16.0), // Adjust the value as needed
+                                  padding: const EdgeInsets.only(right: 16.0),
                                   child: Container(
                                     width: 30,
                                     height: 30,
@@ -130,7 +142,6 @@ class _campaignPageState extends State<campaignPage> {
                                       ),
                                       image: DecorationImage(
                                         image: AssetImage('assets/banah.jpg'),
-                                        // fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -182,104 +193,52 @@ class _campaignPageState extends State<campaignPage> {
               ),
             ),
           ),
-
           Expanded(
-            child: ListView(
+            child: ListView.builder(
               padding: EdgeInsets.all(16),
-              children: [
-                _buildListItem('حملة للتبرع بالدم'),
-                _buildListItem('حملة زيارة اطفال مرضى السرطان'),
-                _buildListItem('حملة لتنظيف متنزه جمال عبد الناصر'),
-                _buildListItem('حملة زيارة مرى الكلى في مستشفى النجاح'),
-                _buildListItem('حملة لتوزيع الحلوى على الاطفال في شوارع المدينة بمناسبة العيد'),
-              ],
+              itemCount: campaigns.length,
+              itemBuilder: (context, index) {
+                return _buildListItem(campaigns[index]);
+              },
             ),
           ),
-          // BottomNavigationBar(
-          //   items: [
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.home),
-          //       label: 'الرئيسية',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.favorite),
-          //       label: 'وقفا إحسان',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.add_circle_outline),
-          //       label: 'التبرع السريع',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.grid_view),
-          //       label: 'فرص التبرع',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.apps),
-          //       label: 'برامجنا',
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
   }
 
-  Widget _buildListItem(String title) {
+  Widget _buildListItem(Map<String, dynamic> campaign) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
-        // Arrow icon on the left side
         leading: Icon(Icons.arrow_back_ios_new, color: Colors.grey, size: 15),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Text aligned to the right
             Flexible(
               child: Text(
-                title,
+                campaign['name'],
                 style: TextStyle(
                   fontFamily: 'Amiri',
                   color: Color(0xFF071533),
                 ),
               ),
             ),
-            SizedBox(width: 10), // Space between icon and text
-            // Icon with grey circle background
-            // Container(
-            //   decoration: BoxDecoration(
-            //     shape: BoxShape.circle,
-            //     color: Color(0xFFE0E0E0),
-            //   ),
-            //   padding: EdgeInsets.all(
-            //       8), // Adjust padding to make the circle bigger or smaller
-            //   child: Icon(icon, color: Color(0xFF071533)),
-            // ),
+            SizedBox(width: 10),
           ],
         ),
         onTap: () {
-          // Navigate to different pages based on the title clicked
-          // For example:
-          if (title =='حملة للتبرع بالدم') {
-            // Navigate to the corresponding page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => campaignDetails()),
-            );
-          }
-          //else if (title == 'ورش عمل ولقاءات توعوية') {
-          //   // Navigate to the corresponding page
-          // } else if (title == 'مخيمات صيفية') {
-          //   // Navigate to the corresponding page
-          // } else if (title == 'مبادرات شبابية') {
-          //   // Navigate to the corresponding page
-          // }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CampaignDetails(campaign: campaign),
+            ),
+          );
         },
       ),
     );
   }
 }
-
-

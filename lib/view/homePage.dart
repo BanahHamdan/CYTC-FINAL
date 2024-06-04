@@ -5,14 +5,16 @@
 
 import 'package:cytc/view/screen/Emergencies/Paramedics.dart';
 import 'package:cytc/view/screen/Emergencies/bloodDonation.dart';
-import 'package:cytc/view/screen/mainPages/Campaigns/Campaigns_list(1).dart';
-import 'package:cytc/view/screen/mainPages/Events/events_main(1).dart';
-import 'package:cytc/view/screen/mainPages/Festivals/Fest_main(1).dart';
-import 'package:cytc/view/screen/mainPages/Suggestions/Suggestions_main(1).dart';
-import 'package:cytc/view/screen/mainPages/University/University_main(1).dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/Campaigns/Campaigns_list(1).dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/Events/events_main(1).dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/Festivals/Fest_main(1).dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
+import 'package:cytc/view/screen/bottomBarPages/activities/Events/events_main(1).dart';
 
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -449,11 +451,11 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                     //   child: Column(
                     //     crossAxisAlignment: CrossAxisAlignment.end,
                     //     children: [
-                          // buildTextWithIcon(
-                          //   text: 'مطلوب وحدات دم بشكل عاجل',
-                          //   icon: Icons.bloodtype_outlined, // Blood icon
-                          //   context: context,
-                          // ),
+                    // buildTextWithIcon(
+                    //   text: 'مطلوب وحدات دم بشكل عاجل',
+                    //   icon: Icons.bloodtype_outlined, // Blood icon
+                    //   context: context,
+                    // ),
                     //       buildTextWithIcon(
                     //         text: 'مطلوب مسعفين بشكل طارئ',
                     //         icon: Icons
@@ -567,7 +569,8 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ParamedicsPage()));
+                                          builder: (context) =>
+                                              ParamedicsPage()));
                                 },
                                 child: Column(
                                   children: [
@@ -644,7 +647,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => eventsPage(),
+                                builder: (context) => EventsPage(),
                               ),
                             );
                             // print('Category 1 clicked');
@@ -700,7 +703,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => campaignPage()),
+                                          builder: (context) => CampaignPage()),
                                     );
                                   },
                                 ),
@@ -730,7 +733,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              suggestionsPage()),
+                                              SuggestionsPage()),
                                     );
                                   },
                                 ),

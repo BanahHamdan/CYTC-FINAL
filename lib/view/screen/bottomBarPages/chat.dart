@@ -1,44 +1,55 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:cytc/view/homePage.dart';
 import 'package:flutter/material.dart';
-
-class ChatApp extends StatelessWidget {
-  const ChatApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Chat Page',
-      theme: ThemeData(
-        primaryColor: Color(0xFFff9c0d),
-        fontFamily: 'Roboto',
-      ),
-      home: ChatPage(userId: null,),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:cytc/view/screen/bottomBarPages/AdminChatPage.dart';
 
 class ChatPage extends StatefulWidget {
-  final userId;
+  final String userId;
 
-  const ChatPage({super.key, required this.userId});
+  const ChatPage({Key? key, required this.userId}) : super(key: key);
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final List<String> _user1Messages = [];
-  final List<String> _user2Messages = [];
+  final String usersApiUrl = 'http://localhost:9999/user/Admins';
+  List<Map<String, dynamic>> users = [];
 
-  final TextEditingController _messageController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsers();
+  }
+
+  Future<void> _fetchUsers() async {
+    final response = await http.get(Uri.parse(usersApiUrl));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        users = List<Map<String, dynamic>>.from(json.decode(response.body));
+      });
+    } else {
+      // Handle error
+      print('Error fetching users: ${response.statusCode}');
+    }
+  }
+
+  void _navigateToChat(String adminId, String adminName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AdminChatPage(
+            userId: widget.userId, adminId: adminId, adminName: adminName),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          // 'تواصل معنا',
           widget.userId,
           style: TextStyle(
             fontSize: 20,
@@ -46,112 +57,24 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF071533), // Change the AppBar color here
+        backgroundColor: Color(0xFF071533),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigate to a different page when the back arrow is pressed
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => homePage(
-                        userId: null,
-                        userRole: null,
-                      )),
-            );
+            Navigator.pop(context);
           },
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(8.0),
-              children: [
-                _buildMessages(_user1Messages, true),
-                _buildMessages(_user2Messages, false),
-              ],
-            ),
-          ),
-          Divider(height: 1),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message...',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessages(List<String> messages, bool isMe) {
-    return Column(
-      crossAxisAlignment:
-          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: messages.map((message) {
-        return ChatBubble(
-          message: message,
-          isMe: isMe,
-        );
-      }).toList(),
-    );
-  }
-
-  void _sendMessage() {
-    String message = _messageController.text.trim();
-    if (message.isNotEmpty) {
-      setState(() {
-        _user1Messages.add(message);
-        _messageController.clear();
-      });
-    }
-  }
-}
-
-class ChatBubble extends StatelessWidget {
-  final String message;
-  final bool isMe;
-
-  const ChatBubble({
-    Key? key,
-    required this.message,
-    required this.isMe,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
-        padding: EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          color: isMe ? Color(0xFF071533) : Colors.grey[300],
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isMe ? Colors.white : Colors.black,
-            fontSize: 16.0,
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+          var user = users[index];
+          return ListTile(
+            title: Text(user['username']),
+            subtitle: Text(user['email']),
+            onTap: () => _navigateToChat(user['_id'], user['username']),
+          );
+        },
       ),
     );
   }

@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:cytc/view/screen/bottomBarPages/calender.dart';
 import 'package:cytc/view/screen/bottomBarPages/chat.dart';
 import 'package:cytc/view/homePage.dart';
+import '../../homeCircularGrey.dart'; 
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
+import 'activities/activities_main.dart'; // Import the package
+
 
 class bar extends StatefulWidget {
-
   final  userId;
   final  userRole;
   const bar({super.key, required this.userId, required this.userRole}); //  const bar({super.key, Key? key, required this.userId, required this.userRole});
@@ -20,13 +24,20 @@ class bar extends StatefulWidget {
 class _barState extends State<bar> {
   // late String? userId;
   // late String? userRole;
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
   bool isSearchBarVisible = false;
   TextEditingController textEditingController = TextEditingController();
+
+    void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
 @override
   void initState() {
     super.initState();
-    // userId = userId;
+    // userId = userId; 
     // userRole = userRole;
     print("*****************");
     print("userId "+ widget.userId);
@@ -34,6 +45,7 @@ class _barState extends State<bar> {
     print("*****************");
 
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,24 +178,42 @@ class _barState extends State<bar> {
       // ),
       
       body: _getPage(_selectedIndex),
-      backgroundColor: Color(0xFFffe145), //0xFF2b7b18 green
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: Color(0xFFffe145),
-                // Color(0xFFf3c344),
-                // Color(0xFFffe145),    
-        animationDuration: Duration(milliseconds: 300),
-        items: [
-          Icon(Icons.calendar_month, color: Colors.white),
-          Icon(Icons.chat, color: Colors.white),
-          Icon(Icons.add_reaction, color: Colors.white),
-          Icon(Icons.home, color: Colors.white),
-        ],
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+      backgroundColor: Colors.transparent,
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          textTheme: TextTheme(
+            bodySmall: TextStyle(fontFamily: 'Amiri', color: Colors.grey), // Unselected labels
+            bodyMedium: TextStyle(fontFamily: 'Amiri', color: Color(0xFFffe145)), // Selected labels
+          ),
+        ),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(LineAwesomeIcons.calendar_alt), // Use Line Awesome icon
+              label: 'التقويم',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(LineAwesomeIcons.comment_dots_solid), // Use Line Awesome icon
+              label: 'تواصل معنا',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(LineAwesomeIcons.trophy_solid), // Use Line Awesome icon
+              label: 'انجازاتنا',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(LineAwesomeIcons.sign_in_alt_solid), // Use Line Awesome icon
+              label: 'تفاعل معنا',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home), // Use Line Awesome icon
+              label: 'الرئيسية',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color(0xFFffe145),
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
@@ -193,43 +223,17 @@ class _barState extends State<bar> {
       case 0:
         return CalendarPage();
       case 1:
-        return ChatPage(userId : widget.userId);
-      case 2:
-        return ReactionPage(userId : widget.userId);
-      case 3:
-        return homePage(userId : widget.userId , userRole : widget.userRole);
+        return ChatPage(userId: widget.userId);
+      case 2: 
+        return ReactionPage(userId: widget.userId);
+      case 3:   //activities 
+        return Activities();
+      case 4:
+        return HomeTestGrey();
+        // return homePage(userId : widget.userId , userRole : widget.userRole);
       default:
-        return homePage(userId : widget.userId , userRole : widget.userRole);
+        return HomeTestGrey();
+        // return homePage(userId : widget.userId , userRole : widget.userRole);
     }
   }
 }
-
-
-// bottomNavigationBar: BottomNavigationBar(
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home),
-//             label: 'الرئيسية',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.auto_awesome_mosaic),
-//             label: 'وقف إحسان',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.attach_money),
-//             label: 'التبرع السريع',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.favorite),
-//             label: 'فرص التبرع',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.campaign),
-//             label: 'برامجنا',
-//           ),
-//         ],
-//         currentIndex: _selectedIndex,
-//         selectedItemColor: Colors.teal,
-//         unselectedItemColor: Colors.grey,
-//         onTap: _onItemTapped,
-//       ),

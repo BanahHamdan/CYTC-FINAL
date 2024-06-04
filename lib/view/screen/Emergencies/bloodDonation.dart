@@ -39,70 +39,69 @@ class _BloodDonationPageState extends State<BloodDonationPage>
     super.dispose();
   }
 
-void _showLastDonationDateDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        title: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'تاريخ اخر تبرع بالدم',
-                        style: TextStyle(
-                          fontFamily: 'Amiri',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF071533),
+  void _showLastDonationDateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'تاريخ اخر تبرع بالدم',
+                          style: TextStyle(
+                            fontFamily: 'Amiri',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF071533),
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5),
-                      Image.asset(
-                        'assets/calendar_icon.png', // Replace with the path to your image
-                        width: 30,
-                        height: 30,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(
-                  Icons.close,
-                  color: Color(0xFFd54043),
+                        SizedBox(width: 5),
+                        Image.asset(
+                          'assets/calendar_icon.png', // Replace with the path to your image
+                          width: 30,
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        content: Text(
-          '5/3/2023', // Example date in Arabic
-          style: TextStyle(
-            fontFamily: 'Amiri',
-            fontSize: 20,
-            color: Color(0xFF071533),
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Color(0xFFd54043),
+                  ),
+                ),
+              ),
+            ],
           ),
-          textAlign: TextAlign.center,
-        ),
-      );
-    },
-  );
-}
-
+          content: Text(
+            '5/3/2023', // Example date in Arabic
+            style: TextStyle(
+              fontFamily: 'Amiri',
+              fontSize: 20,
+              color: Color(0xFF071533),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
