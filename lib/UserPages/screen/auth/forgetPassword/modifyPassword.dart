@@ -136,6 +136,7 @@
 
 import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
 import 'package:cytc/UserPages/screen/auth/forgetPassword/ChangePasswordCode.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -259,7 +260,7 @@ class modifyPasswordPage extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => HomeTestGrey(userId: '',)), //userId: null, userRole: null,
+                                  MaterialPageRoute(builder: (context) => bar(userId: '', userRole: '',)), //userId: null, userRole: null,
                                 );
                               },
                               style: ElevatedButton.styleFrom(

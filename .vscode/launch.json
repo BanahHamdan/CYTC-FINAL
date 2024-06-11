@@ -9,11 +9,7 @@
             "name": "cytc",
             "request": "launch",
             "type": "dart",
-<<<<<<< HEAD
             "program": "lib/main.dart"
-=======
-            "program": "lib/view/main.dart"
->>>>>>> origin/master
         },
         {
             "name": "cytc (profile mode)",

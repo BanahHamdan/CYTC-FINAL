@@ -355,20 +355,6 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20),
-            //   child: Align(
-            //     alignment: Alignment.center,
-            //     child: Text(
-            //       'تعرف على احدث انجازاتنا',
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(
-            //           fontSize: 17,
-            //           fontWeight: FontWeight.bold,
-            //           fontFamily: 'Amiri'),
-            //     ),
-            //   ),
-            // ),
             Container(
               height:
                   240, // Adjust height as needed to accommodate image and text
@@ -728,82 +714,11 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     SizedBox(height: 20),
-                                    // Center(
-                                    //     child: Padding(
-                                    //   padding: EdgeInsets.only(bottom: 15, right: 25),
-                                    //       child: ElevatedButton(
-                                    //         onPressed: () {
-                                    //           Navigator.push(
-                                    //             context,
-                                    //             MaterialPageRoute(
-                                    //               builder: (context) =>
-                                    //                   MapPageHome(
-                                    //                       destination: LatLng(
-                                    //                           32.2238, 35.2613)),
-                                    //             ),
-                                    //           );
-                                    //         },
-                                    //         style: ElevatedButton.styleFrom(
-                                    //           backgroundColor: Colors.white,
-                                    //           foregroundColor: Color(0xFF071533),
-                                    //           shape: RoundedRectangleBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(8),
-                                    //           ),
-                                    //           side:
-                                    //               BorderSide(color: Colors.grey),
-                                    //         ),
-                                    //         child: Text(
-                                    //           'اعرف موقع المركز وقم بزيارتنا',
-                                    //           style: TextStyle(
-                                    //             fontSize: 14,
-                                    //             fontFamily: 'Amiri',
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    // ),
                                   ],
                                 ),
                                 //   ],
                               ),
                             ),
-
-                            // Center(
-                            //   child: Padding(
-                            //     padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-                            //     child: ElevatedButton(
-                            //       onPressed: () {
-                            //         Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //             builder: (context) => MapPageHome(
-                            //                 destination:
-                            //                     LatLng(32.2238, 35.2613)),
-                            //           ),
-                            //         );
-                            //       },
-                            //       style: ElevatedButton.styleFrom(
-                            //         backgroundColor: Color(0xFF071533),
-                            //         foregroundColor: Colors.white,
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(8),
-                            //         ),
-                            //         side: BorderSide(color: Colors.grey),
-                            //       ),
-                            //       child: Padding(
-                            //         padding: EdgeInsets.fromLTRB(70, 0, 70, 0),
-                            //       child: Text(
-                            //         'اعرف موقع المركز وقم بزيارتنا',
-                            //         style: TextStyle(
-                            //           fontSize: 14,
-                            //           fontFamily: 'Amiri',
-                            //         ),
-                            //       ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
 ///////////////////////////////////////////////////////////////////////////
                             SizedBox(
                               height: 40,
@@ -921,15 +836,6 @@ class CustomVolunteerCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Text( 
-                    //   title,
-                    //   textAlign: TextAlign.right,
-                    //   style: TextStyle(
-                    //     fontFamily: 'Amiri',
-                    //     fontSize: 17,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
                     Text(
                       subtitle,
                       textAlign: TextAlign.right,
@@ -996,26 +902,6 @@ class CustomVolunteerCard extends StatelessWidget {
             ),
           ),
         ),
-        // Positioned(
-        //   top: -40,
-        //   left: 100,
-        // child: Container(
-        //   width: 100,
-        //   height: 80,
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.circular(10),
-        //     border: Border.all(
-        //       color: Colors.white,
-        //       width: 2,
-        //     ),
-        //     image: DecorationImage(
-        //       image: AssetImage(imagePath),
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // ),
-        // ),
       ],
     );
   }

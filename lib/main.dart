@@ -1,7 +1,10 @@
 // // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cytc/AdminPages/screen/bottomBarPages/posts/Adminviewpost.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/posts/posts.dart';
 // import 'package:cytc/view/homeTest.dart';
 // import 'package:cytc/view/test.dart';
 import 'package:flutter/foundation.dart';
@@ -74,8 +77,10 @@ class _WelcomePageState extends State<WelcomePage>
     // Set up the timer to navigate after 10 seconds
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
-      Get.to(() => bar(userId: '123', userRole: '0'));
+      // Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage());
+      // Get.to(() => UserPostsPage(userId: '',));
+      Get.to(() => Adminviewpost(userId: '',));
     });
   }
 
