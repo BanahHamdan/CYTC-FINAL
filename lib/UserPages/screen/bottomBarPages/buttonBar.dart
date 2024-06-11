@@ -48,6 +48,75 @@ class _barState extends State<bar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leadingWidth: 120,
+        leading: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.all(4.0),
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Color(0xFF071533).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.menu, color: Color(0xFF071533), size: 20,),
+                onPressed: () {
+                  // Add menu action here
+                },
+                padding: EdgeInsets.all(4.0), // Reduced padding for the icon
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(4.0),
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Color(0xFF071533).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.notifications, color: Color(0xFF071533), size: 20,),
+                onPressed: () {
+                  // Add notifications action here
+                },
+                padding: EdgeInsets.all(4.0), // Reduced padding for the icon
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          // Container(
+          //   width: 30,
+          //     height: 30,
+          //   margin: EdgeInsets.all(4.0),
+          //   decoration: BoxDecoration(
+          //     color: Color(0xFF071533).withOpacity(0.1),
+          //     borderRadius: BorderRadius.circular(8.0),
+          //   ),
+            // child: 
+            IconButton(
+              icon: Icon(Icons.search, color: Color(0xFF071533), size: 20,),
+              onPressed: () {
+                // Add search action here
+              },
+              padding: EdgeInsets.all(4.0), // Reduced padding for the icon
+            ),
+          // ),
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Image.asset(
+              'assets/Logo.png', // Add your image asset here
+              height: 40,
+              width: 40,
+            ),
+          ),
+        ],
+      ),
+
       // appBar: AppBar(
       //   backgroundColor:
       //       Colors.transparent, // Set background color to transparent
