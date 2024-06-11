@@ -1,7 +1,14 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class AdminChatPage extends StatefulWidget {
   final String userId;
@@ -24,6 +31,8 @@ class _AdminChatPageState extends State<AdminChatPage> {
   final String apiUrl = 'http://localhost:9999/chats';
   List<Map<String, dynamic>> messages = [];
   Timer? _timer;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -83,24 +92,44 @@ class _AdminChatPageState extends State<AdminChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Chat with ${widget.adminName}',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+      key: _scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: ClipPath(
+          clipper: CustomAppBarClipper(),
+          child: AppBar(
+            backgroundColor: Color(0xFF071533).withOpacity(0.1),
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+            ),
+            title: Text(
+              '${widget.adminName} تواصل مع الادمن',
+              style: TextStyle(
+                fontFamily: 'Amiri',
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Color(0xFF071533),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
         ),
-        centerTitle: true,
-        backgroundColor: Color(0xFF071533),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
+      drawer: _buildDrawer(),
+      backgroundColor: Color(0xfffafafa),
       body: Column(
         children: [
           Expanded(
@@ -123,21 +152,110 @@ class _AdminChatPageState extends State<AdminChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message...',
-                      border: OutlineInputBorder(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      textAlign: TextAlign.right,
+                      controller: _messageController,
+                      cursorColor: Color(0xFFffe145),
+                      decoration: InputDecoration(
+                        hintText: '... اكتب رسالتك',
+                        hintStyle: TextStyle(fontFamily: 'Amiri'),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send, color: Color(0xFFffe145)),
+                          onPressed: _sendMessage,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
-                ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Drawer _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 40, bottom: 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'بانه خالد حمدان',
+                        style: TextStyle(
+                          color: Color(0xFF071533),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'Amiri',
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: null, userRole: null))),
+            title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage())), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage())), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () {}, // Add onTap functionality for logout
+            title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),
         ],
       ),
@@ -163,17 +281,39 @@ class ChatBubble extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 4.0),
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: isMe ? Color(0xFF071533) : Colors.grey[300],
+          color: isMe ? Color(0xFF071533) : Colors.yellow[100],
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Text(
           message,
           style: TextStyle(
-            color: isMe ? Colors.white : Colors.black,
+            color: Color(0xFF071533),
             fontSize: 16.0,
           ),
         ),
       ),
     );
+  }
+}
+
+class CustomAppBarClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height * 0.6);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height * 0.6,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

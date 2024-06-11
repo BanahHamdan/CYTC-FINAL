@@ -3,7 +3,12 @@
 
 import 'package:cytc/AdminPages/screen/bottomBarPages/posts/Adminviewpost.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Events/events_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Festivals/Fest_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/chat/AdminChatPage.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/posts/posts.dart';
 // import 'package:cytc/view/homeTest.dart';
 // import 'package:cytc/view/test.dart';
@@ -80,7 +85,8 @@ class _WelcomePageState extends State<WelcomePage>
       // Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage());
       // Get.to(() => UserPostsPage(userId: '',));
-      Get.to(() => Adminviewpost(userId: '',));
+      // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
+      Get.to(() => EventsPage());
     });
   }
 
