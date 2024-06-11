@@ -1,11 +1,10 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'dart:convert';
 import 'package:transparent_image/transparent_image.dart';
-
-void main() {
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -271,7 +270,14 @@ class _ViewPostState extends State<ViewPost> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Post'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.close, size: 18, color: Color(0xFF071533)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -279,22 +285,46 @@ class _ViewPostState extends State<ViewPost> {
               ? Center(child: Text('Failed to load post: $errorMessage'))
               : SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('User ID: ${widget.userId}',
-                            style:
-                                TextStyle(fontSize: 16)), // Display the user ID
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(LineAwesomeIcons.smile_beam,
+                                color: Color(0xFF071533)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text('شاركنا باضافة تعليقك',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    fontFamily: 'Amiri',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF071533))),
+                          ],
+                        ),
                       ),
                       _buildPostDetails(),
-                      Divider(),
-                      _buildCommentsSection(),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Post ID: ${widget.postId}',
-                            style: TextStyle(fontSize: 12, color: Colors.grey)),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'التعليقات',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontFamily: 'Amiri',
+                            color: Color(0xFF071533),
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Divider(color: Colors.grey[300]),
+                      ),
+                      _buildCommentsSection(),
                     ],
                   ),
                 ),
@@ -304,42 +334,89 @@ class _ViewPostState extends State<ViewPost> {
   Widget _buildPostDetails() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(post.title,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
-          Text(post.description, style: TextStyle(fontSize: 16)),
-          SizedBox(height: 8),
-          _buildImageWidget(),
-          SizedBox(height: 8),
-          Row(
-            children: [
-              Text('Post ID: ${post.id}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
-              Spacer(),
-              IconButton(
-                icon: Icon(
-                  isLiked ? Icons.thumb_up : Icons.thumb_up_off_alt,
-                  color: isLiked ? Colors.blue : Colors.grey,
-                ),
-                onPressed: toggleLikePost,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    post.title,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      color: Color(0xFF071533),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    post.description,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      color: Color(0xFF071533),
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+            Container(
+              width: double.infinity,
+              height: 200.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: post.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // IconButton(
+                  //   icon: Icon(
+                  //     isLiked ? Icons.thumb_up : Icons.thumb_up_off_alt,
+                  //     color: isLiked ? Color(0xFFffe145) : Colors.grey,
+                  //   ),
+                  //   onPressed: toggleLikePost,
+                  // ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildImageWidget() {
     if (post.imageUrl.isNotEmpty) {
-      return FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image: post.imageUrl,
-        width: double.infinity,
-        fit: BoxFit.cover,
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: post.imageUrl,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
       );
     } else {
       return SizedBox.shrink();
@@ -350,78 +427,82 @@ class _ViewPostState extends State<ViewPost> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('Comments', style: TextStyle(fontSize: 18)),
           if (noComments)
-            Text('Be the first one to comment on this post',
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
-          ...comments.map((comment) => ListTile(
-                title: Row(
-                  children: [
-                    Text(userIdToUsername[comment.userId] ??
-                        'Loading...'), // Display username
-                    if (comment.userId == widget.userId) ...[
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () async {
-                          final newText = await showDialog<String>(
-                            context: context,
-                            builder: (context) {
-                              final editController =
-                                  TextEditingController(text: comment.text);
-                              return AlertDialog(
-                                title: Text('Edit Comment'),
-                                content: TextField(
-                                  controller: editController,
-                                  decoration: InputDecoration(
-                                    hintText: 'Edit your comment',
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(editController.text);
-                                    },
-                                    child: Text('Save'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancel'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-
-                          if (newText != null) {
-                            await editComment(comment.id, newText);
-                          }
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () async {
-                          await deleteComment(comment.id);
-                        },
-                      ),
-                    ],
-                  ],
+            Text(
+              'كن أول من يعلق على هذا المنشور',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontFamily: 'Amiri',
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+          ...comments.map((comment) => Card(
+                margin: const EdgeInsets.symmetric(vertical: 4.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                subtitle: Text(comment.text), // Display comment text
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(8.0),
+                  title: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      userIdToUsername[comment.userId] ?? 'Loading...',
+                      style: TextStyle(
+                        fontFamily: 'Amiri',
+                        color: Color(0xFFffe145),
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  subtitle: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      comment.text,
+                      style: TextStyle(
+                        fontFamily: 'Amiri',
+                        color: Color(0xFF071533),
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ),
               )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: TextField(
-              controller: commentController,
-              decoration: InputDecoration(
-                hintText: 'Add a comment...',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () => addComment(commentController.text),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: TextField(
+                textAlign: TextAlign.right,
+                controller: commentController,
+                cursorColor: Color(0xFFffe145),
+                decoration: InputDecoration(
+                  hintText: '... اكتب تعليقك',
+                  hintStyle: TextStyle(fontFamily: 'Amiri'),
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(color: Color(0xFFffe145)),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.send, color: Color(0xFFffe145)),
+                    onPressed: () => addComment(commentController.text),
+                  ),
                 ),
               ),
             ),

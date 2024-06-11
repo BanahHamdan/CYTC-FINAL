@@ -400,8 +400,8 @@ class _CampaignPageState extends State<CampaignPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => bar(
-                            userId: null,
-                            userRole: null,
+                            userId: '',
+                            userRole: '',
                           ))),
               title: Text('الرئيسية',
                   textAlign: TextAlign.right,

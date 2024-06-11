@@ -929,7 +929,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: null, userRole: null))),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: '', userRole: ''))),
             title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
