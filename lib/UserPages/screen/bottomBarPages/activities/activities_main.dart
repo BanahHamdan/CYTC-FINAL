@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Activities extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           Padding(
@@ -18,7 +20,7 @@ class _ActivitiesState extends State<Activities> {
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
-                'تفاعل معنا',
+                'تفاعل معنا وانضم الى عائلتنا',
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 20,
@@ -34,15 +36,15 @@ class _ActivitiesState extends State<Activities> {
             child: Column(
               children: [
                 _buildCategoryCard('اللانشطة والدورات',
-                    'Get your dream job here this week', 'assets/homePage/campaign.jpg'),
+                    'Get your dream job here this week', 'assets/homePage/activities.jpg'),
                 _buildCategoryCard('الحملات',
-                    'Don\'t miss out on the events', 'assets/image2.png'),
+                    'Don\'t miss out on the events', 'assets/homePage/campaigns.jpg'),
                 _buildCategoryCard('المهرجانات والاحتفالات',
-                    'Learn new skills with our courses', 'assets/image3.png'),
-                _buildCategoryCard('تقديم طلب تدريب للخريجين',
-                    'Make a difference by volunteering', 'assets/image4.png'),
-                _buildCategoryCard('اقترح علينا افكار جديدة',
-                    'Tips to stay healthy and fit', 'assets/image5.png'),
+                    'Learn new skills with our courses', 'assets/homePage/celebration.jpg'),
+                // _buildCategoryCard('تقديم طلب تدريب للخريجين',
+                //     'Make a difference by volunteering', 'assets/image4.png'),
+                // _buildCategoryCard('اقترح علينا افكار جديدة',
+                //     'Tips to stay healthy and fit', 'assets/image5.png'),
               ],
             ),
           ),
