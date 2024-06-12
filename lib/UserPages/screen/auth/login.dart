@@ -260,7 +260,7 @@
 //                           _emailController, //هاي الكونترولر الي بتساعدنا ناخد الداتا من التيكست فيلد
 //                       focusNode: _emailFocusNode,
 //                       onTap: _handleFocusChange,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       // validator: (value) {
 //                       //   if (value == null || value.isEmpty) {
 //                       //     return "Please enter state";
@@ -289,7 +289,7 @@
 //                             )),
 //                         focusedBorder: OutlineInputBorder(
 //                           borderSide: BorderSide(
-//                             color: Color(0xFFf3c344),
+//                             color: Color(0xFFffe145),
 //                             width: 3.0,
 //                           ),
 //                           borderRadius: BorderRadius.circular(20),
@@ -302,7 +302,7 @@
 //                       controller: _passwordController,
 //                       focusNode: _passwordFocusNode,
 //                       onTap: _handleFocusChange,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       obscureText: true,
 //                       decoration: InputDecoration(
 //                         // contentPadding: EdgeInsets.fromLTRB(
@@ -316,7 +316,7 @@
 //                         ),
 //                         focusedBorder: OutlineInputBorder(
 //                           borderSide: BorderSide(
-//                             color: Color(0xFFf3c344),
+//                             color: Color(0xFFffe145),
 //                             width: 3.0,
 //                           ),
 //                           borderRadius: BorderRadius.circular(20),

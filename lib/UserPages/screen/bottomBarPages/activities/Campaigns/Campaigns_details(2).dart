@@ -16,17 +16,19 @@ class _CampaignDetailsState extends State<CampaignDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9F7F2),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          alignment: Alignment.topRight,
+        actions:[  
+          IconButton(
+          alignment: Alignment.centerRight,
           icon: Icon(Icons.close, color: Colors.grey),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,7 +62,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFFf3c344),
+                          color: Color(0xFFffe145),
                           fontFamily: 'Amiri',
                         ),
                       ),
@@ -107,10 +109,11 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                       'فرد',
                       Icons.person),
                   _buildStatCard(
-                      'تاريخ بداية وانتهاء الحملة',
-                      '${_formatDate(widget.campaign['startDate'])} - ${_formatDate(widget.campaign['endDate'])}',
-                      'يوم',
-                      Icons.date_range),
+                    'تاريخ بداية وانتهاء النشاط',
+                    '${_formatDate(widget.campaign['startDate'])} - ${_formatDate(widget.campaign['endDate'])}',
+                    'يوم',
+                    Icons.date_range,
+                  ),
                 ],
               ),
               SizedBox(height: 20),
@@ -120,6 +123,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                   // Add functionality for the register button
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF071533),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -161,7 +165,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
           title,
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFFf3c344),
+            color: Color(0xFFffe145),
             fontFamily: 'Amiri',
           ),
         ),
@@ -191,37 +195,37 @@ class _CampaignDetailsState extends State<CampaignDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, color: Color(0xFFf3c344), size: 30),
+            Icon(icon, color: Color(0xFFffe145), size: 30),
             SizedBox(height: 10),
             Text(
               title,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 13,
                 color: Color(0xFF071533),
                 fontFamily: 'Amiri',
               ),
             ),
-            SizedBox(height: 5),
+            // SizedBox(height: 5),
             Text(
               count,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFf3c344),
+                color: Color(0xFFffe145),
                 fontFamily: 'Amiri',
               ),
             ),
-            Text(
-              unit,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFFf3c344),
-                fontFamily: 'Amiri',
-              ),
-            ),
+            // Text(
+            //   unit,
+            //   textAlign: TextAlign.right,
+            //   style: TextStyle(
+            //     fontSize: 16,
+            //     color: Color(0xFFffe145),
+            //     fontFamily: 'Amiri',
+            //   ),
+            // ),
           ],
         ),
       ),

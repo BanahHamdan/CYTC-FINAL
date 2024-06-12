@@ -1,13 +1,15 @@
-// // ignore_for_file: prefer_const_constructors
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, prefer_const_literals_to_create_immutables
-// ignore_for_file: prefer_const_constructors
+// // ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, prefer_const_literals_to_create_immutables
 
+// import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+// import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+// import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+// import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 // import 'package:location/location.dart';
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
-// import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // class MapPage extends StatefulWidget {
 //   final LatLng destination;
@@ -24,15 +26,12 @@
 //   bool _controllerInitialized = false;
 //   LatLng? _currentP;
 //   List<LatLng> _polylinePoints = [];
-//   BitmapDescriptor? _customMarkerIcon;
-//   Offset? _markerOffset;
-//   Set<Polyline> _polylines = {};
+//   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 //   @override
 //   void initState() {
 //     super.initState();
 //     _initLocationService();
-//     _loadCustomMarkerIcon();
 //     getLocationUpdates();
 //   }
 
@@ -41,135 +40,166 @@
 //     _controllerInitialized = true;
 //   }
 
-//   Future<void> _loadCustomMarkerIcon() async {
-//     _customMarkerIcon = await BitmapDescriptor.fromAssetImage(
-//       ImageConfiguration(size: Size(48, 48)),
-//       'assets/custom_marker.png',
-//     );
-//     setState(() {});
-//   }
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
+//             key: _scaffoldKey,
 //       appBar: PreferredSize(
-//         preferredSize: Size.fromHeight(70.0), // Set the height you want
-//         child: ClipRRect(
-//           borderRadius: BorderRadius.vertical(
-//             bottom: Radius.circular(20),
+//         preferredSize: Size.fromHeight(50.0),
+//         // child: ClipPath(
+//         // clipper: CustomAppBarClipper(),
+//         child: AppBar(
+//           backgroundColor: Color(0xFFffe145).withOpacity(0.7),
+//           elevation: 0,
+//           leading: IconButton(
+//             icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
+//             onPressed: () {
+//               _scaffoldKey.currentState?.openDrawer();
+//             },
 //           ),
-//           child: Container(
-//             decoration: BoxDecoration(
-//               gradient: LinearGradient(
-//                 colors: [
-//                   Color(0xFFFBE66F), //0xFFffe145
-//                   Color(0xFFffe145), //0xFFFFD700   اعتمدي اللي محطوط مش الكومنت
-//                 ],
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//               ),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Color(0xFF071533).withOpacity(0.3),
-//                   spreadRadius: 2,
-//                   blurRadius: 10,
-//                   offset: Offset(0, 3),
-//                 ),
-//               ],
+//           title: Text(
+//             'من الخريطة بامكانك معرفة المنطقة التي نحتاج لتواجدك فيها',
+//             style: TextStyle(
+//               fontFamily: 'Amiri',
+//               fontWeight: FontWeight.bold,
+//               fontSize: 16,
+//               color: Colors.white,
 //             ),
-//             child: SafeArea(
-//               child: Padding(
-//                 padding: const EdgeInsets.all(10),
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         IconButton(
-//                           icon: Icon(
-//                             Icons.arrow_back_ios_new,
-//                             color: Colors.white,
-//                             size: 20,
-//                           ),
-//                           onPressed: () {
-//                             Navigator.of(context).pop();
-//                           },
-//                         ),
-//                         Center(
-//                           child: Text(
-//                             'الخارطة تظهر لك كيفية الوصول الى المكان المطلوب من موقعك الحالي',
-//                             textAlign: TextAlign.center,
-//                             style: TextStyle(
-//                               color: Colors.white,
-//                               fontSize: 17,
-//                               fontWeight: FontWeight.bold,
-//                               fontFamily: 'Amiri',
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
+//             textAlign: TextAlign.center,
 //           ),
+//           centerTitle: true,
+//           actions: [
+//             IconButton(
+//               icon: Icon(LineAwesomeIcons.angle_right_solid,
+//                   color: Colors.white),
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//             ),
+//           ],
 //         ),
+//         // ),
 //       ),
-//       body: Stack(
-//         children: [
-//           _currentP == null
-//               ? Center(
-//                   child: SpinKitFadingCircle(
-//                     color: Color(0xFF071533),
-//                     size: 50.0,
+//       drawer: _buildDrawer(),
+      
+//       body: _currentP == null
+//           ? const Center(
+//               child: Text("...انتظر قليلا"),
+//             )
+//           : GoogleMap(
+//               onMapCreated: _onMapCreated,
+//               initialCameraPosition: CameraPosition(
+//                 target: _currentP ?? LatLng(37.4223, -122.0848),
+//                 zoom: 13.0,
+//               ),
+//               markers: _createMarkers(),
+//               polylines: _createPolylines(),
+//             ),
+//     );
+//   }
+//   Drawer _buildDrawer() {
+//     return Drawer(
+//       child: ListView(
+//         padding: EdgeInsets.zero,
+//         children: <Widget>[
+//           Container(
+//             padding: EdgeInsets.only(top: 40, bottom: 20),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.end,
+//                     children: [
+//                       Text(
+//                         'بانه خالد حمدان',
+//                         style: TextStyle(
+//                           color: Color(0xFF071533),
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 20,
+//                           fontFamily: 'Amiri',
+//                         ),
+//                       ),
+//                     ],
 //                   ),
-//                 )
-//               : GoogleMap(
-//                   onMapCreated: (controller) {
-//                     _onMapCreated(controller);
-//                     if (_currentP != null) {
-//                       _calculateMarkerOffset(_currentP!);
-//                     }
-//                   },
-//                   initialCameraPosition: CameraPosition(
-//                     target: _currentP ?? LatLng(37.4223, -122.0848),
-//                     zoom: 13.0,
+//                   SizedBox(width: 16.0),
+//                   GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => ProfilePage()));
+//                     },
+//                     child: CircleAvatar(
+//                       radius: 30,
+//                       backgroundImage: AssetImage(
+//                           'assets/banah.jpg'), // Replace with your image path
+//                     ),
 //                   ),
-//                   markers: _createMarkers(),
-//                   polylines: _polylines,
-//                   onCameraMove: (position) {
-//                     if (_currentP != null) {
-//                       _calculateMarkerOffset(_currentP!);
-//                     }
-//                   },
-//                 ),
-//           if (_markerOffset != null)
-//             Positioned(
-//               left: _markerOffset!.dx,
-//               top: _markerOffset!.dy,
-//               child: Text(
-//                 "Current Location",
-//                 style: TextStyle(
-//                   color: Colors.red.shade100,
-//                   fontWeight: FontWeight.bold,
-//                   backgroundColor: Colors.red,
-//                 ),
+//                 ],
 //               ),
 //             ),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) => bar(userId: '', userRole: ''))),
+//             title: Text('الرئيسية',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         universityTrainingPage())), // Add onTap functionality
+//             title: Text('تقديم طلب تدريب للخريجين',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+//                 color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         SuggestionsPage())), // Add onTap functionality
+//             title: Text('شاركنا باقتراحاتك وافكارك',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing:
+//                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () {}, // Add onTap functionality for logout
+//             title: Text('تسجيل خروج',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
+//           ),
 //         ],
 //       ),
 //     );
-//   }
-
-//   void _calculateMarkerOffset(LatLng position) async {
-//     ScreenCoordinate screenCoordinate = await _controller.getScreenCoordinate(position);
-//     setState(() {
-//       _markerOffset = Offset(
-//         screenCoordinate.x.toDouble() - 50, // Adjust based on your marker size and text position
-//         screenCoordinate.y.toDouble() - 60, // Adjust based on your marker size and text position
-//       );
-//     });
 //   }
 
 //   Set<Marker> _createMarkers() {
@@ -185,13 +215,28 @@
 //       markers.add(
 //         Marker(
 //           markerId: MarkerId("_currentLocation"),
-//           icon: _customMarkerIcon ?? BitmapDescriptor.defaultMarker,
+//           icon: BitmapDescriptor.defaultMarker,
 //           position: _currentP!,
+//           infoWindow: InfoWindow(
+//         title: "موقعك الحالي",
+//         snippet: "هذا هو مكانك الان",
+//       ),
 //         ),
 //       );
 //     }
 
 //     return markers;
+//   }
+
+//   Set<Polyline> _createPolylines() {
+//     return {
+//       Polyline(
+//         polylineId: PolylineId("route"),
+//         points: _polylinePoints,
+//         color: Colors.blue,
+//         width: 5,
+//       ),
+//     };
 //   }
 
 //   Future<void> getLocationUpdates() async {
@@ -233,7 +278,6 @@
 //             );
 //           }
 //           _getRoute();
-//           _updatePolylines(); // Update polyline when the location is updated
 //         });
 //       }
 //     });
@@ -287,20 +331,6 @@
 //     return points;
 //   }
 
-//   void _updatePolylines() {
-//     if (_currentP == null) return;
-//     setState(() {
-//       _polylines = {
-//         Polyline(
-//           polylineId: PolylineId("current_to_destination"),
-//           points: [_currentP!, widget.destination],
-//           color: Colors.blue,
-//           width: 5,
-//         ),
-//       };
-//     });
-//   }
-
 //   void _initLocationService() {
 //     _locationController.changeSettings(
 //       accuracy: LocationAccuracy.high,
@@ -310,27 +340,7 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
@@ -374,27 +384,27 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            key: _scaffoldKey,
+      key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: Size.fromHeight(60.0),
         // child: ClipPath(
         // clipper: CustomAppBarClipper(),
         child: AppBar(
-          backgroundColor: Color(0xFF071533).withOpacity(0.1),
+          backgroundColor: Color(0xFFffe145).withOpacity(0.7),
           elevation: 0,
           leading: IconButton(
-            icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+            icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();
             },
           ),
           title: Text(
-            'قم بتحديد المكان المطلوب على الخارطة',
+            'من الخريطة بامكانك معرفة المنطقة\n التي نحتاج لتواجدك فيها',
             style: TextStyle(
               fontFamily: 'Amiri',
               fontWeight: FontWeight.bold,
-              fontSize: 10,
-              color: Color(0xFF071533),
+              fontSize: 17,
+              color: Colors.white,
             ),
             textAlign: TextAlign.center,
           ),
@@ -402,7 +412,7 @@ class _MapPageState extends State<MapPage> {
           actions: [
             IconButton(
               icon: Icon(LineAwesomeIcons.angle_right_solid,
-                  color: Color(0xFF071533)),
+                  color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -412,7 +422,6 @@ class _MapPageState extends State<MapPage> {
         // ),
       ),
       drawer: _buildDrawer(),
-      
       body: _currentP == null
           ? const Center(
               child: Text("...انتظر قليلا"),
@@ -428,6 +437,7 @@ class _MapPageState extends State<MapPage> {
             ),
     );
   }
+
   Drawer _buildDrawer() {
     return Drawer(
       child: ListView(
@@ -670,5 +680,3 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
-
-

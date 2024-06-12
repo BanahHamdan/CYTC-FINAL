@@ -46,32 +46,32 @@ class _MapPageState extends State<MapPageHome> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: Size.fromHeight(70.0),
         // child: ClipPath(
           // clipper: CustomAppBarClipper(),
           child: AppBar(
-            backgroundColor: Color(0xFF071533).withOpacity(0.1),
+            backgroundColor: Color(0xFFffe145).withOpacity(0.7),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+              icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
             ),
             title: Text(
-              'الخارطة تظهر لك كيفية الوصول الى موقع المركز من موقعك الحالي',
+              'الخارطة تظهر لك كيفية الوصول \n الى موقع المركز من موقعك الحالي',
               style: TextStyle(
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,
-                fontSize: 10,
-                color: Color(0xFF071533),
+                fontSize: 17,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
             centerTitle: true,
             actions: [
               IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },

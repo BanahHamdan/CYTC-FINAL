@@ -41,7 +41,7 @@
 //                     SizedBox(height: 30),
 //                     TextField(
 //                       textAlign: TextAlign.right,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       decoration: InputDecoration(
 //                         // contentPadding: EdgeInsets.fromLTRB(
 //                         //     180, 20, 10, 20), // Adjust padding
@@ -53,7 +53,7 @@
 //                         ),
 //                         focusedBorder: OutlineInputBorder(
 //                           borderSide:
-//                               BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//                               BorderSide(color: Color(0xFFffe145), width: 3.0),
 //                           borderRadius: BorderRadius.circular(20),
 //                         ),
 //                         // hintStyle: TextStyle(

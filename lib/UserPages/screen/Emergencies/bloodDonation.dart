@@ -50,7 +50,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Row(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -61,7 +61,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                             color: Color(0xFF071533),
                           ),
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(height: 10),
                         Image.asset(
                           'assets/calendar_icon.png', // Replace with the path to your image
                           width: 30,
@@ -80,7 +80,8 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                   },
                   child: Icon(
                     Icons.close,
-                    color: Color(0xFFd54043),
+                    color: Colors.grey,
+                    size: 18,
                   ),
                 ),
               ),

@@ -272,12 +272,13 @@ class _ViewPostState extends State<ViewPost> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.close, size: 18, color: Color(0xFF071533)),
+        actions:[ IconButton(
+          icon: Icon(Icons.close, size: 20, color: Colors.grey),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

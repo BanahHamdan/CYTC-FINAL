@@ -214,7 +214,7 @@
 //       SizedBox(height: 10),
 //       TextField(
 //         textAlign: TextAlign.right,
-//         cursorColor: Color(0xFFf3c344),
+//         cursorColor: Color(0xFFffe145),
 //         controller: _emailController,
 //         focusNode: _emailFocusNode,
 //         decoration: InputDecoration(
@@ -225,7 +225,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),
@@ -233,7 +233,7 @@
 //       SizedBox(height: 10),
 //       TextField(
 //         textAlign: TextAlign.right,
-//         cursorColor: Color(0xFFf3c344),
+//         cursorColor: Color(0xFFffe145),
 //         controller: _usernameController,
 //         focusNode: _usernameFocusNode,
 //         decoration: InputDecoration(
@@ -244,7 +244,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),
@@ -264,7 +264,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),
@@ -272,7 +272,7 @@
 //       SizedBox(height: 10),
 //       TextField(
 //         textAlign: TextAlign.right,
-//         cursorColor: Color(0xFFf3c344),
+//         cursorColor: Color(0xFFffe145),
 //         controller: _phoneNumberController,
 //         focusNode: _phoneNumberFocusNode,
 //         decoration: InputDecoration(
@@ -283,7 +283,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),
@@ -291,7 +291,7 @@
 //       SizedBox(height: 10),
 //       TextField(
 //         textAlign: TextAlign.right,
-//         cursorColor: Color(0xFFf3c344),
+//         cursorColor: Color(0xFFffe145),
 //         controller: _cityController,
 //         focusNode: _cityFocusNode,
 //         decoration: InputDecoration(
@@ -302,7 +302,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),
@@ -310,7 +310,7 @@
 //       SizedBox(height: 10),
 //       TextField(
 //         textAlign: TextAlign.right,
-//         cursorColor: Color(0xFFf3c344),
+//         cursorColor: Color(0xFFffe145),
 //         controller: _bloodTypeController,
 //         focusNode: _bloodTypeFocusNode,
 //         decoration: InputDecoration(
@@ -321,7 +321,7 @@
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//             borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //         ),

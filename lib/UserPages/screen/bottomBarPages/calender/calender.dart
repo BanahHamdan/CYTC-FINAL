@@ -50,6 +50,7 @@ class _CalendarPageState extends State<CalendarPage> {
             child: Text(
               'اختر تاريخا لمعرفة التفاصيل',
               style: TextStyle(
+                fontWeight: FontWeight.bold,
                 fontFamily: 'Amiri',
                 color: Color(0xFF071533),
                 fontSize: 18,
@@ -112,7 +113,7 @@ class _CalendarPageState extends State<CalendarPage> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: IconButton(
-                                  icon: Icon(Icons.close, color: Color(0xFF071533)),
+                                  icon: Icon(Icons.close, color: Colors.grey, size:18,),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -124,6 +125,14 @@ class _CalendarPageState extends State<CalendarPage> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
+                              Align(
+                                alignment: Alignment.center,
+                              child: Image.asset(
+                                'assets/gif/calendar.gif', 
+                                width: 90, 
+                                height: 90,
+                                ),
+                              ),
                               for (var eventName in eventNames)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,7 +169,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 10),
+                                    SizedBox(height: 20),
                                   ],
                                 ),
                             ],
@@ -198,7 +207,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       color: isSelected
                           ? Color(0xFFffe145).withOpacity(0.3)
                           : isToday
-                              ? Color(0xFFffe145).withOpacity(0.1)
+                              ? Color(0xFFffe145).withOpacity(0.6)
                               : Colors.transparent,
                     ),
                     child: Stack(

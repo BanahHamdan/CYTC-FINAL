@@ -230,12 +230,12 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () {}, // Add onTap functionality
+            onTap: ()  => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage())), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () {}, // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage())),  // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
@@ -255,7 +255,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.calendar_alt), label: 'التقويم'),
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.comment_dots_solid), label: 'تواصل معنا'),
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.trophy_solid), label: 'انجازاتنا'),
-        BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.sign_in_alt_solid), label: 'تفاعل معنا'),
+        BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.sign_in_alt_solid), label: 'انضم لنا'),
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
       ],
       currentIndex: _selectedIndex,

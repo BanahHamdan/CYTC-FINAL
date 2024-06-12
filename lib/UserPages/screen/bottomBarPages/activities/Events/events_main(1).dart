@@ -29,7 +29,7 @@
 //               decoration: BoxDecoration(
 //                 gradient: LinearGradient(
 //                   colors: [
-//                     Color(0xFFFBE66F), //0xFFf3c344
+//                     Color(0xFFFBE66F), //0xFFffe145
 //                     Color(0xFFffe145),
 //                   ],
 //                   begin: Alignment.topCenter,
@@ -189,13 +189,14 @@
 //   }
 // }
 
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:flutter/material.dart';
+import 'events_list(2).dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
-import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'events_list(2).dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -205,11 +206,13 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Add this line
   TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Add this line
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: ClipPath(
@@ -220,11 +223,11 @@ class _EventsPageState extends State<EventsPage> {
             leading: IconButton(
               icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                _scaffoldKey.currentState?.openDrawer(); // Change this line
               },
             ),
             title: Text(
-              'شارك معنا وانضم الى عائلتنا',
+              'الانشطة والدورات',
               style: TextStyle(
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,

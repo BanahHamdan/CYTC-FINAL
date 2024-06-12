@@ -11,17 +11,19 @@ class EventDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9F7F2),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          alignment: Alignment.topRight,
+        actions:[  
+          IconButton(
+          alignment: Alignment.centerRight,
           icon: Icon(Icons.close, color: Colors.grey),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -55,7 +57,7 @@ class EventDetails extends StatelessWidget {
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFFf3c344),
+                          color: Color(0xFFffe145),
                           fontFamily: 'Amiri',
                         ),
                       ),
@@ -154,7 +156,7 @@ class EventDetails extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFFf3c344),
+            color: Color(0xFFffe145),
             fontFamily: 'Amiri',
           ),
         ),
@@ -184,37 +186,37 @@ class EventDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, color: Color(0xFFf3c344), size: 30),
+            Icon(icon, color: Color(0xFFffe145), size: 30),
             SizedBox(height: 10),
             Text(
               title,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 13,
                 color: Color(0xFF071533),
                 fontFamily: 'Amiri',
               ),
             ),
-            SizedBox(height: 5),
+            // SizedBox(height: 5),
             Text(
               count,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFf3c344),
+                color: Color(0xFFffe145),
                 fontFamily: 'Amiri',
               ),
             ),
-            Text(
-              unit,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFFf3c344),
-                fontFamily: 'Amiri',
-              ),
-            ),
+            // Text(
+            //   unit,
+            //   textAlign: TextAlign.right,
+            //   style: TextStyle(
+            //     fontSize: 16,
+            //     color: Color(0xFFffe145),
+            //     fontFamily: 'Amiri',
+            //   ),
+            // ),
           ],
         ),
       ),

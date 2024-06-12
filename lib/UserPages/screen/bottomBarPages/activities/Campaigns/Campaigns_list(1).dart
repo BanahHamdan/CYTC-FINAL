@@ -49,7 +49,7 @@
 //               decoration: BoxDecoration(
 //                 gradient: LinearGradient(
 //                   colors: [
-//                     Color(0xFFf3c344), //0xFFf3c344
+//                     Color(0xFFffe145), //0xFFffe145
 //                     Color(0xFFffe145),
 //                   ],
 //                   begin: Alignment.topCenter,
@@ -325,7 +325,7 @@ class _CampaignPageState extends State<CampaignPage> {
         ),
       ),
       drawer: _buildDrawer(),
-      backgroundColor: Color(0xfffafafa),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           ClipRRect(

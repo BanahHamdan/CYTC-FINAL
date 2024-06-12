@@ -98,10 +98,10 @@ class _AdminChatPageState extends State<AdminChatPage> {
         child: ClipPath(
           clipper: CustomAppBarClipper(),
           child: AppBar(
-            backgroundColor: Color(0xFF071533).withOpacity(0.1),
+            backgroundColor: Color(0xFFffe145).withOpacity(0.7),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+              icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
@@ -111,15 +111,15 @@ class _AdminChatPageState extends State<AdminChatPage> {
               style: TextStyle(
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Color(0xFF071533),
+                fontSize: 18,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
             centerTitle: true,
             actions: [
               IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },

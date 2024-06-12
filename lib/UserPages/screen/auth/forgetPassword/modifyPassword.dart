@@ -43,7 +43,7 @@
 //                     TextField(
 //                       textAlign: TextAlign.right,
 //                       obscureText: true,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       decoration: InputDecoration(
 //                         // labelText: 'ادخل كلمة المرور الجديدة',
 //                         hintText: 'ادخل كلمة المرور الجديدة',
@@ -53,7 +53,7 @@
 //                           borderRadius: BorderRadius.circular(20),
 //                         ),
 //                         focusedBorder: OutlineInputBorder(
-//                           borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//                           borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //                           borderRadius: BorderRadius.circular(20),
 //                         ),
 //                       ),
@@ -62,7 +62,7 @@
 //                     TextField(
 //                       textAlign: TextAlign.right,
 //                       obscureText: true,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       decoration: InputDecoration(
 //                         // labelText: 'اعد كتابة كلمة المرور',
 //                         hintText: 'اعد كتابة كلمة المرور',
@@ -72,7 +72,7 @@
 //                           borderRadius: BorderRadius.circular(20),
 //                         ),
 //                         focusedBorder: OutlineInputBorder(
-//                           borderSide: BorderSide(color: Color(0xFFf3c344), width: 3.0),
+//                           borderSide: BorderSide(color: Color(0xFFffe145), width: 3.0),
 //                           borderRadius: BorderRadius.circular(20),
 //                         ),
 //                       ),

@@ -51,7 +51,7 @@
 //               decoration: BoxDecoration(
 //                 gradient: LinearGradient(
 //                   colors: [
-//                     Color(0xFFf3c344),
+//                     Color(0xFFffe145),
 //                     Color(0xFFffe145),
 //                   ],
 //                   begin: Alignment.topCenter,

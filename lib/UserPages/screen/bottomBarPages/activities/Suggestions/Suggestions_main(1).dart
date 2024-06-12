@@ -65,7 +65,7 @@
 //             decoration: BoxDecoration(
 //               gradient: LinearGradient(
 //                 colors: [
-//                   Color(0xFFf3c344),
+//                   Color(0xFFffe145),
 //                   Color(0xFFffe145),
 //                 ],
 //                 begin: Alignment.topCenter,
@@ -73,7 +73,7 @@
 //               ),
 //               boxShadow: [
 //                 BoxShadow(
-//                   color: Color(0xFF071533).withOpacity(0.3),
+//                   color: Color(0xFF071533).withOpacity(0.1),
 //                   spreadRadius: 2,
 //                   blurRadius: 10,
 //                   offset: Offset(0, 3),
@@ -234,7 +234,7 @@
 //                       borderRadius: BorderRadius.circular(10),
 //                       boxShadow: [
 //                         BoxShadow(
-//                           color: Color(0xFF071533).withOpacity(0.3),
+//                           color: Color(0xFF071533).withOpacity(0.1),
 //                           spreadRadius: 2,
 //                           blurRadius: 10,
 //                         ),
@@ -260,7 +260,7 @@
 //                             ),
 //                             focusedBorder: OutlineInputBorder(
 //                               borderSide: BorderSide(
-//                                   color: Color(0xFFf3c344),
+//                                   color: Color(0xFFffe145),
 //                                   width: 2), // Border color when focused
 //                             ),
 //                             enabledBorder: OutlineInputBorder(
@@ -269,7 +269,7 @@
 //                                       Colors.grey), // Border color when enabled
 //                             ),
 //                           ),
-//                           cursorColor: Color(0xFFf3c344),
+//                           cursorColor: Color(0xFFffe145),
 //                         ),
 //                       ],
 //                     ),
@@ -284,7 +284,7 @@
 //                       borderRadius: BorderRadius.circular(10),
 //                       boxShadow: [
 //                         BoxShadow(
-//                           color: Color(0xFF071533).withOpacity(0.3),
+//                           color: Color(0xFF071533).withOpacity(0.1),
 //                           spreadRadius: 2,
 //                           blurRadius: 10,
 //                         ),
@@ -310,7 +310,7 @@
 //                             ),
 //                             focusedBorder: OutlineInputBorder(
 //                               borderSide: BorderSide(
-//                                   color: Color(0xFFf3c344),
+//                                   color: Color(0xFFffe145),
 //                                   width: 2), // Border color when focused
 //                             ),
 //                             enabledBorder: OutlineInputBorder(
@@ -319,7 +319,7 @@
 //                                       Colors.grey), // Border color when enabled
 //                             ),
 //                           ),
-//                           cursorColor: Color(0xFFf3c344),
+//                           cursorColor: Color(0xFFffe145),
 //                         ),
 //                       ],
 //                     ),
@@ -335,7 +335,7 @@
 //                 borderRadius: BorderRadius.circular(10),
 //                 boxShadow: [
 //                   BoxShadow(
-//                     color: Color(0xFF071533).withOpacity(0.3),
+//                     color: Color(0xFF071533).withOpacity(0.1),
 //                     spreadRadius: 2,
 //                     blurRadius: 10,
 //                   ),
@@ -363,7 +363,7 @@
 //                       ),
 //                       focusedBorder: OutlineInputBorder(
 //                         borderSide: BorderSide(
-//                             color: Color(0xFFf3c344),
+//                             color: Color(0xFFffe145),
 //                             width: 2), // Border color when focused
 //                       ),
 //                       enabledBorder: OutlineInputBorder(
@@ -371,7 +371,7 @@
 //                             color: Colors.grey), // Border color when enabled
 //                       ),
 //                     ),
-//                     cursorColor: Color(0xFFf3c344),
+//                     cursorColor: Color(0xFFffe145),
 //                   ),
 //                 ],
 //               ),
@@ -384,7 +384,7 @@
 //                 borderRadius: BorderRadius.circular(10),
 //                 boxShadow: [
 //                   BoxShadow(
-//                     color: Color(0xFF071533).withOpacity(0.3),
+//                     color: Color(0xFF071533).withOpacity(0.1),
 //                     spreadRadius: 2,
 //                     blurRadius: 10,
 //                   ),
@@ -411,7 +411,7 @@
 //                       ),
 //                       focusedBorder: OutlineInputBorder(
 //                         borderSide: BorderSide(
-//                             color: Color(0xFFf3c344),
+//                             color: Color(0xFFffe145),
 //                             width: 2), // Border color when focused
 //                       ),
 //                       enabledBorder: OutlineInputBorder(
@@ -419,7 +419,7 @@
 //                             color: Colors.grey), // Border color when enabled
 //                       ),
 //                     ),
-//                     cursorColor: Color(0xFFf3c344),
+//                     cursorColor: Color(0xFFffe145),
 //                   ),
 //                 ],
 //               ),
@@ -564,16 +564,17 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: ClipPath(
           clipper: CustomAppBarClipper(),
           child: AppBar(
-            backgroundColor: Color(0xFF071533).withOpacity(0.1),
+            backgroundColor: Color(0xFFffe145).withOpacity(0.7),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+              icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
@@ -584,14 +585,14 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
-                color: Color(0xFF071533),
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
             centerTitle: true,
             actions: [
               IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -617,7 +618,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xFF071533).withOpacity(0.3),
+                          color: Color(0xFF071533).withOpacity(0.1),
                           spreadRadius: 2,
                           blurRadius: 10,
                         ),
@@ -643,7 +644,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Color(0xFFf3c344),
+                                  color: Color(0xFFffe145),
                                   width: 2), // Border color when focused
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -652,7 +653,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                                       Colors.grey), // Border color when enabled
                             ),
                           ),
-                          cursorColor: Color(0xFFf3c344),
+                          cursorColor: Color(0xFFffe145),
                         ),
                       ],
                     ),
@@ -667,7 +668,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xFF071533).withOpacity(0.3),
+                          color: Color(0xFF071533).withOpacity(0.1),
                           spreadRadius: 2,
                           blurRadius: 10,
                         ),
@@ -693,7 +694,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Color(0xFFf3c344),
+                                  color: Color(0xFFffe145),
                                   width: 2), // Border color when focused
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -702,7 +703,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                                       Colors.grey), // Border color when enabled
                             ),
                           ),
-                          cursorColor: Color(0xFFf3c344),
+                          cursorColor: Color(0xFFffe145),
                         ),
                       ],
                     ),
@@ -718,7 +719,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFF071533).withOpacity(0.3),
+                    color: Color(0xFF071533).withOpacity(0.1),
                     spreadRadius: 2,
                     blurRadius: 10,
                   ),
@@ -746,7 +747,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: Color(0xFFf3c344),
+                            color: Color(0xFFffe145),
                             width: 2), // Border color when focused
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -754,7 +755,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                             color: Colors.grey), // Border color when enabled
                       ),
                     ),
-                    cursorColor: Color(0xFFf3c344),
+                    cursorColor: Color(0xFFffe145),
                   ),
                 ],
               ),
@@ -767,7 +768,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFF071533).withOpacity(0.3),
+                    color: Color(0xFF071533).withOpacity(0.1),
                     spreadRadius: 2,
                     blurRadius: 10,
                   ),
@@ -794,7 +795,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: Color(0xFFf3c344),
+                            color: Color(0xFFffe145),
                             width: 2), // Border color when focused
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -802,7 +803,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                             color: Colors.grey), // Border color when enabled
                       ),
                     ),
-                    cursorColor: Color(0xFFf3c344),
+                    cursorColor: Color(0xFFffe145),
                   ),
                 ],
               ),
@@ -814,6 +815,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                 // submitSuggestion();
               },
               style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFffe145),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

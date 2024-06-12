@@ -44,7 +44,7 @@
 //                     SizedBox(height: 30),
 //                     TextField(
 //                       textAlign: TextAlign.right,
-//                       cursorColor: Color(0xFFf3c344),
+//                       cursorColor: Color(0xFFffe145),
 //                       decoration: InputDecoration(
 //                         // labelText: 'رمز التحقق',
 //                         hintText: 'ادخل رمز التحقق ',
@@ -55,7 +55,7 @@
 //                         ),
 //                         focusedBorder: OutlineInputBorder(
 //                           borderSide: BorderSide(
-//                             color: Color(0xFFf3c344),
+//                             color: Color(0xFFffe145),
 //                             width: 3.0,
 //                           ),
 //                           borderRadius: BorderRadius.circular(20),
