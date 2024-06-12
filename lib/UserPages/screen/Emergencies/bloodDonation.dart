@@ -1,5 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
+import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -84,7 +89,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                     size: 18,
                   ),
                 ),
-              ),
+              ), 
             ],
           ),
           content: Text(
@@ -104,7 +109,36 @@ class _BloodDonationPageState extends State<BloodDonationPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(35.0),
+        // child: ClipPath(
+        //   clipper: CustomAppBarClipper(),
+          child: AppBar(
+            backgroundColor: Color(0xFF071533).withOpacity(0.1),
+            elevation: 0, 
+            leading: Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        // ),
+      ),
       backgroundColor: Colors.white,
+      drawer: _buildDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -117,39 +151,6 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                     height: 200,
                     color: Color(0xFF071533).withOpacity(0.1),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 300,
-                  child: IconButton(
-                    icon: Icon(
-                      LineAwesomeIcons.angle_right_solid,
-                      color: Color(0xFF071533),
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Positioned(
-                  top: 5,
-                  left: 12,
-                  child: Builder(
-                    builder: (context) {
-                      return IconButton(
-                        icon: Icon(Icons.menu,
-                            color: Color(0xFF071533), size: 20),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
-                      );
-                    },
-                  ),
-                  //   ],
-                  // ),
                 ),
                 Positioned(
                   top: 30,
@@ -261,9 +262,9 @@ class _BloodDonationPageState extends State<BloodDonationPage>
             ),
             SizedBox(height: 20),
             Text(
-              'ملاحظة: يجب ان يكون قد مر على الاقل 3 شهور منذ اخر مرة قمت بالتبرع بالدم بها',
+              'ملاحظة: يجب ان يكون قد مر على الاقل 3 اشهر على الاقل \n منذ اخر مرة قمت بالتبرع بالدم بها',
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   fontFamily: 'Amiri',
                   color: Color(0xFFd54043),
                   fontWeight: FontWeight.bold),
@@ -294,14 +295,100 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                 ),
               ),
             ),
+            SizedBox(height: 20,),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 40, bottom: 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'بانه خالد حمدان',
+                        style: TextStyle(color: Color(0xFF071533), fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Amiri'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: '', userRole: '',))),
+            title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage())), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage())), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
+            title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
+          ),
+        ],
       ),
     );
   }
 }
 
 class BackgroundClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height * 0.6);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height * 0.6,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class CustomAppBarClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();

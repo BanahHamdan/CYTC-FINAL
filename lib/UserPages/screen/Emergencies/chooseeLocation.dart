@@ -216,6 +216,7 @@
 
 import 'package:cytc/UserPages/screen/Emergencies/MapPage.dart';
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
@@ -420,7 +421,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () {}, // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
             title: Text('تسجيل خروج',
                 textAlign: TextAlign.right,
                 style: TextStyle(

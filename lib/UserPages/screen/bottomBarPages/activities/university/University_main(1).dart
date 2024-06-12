@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
@@ -341,7 +342,7 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () {}, // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
             title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),

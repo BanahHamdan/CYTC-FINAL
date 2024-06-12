@@ -247,6 +247,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:convert';
+import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -434,7 +435,7 @@ class _CampaignPageState extends State<CampaignPage> {
                   Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
             ),
             ListTile(
-              onTap: () {}, // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
               title: Text('تسجيل خروج',
                   textAlign: TextAlign.right,
                   style: TextStyle(

@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, library_private_types_in_public_api, use_key_in_widget_constructors
 import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -26,6 +30,36 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, //0xFFF9F7F2
+      appBar: AppBar(
+        backgroundColor: Color(0xFF071533).withOpacity(0.1), // Baby blue
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              LineAwesomeIcons.angle_right_solid,
+              color: Color(0xFF071533),
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Color(0xFF071533),
+                size: 20,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+      ),
       drawer: _buildDrawer(),
       body: SingleChildScrollView(
         child: Column(
@@ -36,37 +70,37 @@ class _ProfilePageState extends State<ProfilePage> {
                 ClipPath(
                   clipper: BackgroundClipper(),
                   child: Container(
-                    height: 200,
-                    color: Color(0xFFEBF5FF), // Baby blue
+                    height: 170,
+                    color: Color(0xFF071533).withOpacity(0.1), // Baby blue
                   ),
                 ),
+                // Positioned(
+                //   top: 20,
+                //   left: 16,
+                //   child: Row(
+                //     children: [
+                //       IconButton(
+                //         icon: Icon(Icons.arrow_back_ios_new,
+                //             color: Color(0xFF071533), size: 20,),
+                //         onPressed: () {
+                //           Navigator.pop(context);
+                //         },
+                //       ),
+                //       Builder(
+                //         builder: (context) {
+                //           return IconButton(
+                //             icon: Icon(Icons.menu, color: Color(0xFF071533), size: 20,),
+                //             onPressed: () {
+                //               Scaffold.of(context).openDrawer();
+                //             },
+                //           );
+                //         },
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Positioned(
-                  top: 20,
-                  left: 16,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios_new,
-                            color: Color(0xFF071533), size: 20,),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Builder(
-                        builder: (context) {
-                          return IconButton(
-                            icon: Icon(Icons.menu, color: Color(0xFF071533), size: 20,),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 100,
+                  top: 70,
                   left: 0,
                   right: 0,
                   child: Column(
@@ -86,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color(0xFFEBF5FF),
+                                  color: Color(0xFF071533).withOpacity(0.1),
                                 ),
                                 padding: EdgeInsets.all(4),
                                 child: Icon(
@@ -141,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               isSettingsSelected = false;
                             });
                           },
-                          child: _buildTab('تقاريري', isReportsSelected),
+                          child: _buildTab('انجازاتي', isReportsSelected),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -185,79 +219,111 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildDrawer() {
     return Drawer(
-      child: Container(
-        width: 250, // Set the width of the drawer
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFFEBF5FF),
-              ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  'القائمة',
-                  style: TextStyle(
-                    color: Color(0xFF071533),
-                    fontSize: 25,
-                    fontFamily: 'Amiri',
-                    fontWeight: FontWeight.bold,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 40, bottom: 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'بانه خالد حمدان',
+                        style: TextStyle(
+                            color: Color(0xFF071533),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'Amiri'),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                // Navigate to home
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeTestGrey(userId: '',)));
-              },
-              title: Row(
-                children: [
-                  // Icon(Icons.arrow_back_ios,
-                  //     color: Color(0xFF071533), size: 15),
-                  Spacer(),
-                  Text('الرئيسية', textAlign: TextAlign.right),
-                  SizedBox(width: 10),
-                  Icon(Icons.home, color: Color(0xFFffe145)),
+                  SizedBox(width: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage()));
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(
+                          'assets/banah.jpg'), // Replace with your image path
+                    ),
+                  ),
                 ],
               ),
             ),
-            ListTile(
-              onTap: () {
-                // Navigate to profile
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()));
-              },
-              title: Row(
-                children: [
-                  // Icon(Icons.arrow_back_ios,
-                  //     color: Color(0xFF071533), size: 15),
-                  Spacer(),
-                  Text('الملف الشخصي', textAlign: TextAlign.right),
-                  SizedBox(width: 10),
-                  Icon(Icons.account_circle, color: Color(0xFFffe145)),
-                ],
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                // Handle logout
-              },
-              title: Row(
-                children: [
-                  // Icon(Icons.arrow_back_ios,
-                  //     color: Color(0xFF071533), size: 15),
-                  Spacer(),
-                  Text('تسجيل خروج', textAlign: TextAlign.right),
-                  SizedBox(width: 10),
-                  Icon(Icons.logout, color: Color(0xFFffe145)),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => bar(
+                          userId: '',
+                          userRole: '',
+                        ))),
+            title: Text('الرئيسية',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        universityTrainingPage())), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+                color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SuggestionsPage())), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing:
+                Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        LoginPage())), // Add onTap functionality for logout
+            title: Text('تسجيل خروج',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
+          ),
+        ],
       ),
     );
   }
@@ -309,24 +375,24 @@ class _ProfilePageState extends State<ProfilePage> {
             border: TableBorder.all(color: Colors.grey),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             columnWidths: {
-              0: FractionColumnWidth(0.19),
-              1: FractionColumnWidth(0.18),
-              2: FractionColumnWidth(0.18),
-              3: FractionColumnWidth(0.18),
-              4: FractionColumnWidth(0.14),
-              5: FractionColumnWidth(0.14),
+              // 0: FractionColumnWidth(0.19),
+              0: FractionColumnWidth(0.2),
+              1: FractionColumnWidth(0.3),
+              2: FractionColumnWidth(0.3),
+              // 4: FractionColumnWidth(0.14),
+              3: FractionColumnWidth(0.2),
             },
             children: [
               TableRow(
                 decoration: BoxDecoration(
-                  color: Color(0xFFEBF5FF),
+                  color: Color(0xFF071533).withOpacity(0.1),
                 ),
                 children: [
-                  _buildTableCell('استمرارية النشاط', true),
+                  // _buildTableCell('استمرارية النشاط', true),
                   _buildTableCell('عدد الساعات'),
                   _buildTableCell('تاريخ النهاية'),
                   _buildTableCell('تاريخ البداية'),
-                  _buildTableCell('التصنيف'),
+                  // _buildTableCell('التصنيف'),
                   _buildTableCell('اسم النشاط'),
                 ],
               ),
@@ -335,24 +401,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.white,
                 ),
                 children: [
-                  _buildStatusCell('مستمر', true),
+                  // _buildStatusCell('مستمر', true),
                   _buildTableCell('50'),
                   _buildTableCell('2023-12-31'),
                   _buildTableCell('2023-01-01'),
-                  _buildTableCell('تعليم'),
+                  // _buildTableCell('تعليم'),
                   _buildTableCell('نشاط 1'),
                 ],
               ),
               TableRow(
                 decoration: BoxDecoration(
-                  color: Color(0xFFEBF5FF),
+                  color: Color(0xFF071533).withOpacity(0.1),
                 ),
                 children: [
-                  _buildStatusCell('منتهي', false),
+                  // _buildStatusCell('منتهي', false),
                   _buildTableCell('30'),
                   _buildTableCell('2023-06-30'),
                   _buildTableCell('2023-02-01'),
-                  _buildTableCell('رياضة'),
+                  // _buildTableCell('رياضة'),
                   _buildTableCell('نشاط 2'),
                 ],
               ),
@@ -361,24 +427,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.white,
                 ),
                 children: [
-                  _buildStatusCell('مستمر', true),
+                  // _buildStatusCell('مستمر', true),
                   _buildTableCell('20'),
                   _buildTableCell('2023-11-30'),
                   _buildTableCell('2023-03-01'),
-                  _buildTableCell('صحة'),
+                  // _buildTableCell('صحة'),
                   _buildTableCell('نشاط 3'),
                 ],
               ),
               TableRow(
                 decoration: BoxDecoration(
-                  color: Color(0xFFEBF5FF),
+                  color: Color(0xFF071533).withOpacity(0.1),
                 ),
                 children: [
-                  _buildStatusCell('منتهي', false),
+                  // _buildStatusCell('منتهي', false),
                   _buildTableCell('40'),
                   _buildTableCell('2023-08-31'),
                   _buildTableCell('2023-04-01'),
-                  _buildTableCell('ثقافة'),
+                  // _buildTableCell('ثقافة'),
                   _buildTableCell('نشاط 4'),
                 ],
               ),
@@ -396,7 +462,7 @@ class _ProfilePageState extends State<ProfilePage> {
         text,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 10,
           fontFamily: 'Amiri',
         ),
       ),
@@ -451,7 +517,8 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 30,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(0xFFEBF5FF), // Same color as the app bar
+              color: Color(0xFF071533)
+                  .withOpacity(0.1), // Same color as the app bar
             ),
             child: Icon(Icons.logout, color: Color(0xFF071533), size: 20),
           ),
@@ -470,7 +537,8 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 30,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(0xFFEBF5FF), // Same color as the app bar
+              color: Color(0xFF071533)
+                  .withOpacity(0.1), // Same color as the app bar
             ),
             child: Icon(Icons.delete, color: Color(0xFF071533), size: 20),
           ),
@@ -551,7 +619,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   value,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontFamily: 'Amiri',
                   ),
                 ),
@@ -572,7 +640,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 30,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFFEBF5FF), // Same color as the app bar
+                  color: Color(0xFF071533)
+                      .withOpacity(0.1), // Same color as the app bar
                 ),
                 child: Icon(icon, color: Color(0xFF071533), size: 20),
               ),
@@ -744,8 +813,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _logout() {
     // Perform logout and navigate to login page
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LoginPage())); // Add onTap functionality for logout
   }
 
   void _pickProfileImage() async {
