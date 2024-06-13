@@ -256,7 +256,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.calendar_alt), label: 'التقويم'),
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.comment_dots_solid), label: 'تواصل معنا'),
         BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.trophy_solid), label: 'انجازاتنا'),
-        BottomNavigationBarItem(icon: Icon(LineAwesomeIcons.sign_in_alt_solid), label: 'انضم لنا'),
+        BottomNavigationBarItem(icon: Icon(Icons.group_add), label: 'انضم لنا'),
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
       ],
       currentIndex: _selectedIndex,
