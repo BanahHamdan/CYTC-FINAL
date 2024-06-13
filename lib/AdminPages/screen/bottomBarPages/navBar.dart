@@ -261,27 +261,27 @@ class _AdminBarState extends State<AdminBar> {
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return CalendarPage();
+        return CalendarPage(userId: widget.userId);
       case 1:
         return ChatPage(userId: widget.userId);
       case 2:
         return UserPostsPage(userId: widget.userId);
       case 3:
-        return Activities();
+        return Activities(userId: widget.userId);
       case 4:
-        return AdminHomePage(userId: '',);
+        return AdminHomePage(userId: widget.userId,);
       case 5:
-        return universityTrainingPage();
+        return universityTrainingPage(userId: widget.userId);
       case 6:
-        return SuggestionsPage();
+        return SuggestionsPage(userId: widget.userId);
       case 7:
-        return LoginPage();
+        return LoginPage(userId: widget.userId);
       case 8:
-        return Adminviewpost(userId: '',);
+        return Adminviewpost(userId: widget.userId,);
       case 9:
-        return Activities();
+        return Activities(userId: widget.userId);
       default:
-        return AdminHomePage(userId: '',);
+        return AdminHomePage(userId: widget.userId,);
     }
   }
 

@@ -583,7 +583,7 @@ class _HomePageState extends State<HomePage> {
           'assets/homePage/ambulance_icon.png',
           () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ParamedicsPage()),
+            MaterialPageRoute(builder: (context) => ParamedicsPage(userId: widget.userId ,userRole: '0',)),
           ),
         ),
       ),

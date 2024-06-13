@@ -9,6 +9,9 @@ import 'package:cytc/linkapi.dart';
 class CalendarPage extends StatefulWidget {
   @override
   _CalendarPageState createState() => _CalendarPageState();
+
+  final String userId;
+  const CalendarPage({Key? key, required this.userId}) : super(key: key);
 }
 
 class _CalendarPageState extends State<CalendarPage> {

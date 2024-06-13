@@ -157,7 +157,7 @@ class forgotPassword extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
+                                  builder: (context) => LoginPage(userId: widget.userId)),
                             );
                           },
                           child: Icon(

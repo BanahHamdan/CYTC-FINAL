@@ -88,7 +88,7 @@ class _WelcomePageState extends State<WelcomePage>
       // Get.to(() => LoginPage());
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
-      Get.to(() => AdminBar(userId: '', userRole: '',));
+      // Get.to(() => AdminBar(userId: '', userRole: '',));
     });
   }
 

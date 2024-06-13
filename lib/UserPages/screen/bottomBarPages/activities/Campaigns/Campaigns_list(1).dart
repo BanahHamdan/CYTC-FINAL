@@ -255,8 +255,9 @@ import '../../buttonBar.dart';
 import 'Campaigns_details(2).dart';
 
 class CampaignPage extends StatefulWidget {
-  const CampaignPage({super.key});
- 
+  const CampaignPage({Key? key, required this.userId}) : super(key: key);
+  final String userId;
+
   @override
   _CampaignPageState createState() => _CampaignPageState();
 }
@@ -384,7 +385,7 @@ class _CampaignPageState extends State<CampaignPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CampaignPage()));
+                                builder: (context) => CampaignPage(userId: widget.userId,)));
                       },
                       child: CircleAvatar(
                         radius: 30,
@@ -435,7 +436,7 @@ class _CampaignPageState extends State<CampaignPage> {
                   Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
             ),
             ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
               title: Text('تسجيل خروج',
                   textAlign: TextAlign.right,
                   style: TextStyle(
@@ -477,7 +478,7 @@ class _CampaignPageState extends State<CampaignPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CampaignDetails(campaign: campaign),
+              builder: (context) => CampaignDetails(campaign: campaign, userId: widget.userId,),
             ),
           );
         },

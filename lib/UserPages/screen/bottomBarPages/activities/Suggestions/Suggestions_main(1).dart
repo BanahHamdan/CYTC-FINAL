@@ -518,6 +518,10 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 class SuggestionsPage extends StatefulWidget {
   @override
   _SuggestionsPageState createState() => _SuggestionsPageState();
+
+  final String userId;
+
+  const SuggestionsPage({Key? key, required this.userId}) : super(key: key);
 }
 
 class _SuggestionsPageState extends State<SuggestionsPage> {
@@ -920,7 +924,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -932,22 +936,22 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: '', userRole: ''))),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: widget.userId, userRole: ''))),
             title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage())), // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage())), // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId))), // Add onTap functionality for logout
             title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),

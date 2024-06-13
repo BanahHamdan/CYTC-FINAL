@@ -603,7 +603,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              BloodDonationPage()));
+                                              BloodDonationPage(userId: widget.userId)));
                                 },
                                 child: Column(
                                   children: [
@@ -703,7 +703,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => CampaignPage()),
+                                          builder: (context) => CampaignPage(userId: widget.userId)),
                                     );
                                   },
                                 ),
@@ -733,7 +733,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SuggestionsPage()),
+                                              SuggestionsPage(userId: widget.userId)),
                                     );
                                   },
                                 ),
@@ -745,7 +745,7 @@ class _homePageState extends State<homePage> with TickerProviderStateMixin {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              universityTrainingPage()),
+                                              universityTrainingPage(userId: widget.userId)),
                                     );
                                   },
                                 ),

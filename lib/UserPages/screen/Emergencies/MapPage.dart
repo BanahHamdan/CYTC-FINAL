@@ -356,7 +356,9 @@ import 'dart:convert';
 class MapPage extends StatefulWidget {
   final LatLng destination;
 
-  const MapPage({required this.destination, super.key});
+  final String userId;
+
+  const MapPage({required this.destination, super.key, required this.userId});
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -474,7 +476,7 @@ class _MapPageState extends State<MapPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage()));
+                              builder: (context) => ProfilePage(userId: widget.userId,)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -504,7 +506,7 @@ class _MapPageState extends State<MapPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        universityTrainingPage())), // Add onTap functionality
+                        universityTrainingPage(userId: widget.userId,))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -519,7 +521,7 @@ class _MapPageState extends State<MapPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        SuggestionsPage())), // Add onTap functionality
+                        SuggestionsPage(userId: widget.userId,))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -530,7 +532,7 @@ class _MapPageState extends State<MapPage> {
                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
             title: Text('تسجيل خروج',
                 textAlign: TextAlign.right,
                 style: TextStyle(

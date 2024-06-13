@@ -435,7 +435,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../bottomBarPages/buttonBar.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required String userId});
 
   @override
   _LoginPageState createState() => _LoginPageState();

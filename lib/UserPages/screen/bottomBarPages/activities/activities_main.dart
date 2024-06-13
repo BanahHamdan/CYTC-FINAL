@@ -120,6 +120,10 @@ import 'package:url_launcher/url_launcher.dart';
 class Activities extends StatefulWidget {
   @override
   _ActivitiesState createState() => _ActivitiesState();
+
+  final String userId;
+
+  const Activities({Key? key, required this.userId}) : super(key: key);
 }
 
 class _ActivitiesState extends State<Activities> {
