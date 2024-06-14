@@ -357,8 +357,8 @@ class MapPage extends StatefulWidget {
   final LatLng destination;
 
   final String userId;
-
-  const MapPage({required this.destination, super.key, required this.userId});
+  final String userRole;
+  const MapPage({required this.destination, super.key, required this.userId, required this.userRole});
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -476,7 +476,7 @@ class _MapPageState extends State<MapPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage(userId: widget.userId,)));
+                              builder: (context) => ProfilePage(userId: widget.userId,userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -492,7 +492,7 @@ class _MapPageState extends State<MapPage> {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => bar(userId: '', userRole: ''))),
+                    builder: (context) => bar(userId: widget.userId,userRole: widget.userRole))),
             title: Text('الرئيسية',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -506,7 +506,7 @@ class _MapPageState extends State<MapPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        universityTrainingPage(userId: widget.userId,))), // Add onTap functionality
+                        universityTrainingPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -521,7 +521,7 @@ class _MapPageState extends State<MapPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        SuggestionsPage(userId: widget.userId,))), // Add onTap functionality
+                        SuggestionsPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك',
                 textAlign: TextAlign.right,
                 style: TextStyle(

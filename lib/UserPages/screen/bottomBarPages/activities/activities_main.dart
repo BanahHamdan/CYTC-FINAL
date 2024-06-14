@@ -122,9 +122,10 @@ class Activities extends StatefulWidget {
   _ActivitiesState createState() => _ActivitiesState();
 
   final String userId;
+  final String userRole;
 
-  const Activities({Key? key, required this.userId}) : super(key: key);
-}
+  const Activities({Key? key, required this.userId, required this.userRole}) : super(key: key);
+} 
 
 class _ActivitiesState extends State<Activities> {
   @override
@@ -160,7 +161,7 @@ class _ActivitiesState extends State<Activities> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EventsPage()),
+                      MaterialPageRoute(builder: (context) => EventsPage(userId: widget.userId, userRole: widget.userRole,)),
                     );
                   },
                 ),
@@ -171,7 +172,7 @@ class _ActivitiesState extends State<Activities> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CampaignPage()),
+                      MaterialPageRoute(builder: (context) => CampaignPage(userId: widget.userId,)),
                     );
                   },
                 ),
@@ -182,7 +183,7 @@ class _ActivitiesState extends State<Activities> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FestivalsPage()),
+                      MaterialPageRoute(builder: (context) => FestivalsPage(userId: widget.userId, userRole: widget.userRole)),
                     );
                   },
                 ),

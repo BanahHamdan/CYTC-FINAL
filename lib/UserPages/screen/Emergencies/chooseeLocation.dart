@@ -225,8 +225,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class ChooseLocationPage extends StatefulWidget {
-  const ChooseLocationPage({super.key});
-
+     final String userId;
+     final String userRole;
+  const ChooseLocationPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
   @override
   _ChooseLocationPageState createState() => _ChooseLocationPageState();
 }
@@ -258,7 +259,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MapPage(destination: _chosenLocation!),
+          builder: (context) => MapPage(destination: _chosenLocation!, userId: widget.userId,userRole: widget.userRole),
         ),
       );
     } else {
@@ -269,7 +270,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
           textAlign: TextAlign.center,
         )),
       );
-    }
+    } 
   }
 
   @override
@@ -365,7 +366,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage()));
+                              builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -381,7 +382,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => bar(userId: '', userRole: ''))),
+                    builder: (context) => bar(userId: widget.userId, userRole: widget.userRole))),
             title: Text('الرئيسية',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -395,7 +396,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        universityTrainingPage())), // Add onTap functionality
+                        universityTrainingPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -410,7 +411,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        SuggestionsPage())), // Add onTap functionality
+                        SuggestionsPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -421,7 +422,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())), // Add onTap functionality for logout
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
             title: Text('تسجيل خروج',
                 textAlign: TextAlign.right,
                 style: TextStyle(

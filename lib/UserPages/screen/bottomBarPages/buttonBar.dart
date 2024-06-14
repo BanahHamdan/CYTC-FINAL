@@ -60,17 +60,17 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return CalendarPage();
+        return CalendarPage(userId: widget.userId,);
       case 1:
-        return ChatPage(userId: widget.userId);
+        return ChatPage(userId: widget.userId, userRole: widget.userRole,);
       case 2:
         return UserPostsPage(userId: widget.userId);
       case 3:
-        return Activities();
+        return Activities(userId: widget.userId, userRole: widget.userRole,);
       case 4:
-        return HomeTestGrey(userId: '',);
+        return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
       default:
-        return HomeTestGrey(userId: '',);
+        return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
     }
   }
 
@@ -214,7 +214,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole,)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -231,12 +231,12 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: ()  => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId))), // Add onTap functionality
+            onTap: ()  => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId))),  // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))),  // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
@@ -247,7 +247,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
-    );
+    ); 
   }
 
   BottomNavigationBar _buildBottomNavigationBar() {

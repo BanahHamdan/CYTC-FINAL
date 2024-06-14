@@ -169,8 +169,8 @@ import 'package:cytc/UserPages/screen/auth/Signup.dart';
 import 'package:flutter/material.dart';
 
 class main2 extends StatefulWidget {
-  const main2({super.key});
-
+     final String userId;
+  const main2({Key? key, required this.userId}) : super(key: key);
   @override
   _main2State createState() => _main2State();
 }
@@ -226,7 +226,7 @@ class _main2State extends State<main2> {
                             ),
                           ],
                         ),
-                        child: Padding(
+                        child: Padding( 
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: [
@@ -236,7 +236,7 @@ class _main2State extends State<main2> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => main2()),
+                                    MaterialPageRoute(builder: (context) => main2(userId: widget.userId,)),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -258,7 +258,7 @@ class _main2State extends State<main2> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Signup()),
+                                    MaterialPageRoute(builder: (context) => Signup(userId: widget.userId,)),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(

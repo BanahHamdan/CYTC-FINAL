@@ -393,8 +393,8 @@ import 'login.dart';
 import 'verify.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
-
+  final String userId;
+  const Signup({Key? key, required this.userId}) : super(key: key);
   @override
   _SignupState createState() => _SignupState();
 }
@@ -403,7 +403,7 @@ class _SignupState extends State<Signup> {
   late TextEditingController _emailController;
   late TextEditingController _usernameController;
   late TextEditingController _passwordController;
-  late TextEditingController _phoneNumberController;
+  late TextEditingController _phoneNumberController; 
   late TextEditingController _cityController;
   late TextEditingController _bloodTypeController;
   late TextEditingController _birthdateController;
@@ -493,7 +493,7 @@ class _SignupState extends State<Signup> {
           MaterialPageRoute(
               builder: (context) => VerifyPage(
                   code: jsonResponse['verifyCode'].toString(),
-                  email: _emailController.text)),
+                  email: _emailController.text, userId: widget.userId,)),
         );
       } else {
         // show dialog
@@ -586,7 +586,7 @@ class _SignupState extends State<Signup> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginPage()),
+                              MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,)),
                             );
                           },
                           child: Icon(

@@ -51,19 +51,21 @@ class _CalendarPageState extends State<CalendarPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'اختر تاريخا لمعرفة التفاصيل',
+              'اضغط على الايام المليئة بالانشطة لمعرفة تفاصيل انشطة هذا الشهر',
+              textAlign: TextAlign.right,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Amiri',
                 color: Color(0xFF071533),
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
           ),
+          SizedBox(height: 10,),
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
-              height: MediaQuery.of(context).size.height * 0.75, // 75% of screen height
+              height: MediaQuery.of(context).size.height * 0.70, // 75% of screen height
               child: SfCalendar(
                 view: CalendarView.month,
                 firstDayOfWeek: 6, // Start the week on Saturday

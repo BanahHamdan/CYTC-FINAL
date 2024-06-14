@@ -520,8 +520,8 @@ class SuggestionsPage extends StatefulWidget {
   _SuggestionsPageState createState() => _SuggestionsPageState();
 
   final String userId;
-
-  const SuggestionsPage({Key? key, required this.userId}) : super(key: key);
+  final String userRole;
+  const SuggestionsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
 }
 
 class _SuggestionsPageState extends State<SuggestionsPage> {
@@ -924,7 +924,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -941,12 +941,12 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId))), // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId))), // Add onTap functionality
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),

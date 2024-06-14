@@ -230,8 +230,8 @@ import 'Signup.dart';
 class VerifyPage extends StatefulWidget {
   final String code;
   final String email;
-
-  const VerifyPage({super.key, required this.code, required this.email});
+  final String userId;
+  const VerifyPage({super.key, required this.code, required this.email, required this.userId});
 
   @override
   _VerifyPageState createState() => _VerifyPageState();
@@ -277,7 +277,7 @@ class _VerifyPageState extends State<VerifyPage> {
         print("User activated successfully");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,)),
         );
       } else {
         print("Error activating user: ${jsonResponse['error']}");
@@ -303,7 +303,7 @@ class _VerifyPageState extends State<VerifyPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Signup()),
+                    MaterialPageRoute(builder: (context) => Signup(userId: widget.userId,)),
                   );
                 },
                 child: Icon(

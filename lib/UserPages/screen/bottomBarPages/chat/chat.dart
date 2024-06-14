@@ -89,8 +89,8 @@ import 'dart:convert';
 
 class ChatPage extends StatefulWidget {
   final String userId;
-
-  const ChatPage({Key? key, required this.userId}) : super(key: key);
+  final String userRole;
+  const ChatPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -124,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
       context,
       MaterialPageRoute(
         builder: (context) => AdminChatPage(
-            userId: widget.userId, adminId: adminId, adminName: adminName),
+            userId: widget.userId, adminId: adminId, adminName: adminName, userRole: widget.userRole,),
       ),
     );
   }

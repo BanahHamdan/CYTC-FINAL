@@ -435,7 +435,9 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../bottomBarPages/buttonBar.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required String userId});
+  final String userId;
+
+  const LoginPage({super.key, required this.userId});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -659,7 +661,7 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              forgotPassword()),
+                                              ForgotPassword(userId: widget.userId,)),
                                     );
                                   },
                                   child: Text(
@@ -704,7 +706,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Signup()),
+                          MaterialPageRoute(builder: (context) => Signup(userId: widget.userId,)),
                         );
                       },
                       child: Text(

@@ -263,23 +263,23 @@ class _AdminBarState extends State<AdminBar> {
       case 0:
         return CalendarPage(userId: widget.userId);
       case 1:
-        return ChatPage(userId: widget.userId);
+        // return ChatPage(userId: widget.userId);
       case 2:
         return UserPostsPage(userId: widget.userId);
       case 3:
-        return Activities(userId: widget.userId);
+        // return Activities(userId: widget.userId);
       case 4:
         return AdminHomePage(userId: widget.userId,);
       case 5:
-        return universityTrainingPage(userId: widget.userId);
+        return universityTrainingPage(userId: widget.userId, userRole: widget.userRole);
       case 6:
-        return SuggestionsPage(userId: widget.userId);
+        return SuggestionsPage(userId: widget.userId, userRole: widget.userRole);
       case 7:
         return LoginPage(userId: widget.userId);
       case 8:
         return Adminviewpost(userId: widget.userId,);
       case 9:
-        return Activities(userId: widget.userId);
+        // return Activities(userId: widget.userId);
       default:
         return AdminHomePage(userId: widget.userId,);
     }
