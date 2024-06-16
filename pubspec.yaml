@@ -120,7 +120,7 @@ flutter:
     - assets/paramedicsEmergency.png
     - assets/calendar_icon.png
     - assets/gif/
-    
+    - assets/adminPage/
     
 
   # The following line ensures that the Material Icons font is

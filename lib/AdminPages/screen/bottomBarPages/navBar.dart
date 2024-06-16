@@ -624,7 +624,7 @@ class _AdminBarState extends State<AdminBar> {
       child: Container(
         width: 187.5, // Adjust the width as needed
         decoration: BoxDecoration(
-          color: Color(0xFF071533).withOpacity(0.6),
+          color: Color(0xFF071533) ,  //.withOpacity(0.6),
           borderRadius: BorderRadius.circular(11.25), // Circular edges
         ),
         child: ListView(
@@ -633,7 +633,7 @@ class _AdminBarState extends State<AdminBar> {
             Container(
               padding: EdgeInsets.only(top: 30, bottom: 15),
               decoration: BoxDecoration(
-                color: Color(0xFF071533).withOpacity(0.6),
+                color: Color(0xFF071533), //.withOpacity(0.6),
                 borderRadius: BorderRadius.circular(11.25), // Circular edges
               ),
               child: Padding(
