@@ -2,8 +2,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cytc/AdminPages/Home/AdminHome.dart';
-import 'package:cytc/AdminPages/screen/bottomBarPages/navBar.dart';
-import 'package:cytc/AdminPages/screen/bottomBarPages/posts/Adminviewpost.dart';
+import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
+import 'package:cytc/AdminPages/screen/MenuPages/posts/Adminviewpost.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Events/events_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Festivals/Fest_main(1).dart';

@@ -373,6 +373,7 @@
 
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
+import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -427,7 +428,9 @@ class _AdminHomePageState extends State<AdminHome> {
   bool isEditing2 = false;
   TextEditingController controller1 =
       TextEditingController(text: 'اسم المتطوع:');
-  TextEditingController controller2 = TextEditingController(text: 'المركز هو');
+  TextEditingController controller2 = TextEditingController(
+      text:
+          'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية الشباب ومهاراتهم الخ الخ الخ');
 
   void _saveEdit() {
     setState(() {
@@ -809,46 +812,46 @@ class _AdminHomePageState extends State<AdminHome> {
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'متطوع الشهر المثالي الحالي',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF071533),
-                              fontFamily: 'Amiri',
-                            )
-                        ),
-                        SizedBox(height: 5,),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              15.0), // Adjust the radius as needed
-                          child: Image.asset(
-                            selectedVolunteer!.imageUrl,
-                            height: 70,
-                            width: 70,
-                            fit: BoxFit.cover,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('متطوع الشهر المثالي الحالي',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              )),
+                          SizedBox(
+                            height: 5,
                           ),
-                        ),
-                        SizedBox(height: 3,),
-                        Text(selectedVolunteer!.name,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Color(0xFF071533),
-                              fontFamily: 'Amiri',
-                              // fontWeight: 
-                            )),
-                      ],
-                    ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                15.0), // Adjust the radius as needed
+                            child: Image.asset(
+                              selectedVolunteer!.imageUrl,
+                              height: 70,
+                              width: 70,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(selectedVolunteer!.name,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                                // fontWeight:
+                              )),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ],
-              SizedBox(
-                height: 10,
-              ),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -963,13 +966,13 @@ class _AdminHomePageState extends State<AdminHome> {
   Widget _buildEditableCardCenterInfo() {
     return SizedBox(
       width: 100, // Adjust the width as needed
-      height: 270, // Adjust the height as needed
+      height: 360, // Adjust the height as needed
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          height: 200,
+          height: 360,
           padding: EdgeInsets.all(12.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -978,19 +981,29 @@ class _AdminHomePageState extends State<AdminHome> {
               Text(
                 'تعريف عن المركز',
                 style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
                   color: Color(0xFF071533),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              Divider(color: Colors.grey),
               SizedBox(height: 6),
               isEditing2
                   ? TextField(
                       controller: controller2,
+                      textAlign: TextAlign.right,
                       maxLines: null,
                       style: TextStyle(color: Color(0xFF071533), fontSize: 10),
+                      cursorColor: Color(0xFFffe145),
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFFffe145), width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
                       ),
                     )
                   : Text(
@@ -999,17 +1012,21 @@ class _AdminHomePageState extends State<AdminHome> {
                         fontSize: 10,
                       ),
                     ),
-              SizedBox(height: 6),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
                     onPressed: _saveEdit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF071533)
-                          .withOpacity(0.4), // Background color
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      backgroundColor: Color(0xFF071533),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: Color(0xFF071533), width: 1.0),
+                      ),
+                      // .withOpacity(0.4), // Background color
+                      // padding:
+                      //     EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     ),
                     child: Text('حفظ',
                         style: TextStyle(
@@ -1024,14 +1041,17 @@ class _AdminHomePageState extends State<AdminHome> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF071533), // Background color
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      backgroundColor: Colors.white, // Background color
+                      // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: Color(0xFF071533), width: 1.0),
+                      ),
                     ),
                     child: Text('تعديل',
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.white,
+                          color: Color(0xFF071533),
                         )),
                   ),
                 ],
@@ -1047,31 +1067,45 @@ class _AdminHomePageState extends State<AdminHome> {
     return SizedBox(
       width: 80, // Adjust the width as needed
       height: 150, // Adjust the height as needed
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(11.25),
-        ),
-        child: Container(
-          height: 75,
-          padding: EdgeInsets.all(12.0),
-          child: Center(
-            child: Column(
-              children: [
-                Text(
-                  'طلب مسعفين',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF071533),
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ParamedicsRequests()
+                      ),
+                    );
+          // Add your onTap functionality here
+          print('Card clicked');
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(11.25),
+          ),
+          child: Container(
+            height: 75,
+            padding: EdgeInsets.all(12.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'طلب مسعفين',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF071533),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Image.asset(
-                  'assets/adminPage/ambulance.png',
-                  width: 80,
-                  height: 80,
-                ),
-              ],
+                  SizedBox(height: 10),
+                  Image.asset(
+                    'assets/adminPage/ambulance.png',
+                    width: 80,
+                    height: 80,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -1083,35 +1117,41 @@ class _AdminHomePageState extends State<AdminHome> {
     return SizedBox(
       width: 80, // Adjust the width as needed
       height: 150, // Adjust the height as needed
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(11.25),
-        ),
-        child: Container(
-          alignment: Alignment.topCenter,
-          height: 75,
-          padding: EdgeInsets.all(12.0),
-          child: Center(
-            child: Column(
-              children: [
-                Text(
-                  'طلب وحدات دم',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF071533),
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+      child: InkWell(
+        onTap: () {
+          // Add your onTap functionality here
+          print('Card clicked22222');
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(11.25),
+          ),
+          child: Container(
+            alignment: Alignment.topCenter,
+            height: 75,
+            padding: EdgeInsets.all(12.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    'طلب وحدات دم',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF071533),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Image.asset(
-                  'assets/adminPage/bloodAdd.png',
-                  width: 70,
-                  height: 70,
-                ),
-              ],
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Image.asset(
+                    'assets/adminPage/bloodAdd.png',
+                    width: 70,
+                    height: 70,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

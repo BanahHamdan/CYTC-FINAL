@@ -458,7 +458,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/AdminPages/Home/AdminHome.dart';
-import 'package:cytc/AdminPages/screen/bottomBarPages/posts/Adminviewpost.dart';
+import 'package:cytc/AdminPages/screen/MenuPages/posts/Adminviewpost.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/activities_main.dart';

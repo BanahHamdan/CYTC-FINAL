@@ -485,7 +485,7 @@
 ////////////////////
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cytc/AdminPages/screen/bottomBarPages/posts/createpost.dart';
+import 'package:cytc/AdminPages/screen/MenuPages/posts/createpost.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
