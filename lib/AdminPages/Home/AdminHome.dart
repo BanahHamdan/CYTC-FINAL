@@ -373,6 +373,7 @@
 
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
+import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
 import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -1119,6 +1120,12 @@ class _AdminHomePageState extends State<AdminHome> {
       height: 150, // Adjust the height as needed
       child: InkWell(
         onTap: () {
+          Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BloodRequests()
+                      ),
+                    );
           // Add your onTap functionality here
           print('Card clicked22222');
         },

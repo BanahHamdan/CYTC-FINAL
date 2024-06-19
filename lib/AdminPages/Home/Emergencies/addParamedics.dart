@@ -690,36 +690,6 @@ class _ParamedicsRequestsPageState extends State<ParamedicsRequestsPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'الوقت',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Amiri',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF071533),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'تاريخ الاضافة',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Amiri',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF071533),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
                             'الاحداثيات على الخريطة',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -746,6 +716,36 @@ class _ParamedicsRequestsPageState extends State<ParamedicsRequestsPage> {
                           ),
                         ),
                       ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'الوقت',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Amiri',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF071533),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'تاريخ الاضافة',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Amiri',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF071533),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   ...rescueRequests.map((request) {
@@ -759,7 +759,7 @@ class _ParamedicsRequestsPageState extends State<ParamedicsRequestsPage> {
                             child: Text(
                               savedRequests.containsKey(request.hashCode) &&
                                       savedRequests[request.hashCode]!
-                                  ? 'Saved'
+                                  ?  'تم اظهاره للمستخدم'
                                   : '',
                               textAlign: TextAlign.center,
                             ),
