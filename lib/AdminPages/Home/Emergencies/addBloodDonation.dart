@@ -574,6 +574,7 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                                   icon: Icon(
                                     Icons.edit,
                                     size: 17,
+                                    color: Color(0xFFffe145),
                                   ),
                                   onPressed: canEdit
                                       ? () => _showAddEditDialog(
@@ -601,6 +602,7 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                                     icon: Icon(
                                       Icons.save,
                                       size: 17,
+                                      color: Colors.blue,
                                     ),
                                     onPressed: () {
                                       setState(() {

@@ -254,18 +254,18 @@ class _EventsPageState extends State<EventsPage> {
       ),
       drawer: _buildDrawer(),
       backgroundColor: Colors.white,
-      body: Padding(
+      body: Padding( 
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             _buildListItem('دورات', Icons.add,
                 'http://localhost:9999/event/interest/دورات'),
             _buildListItem('ورش عمل ولقاءات توعوية', Icons.work,
-                'http://localhost:9999/event/interest/ورش'),
+                'http://localhost:9999/event/interest/ورش عمل'),
             _buildListItem('مخيمات صيفية', Icons.emoji_nature,
                 'http://localhost:9999/event/interest/مخيمات'),
             _buildListItem('مبادرات شبابية', Icons.volunteer_activism,
-                'http://localhost:9999/event/interest/مبادرات'),
+                'http://localhost:9999/event/interest/مبادرات شبابية'),
           ],
         ),
       ),

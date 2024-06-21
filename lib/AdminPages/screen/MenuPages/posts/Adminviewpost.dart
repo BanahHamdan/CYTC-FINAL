@@ -485,6 +485,7 @@
 ////////////////////
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cytc/AdminPages/screen/MenuPages/posts/commentsView.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/posts/createpost.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
 import 'package:flutter/material.dart';
@@ -612,7 +613,7 @@ class _ReactionPageState extends State<Adminviewpost> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -621,32 +622,56 @@ class _ReactionPageState extends State<Adminviewpost> {
               'تعرف على انجازاتنا وتفاعل معنا',
               textAlign: TextAlign.right,
              style: TextStyle(
-                fontSize: 18,
+                fontSize: 23,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF071533),
                 fontFamily: 'Amiri',
               ),
             ),
           ),
-          Expanded(
+           Expanded(
             child: ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return PostWidget(
-                  post: posts[index],
-                  currentUserId: currentUserId,
-                  onLike: () => likePost(posts[index].id),
-                  onUnlike: () => unlikePost(posts[index].id),
-                  onViewPost: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewPost(
-                            postId: posts[index].id, userId: currentUserId),
-                      ),
-                    );
-                  },
+                return Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.7, // Adjust the width as needed
+                    child: PostWidget(
+                      post: posts[index],
+                      currentUserId: currentUserId,
+                      onLike: () => likePost(posts[index].id),
+                      onUnlike: () => unlikePost(posts[index].id),
+                      onViewPost: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewCommentsAdmin(
+                                postId: posts[index].id, userId: currentUserId),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 );
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: posts.length,
+          //     itemBuilder: (context, index) {
+          //       return PostWidget(
+          //         post: posts[index],
+          //         currentUserId: currentUserId,
+          //         onLike: () => likePost(posts[index].id),
+          //         onUnlike: () => unlikePost(posts[index].id),
+          //         onViewPost: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) => ViewPost(
+          //                   postId: posts[index].id, userId: currentUserId),
+          //             ),
+          //           );
+          //         },
+          //       );
               },
             ),
           ),
@@ -739,7 +764,7 @@ class PostWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Card(
+        child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -839,7 +864,7 @@ class PostWidget extends StatelessWidget {
             )
           ],
         ),
-      ),
+        ),
     );
   }
 }

@@ -331,28 +331,28 @@ class EventDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        'رقم النشاط',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFFffe145),
-                          fontFamily: 'Amiri',
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        event['_id']
-                            .toString(), // Corrected key to access event ID
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF071533),
-                          fontFamily: 'Amiri',
-                        ),
-                      ),
-                      Divider(thickness: 1, height: 20),
+                      // Text(
+                      //   'رقم النشاط',
+                      //   textAlign: TextAlign.right,
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     color: Color(0xFFffe145),
+                      //     fontFamily: 'Amiri',
+                      //   ),
+                      // ),
+                      // SizedBox(height: 5),
+                      // Text(
+                      //   event['_id']
+                      //       .toString(), // Corrected key to access event ID
+                      //   textAlign: TextAlign.right,
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Color(0xFF071533),
+                      //     fontFamily: 'Amiri',
+                      //   ),
+                      // ),
+                      // Divider(thickness: 1, height: 20),
                       Text(
                         'اسم النشاط',
                         textAlign: TextAlign.right,

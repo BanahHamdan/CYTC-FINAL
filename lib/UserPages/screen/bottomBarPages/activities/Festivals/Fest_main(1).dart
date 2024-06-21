@@ -356,7 +356,7 @@ class _FestivalsPageState extends State<FestivalsPage> {
 
   Future<void> fetchEvents() async {
     final response = await http
-        .get(Uri.parse('http://localhost:9999/event/interest/مهرجانات'));
+        .get(Uri.parse('http://localhost:9999/event/interest/احتفالات و مهرجانات'));
     if (response.statusCode == 200) {
       setState(() {
         events = json.decode(response.body);

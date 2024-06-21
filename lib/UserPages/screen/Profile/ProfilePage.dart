@@ -1,4 +1,5 @@
-// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, library_private_types_in_public_api, use_key_in_widget_constructors
+// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 // import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
 // import 'package:cytc/UserPages/screen/auth/login.dart';
 // import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
@@ -8,7 +9,19 @@
 // import 'package:image_picker/image_picker.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:cytc/linkapi.dart';
+
 // class ProfilePage extends StatefulWidget {
+//   final String userId;
+//   final String userRole;
+
+//   const ProfilePage({Key? key, required this.userId, required this.userRole})
+//       : super(key: key);
+
 //   @override
 //   _ProfilePageState createState() => _ProfilePageState();
 // }
@@ -21,44 +34,151 @@
 //   String location = 'نابلس';
 //   String bloodType = 'AB+';
 //   String profileImagePath = 'assets/banah.jpg';
+//   DateTime birthDate = DateTime.now();
+//   String email = '';
+//   String username = ''; // New field for username
 
 //   final ImagePicker _picker = ImagePicker();
-//   final String correctCode =
-//       "123456"; // Example code, replace with actual logic
+//   final String correctCode = "123456";
+
+//   List events = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchUserData();
+//     fetchUserEvents();
+//   }
+
+//   Future<void> fetchUserData() async {
+//     final response =
+//         await http.get(Uri.parse('${LinkApi.user}/${widget.userId}'));
+
+//     if (response.statusCode == 200) {
+//       final data = json.decode(response.body);
+//       if (data['status']) {
+//         setState(() {
+//           phoneNumber = data['user']['phoneNumber'];
+//           location = data['user']['city'];
+//           bloodType = data['user']['bloodType'];
+//           birthDate = DateTime.parse(data['user']['birthDate']);
+//           email = data['user']['email'];
+//           username = data['user']['username']; // Fetch username
+//         });
+//       } else {
+//         // Handle the case where the API returns a failure status
+//       }
+//     } else {
+//       // Handle the case where the API call fails
+//     }
+//   }
+
+//   Future<void> fetchUserEvents() async {
+//     final response = await http.get(
+//         Uri.parse('http://localhost:9999/event-user/events/${widget.userId}'));
+
+//     if (response.statusCode == 200) {
+//       final data = json.decode(response.body);
+//       if (data['status']) {
+//         setState(() {
+//           events = data['events'];
+//         });
+//       } else {
+//         // Handle the case where the API returns a failure status
+//       }
+//     } else {
+//       // Handle the case where the API call fails
+//     }
+//   }
+
+//   Future<void> editUserData(String field, String newValue) async {
+//     final url = '${LinkApi.editUser}/${widget.userId}';
+//     final headers = {
+//       'Content-Type': 'application/json',
+//     };
+//     final body = json.encode({
+//       field: newValue,
+//     });
+
+//     print('Sending PUT request to $url with body: $body and headers: $headers');
+
+//     final response = await http.put(
+//       Uri.parse(url),
+//       headers: headers,
+//       body: body,
+//     );
+
+//     print('Response status: ${response.statusCode}');
+//     print('Response body: ${response.body}');
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       final data = json.decode(response.body);
+//       if (data['status']) {
+//         fetchUserData(); // Fetch updated user data
+//       } else {
+//         print('Failed to update user information: ${data['message']}');
+//       }
+//     } else {
+//       print('Failed to update user information');
+//     }
+//   }
+
+//   Future<void> _unsubscribeEvent(String eventId) async {
+//     final url = 'http://localhost:9999/event-user/remove';
+//     final headers = {'Content-Type': 'application/json'};
+//     final body = json.encode({'eventId': eventId, 'userId': widget.userId});
+
+//     final response = await http.post(
+//       Uri.parse(url),
+//       headers: headers,
+//       body: body,
+//     );
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       final data = json.decode(response.body);
+//       if (data['status']) {
+//         fetchUserEvents(); // Fetch updated events
+//       } else {
+//         print('Failed to unsubscribe from the event: ${data['message']}');
+//       }
+//     } else {
+//       print('Failed to unsubscribe from the event');
+//     }
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       backgroundColor: Colors.white, //0xFFF9F7F2
+//       backgroundColor: Colors.white,
 //       appBar: AppBar(
-//         backgroundColor: Color(0xFF071533).withOpacity(0.1), // Baby blue
+//         backgroundColor: Color(0xFF071533).withOpacity(0.1),
 //         elevation: 0,
 //         actions: [
 //           IconButton(
-//             icon: Icon(
-//               LineAwesomeIcons.angle_right_solid,
-//               color: Color(0xFF071533),
-//               size: 20,
-//             ),
-//             onPressed: () {
-//               Navigator.pop(context);
-//             },
+//           icon: Icon(
+//             LineAwesomeIcons.angle_right_solid,
+//             color: Color(0xFF071533),
+//             size: 20,
 //           ),
-//         ],
-//         leading: Builder(
-//           builder: (context) {
-//             return IconButton(
-//               icon: Icon(
-//                 Icons.menu,
-//                 color: Color(0xFF071533),
-//                 size: 20,
-//               ),
-//               onPressed: () {
-//                 Scaffold.of(context).openDrawer();
-//               },
-//             );
+//           onPressed: () {
+//             Navigator.pop(context);
 //           },
 //         ),
+//         ],
+//         leading: Builder(
+//             builder: (context) {
+//               return IconButton(
+//                 icon: Icon(
+//                   Icons.menu,
+//                   color: Color(0xFF071533),
+//                   size: 20,
+//                 ),
+//                 onPressed: () {
+//                   Scaffold.of(context).openDrawer();
+//                 },
+//               );
+//             },
+//           ),
 //       ),
 //       drawer: _buildDrawer(),
 //       body: SingleChildScrollView(
@@ -67,38 +187,13 @@
 //             Stack(
 //               clipBehavior: Clip.none,
 //               children: [
-//                 ClipPath(
-//                   clipper: BackgroundClipper(),
-//                   child: Container(
-//                     height: 170,
-//                     color: Color(0xFF071533).withOpacity(0.1), // Baby blue
-//                   ),
-//                 ),
-//                 // Positioned(
-//                 //   top: 20,
-//                 //   left: 16,
-//                 //   child: Row(
-//                 //     children: [
-//                 //       IconButton(
-//                 //         icon: Icon(Icons.arrow_back_ios_new,
-//                 //             color: Color(0xFF071533), size: 20,),
-//                 //         onPressed: () {
-//                 //           Navigator.pop(context);
-//                 //         },
-//                 //       ),
-//                 //       Builder(
-//                 //         builder: (context) {
-//                 //           return IconButton(
-//                 //             icon: Icon(Icons.menu, color: Color(0xFF071533), size: 20,),
-//                 //             onPressed: () {
-//                 //               Scaffold.of(context).openDrawer();
-//                 //             },
-//                 //           );
-//                 //         },
-//                 //       ),
-//                 //     ],
-//                 //   ),
-//                 // ),
+                // ClipPath(
+                //   clipper: BackgroundClipper(),
+                //   child: Container(
+                //     height: 160,
+                //     color: Color(0xFF071533).withOpacity(0.1),
+                //   ),
+                // ),
 //                 Positioned(
 //                   top: 70,
 //                   left: 0,
@@ -135,7 +230,7 @@
 //                       ),
 //                       SizedBox(height: 10),
 //                       Text(
-//                         'بانه خالد موسى حمدان',
+//                         username, // Display the fetched username
 //                         style: TextStyle(
 //                           fontSize: 20,
 //                           fontWeight: FontWeight.bold,
@@ -217,116 +312,117 @@
 //     );
 //   }
 
-  // Widget _buildDrawer() {
-  //   return Drawer(
-  //     child: ListView(
-  //       padding: EdgeInsets.zero,
-  //       children: <Widget>[
-  //         Container(
-  //           padding: EdgeInsets.only(top: 40, bottom: 20),
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //           ),
-  //           child: Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.end,
-  //               children: [
-  //                 Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.end,
-  //                   children: [
-  //                     Text(
-  //                       'بانه خالد حمدان',
-  //                       style: TextStyle(
-  //                           color: Color(0xFF071533),
-  //                           fontWeight: FontWeight.bold,
-  //                           fontSize: 20,
-  //                           fontFamily: 'Amiri'),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 SizedBox(width: 16.0),
-  //                 GestureDetector(
-  //                   onTap: () {
-  //                     Navigator.push(
-  //                         context,
-  //                         MaterialPageRoute(
-  //                             builder: (context) => ProfilePage()));
-  //                   },
-  //                   child: CircleAvatar(
-  //                     radius: 30,
-  //                     backgroundImage: AssetImage(
-  //                         'assets/banah.jpg'), // Replace with your image path
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //         ListTile(
-  //           onTap: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) => bar(
-  //                         userId: '',
-  //                         userRole: '',
-  //                       ))),
-  //           title: Text('الرئيسية',
-  //               textAlign: TextAlign.right,
-  //               style: TextStyle(
-  //                   fontFamily: 'Amiri',
-  //                   fontSize: 16,
-  //                   color: Color(0xFF071533))),
-  //           trailing: Icon(Icons.home, color: Color(0xFFffe145)),
-  //         ),
-  //         ListTile(
-  //           onTap: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) =>
-  //                       universityTrainingPage())), // Add onTap functionality
-  //           title: Text('تقديم طلب تدريب للخريجين',
-  //               textAlign: TextAlign.right,
-  //               style: TextStyle(
-  //                   fontFamily: 'Amiri',
-  //                   fontSize: 16,
-  //                   color: Color(0xFF071533))),
-  //           trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
-  //               color: Color(0xFFffe145)),
-  //         ),
-  //         ListTile(
-  //           onTap: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) =>
-  //                       SuggestionsPage())), // Add onTap functionality
-  //           title: Text('شاركنا باقتراحاتك وافكارك',
-  //               textAlign: TextAlign.right,
-  //               style: TextStyle(
-  //                   fontFamily: 'Amiri',
-  //                   fontSize: 16,
-  //                   color: Color(0xFF071533))),
-  //           trailing:
-  //               Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
-  //         ),
-  //         ListTile(
-  //           onTap: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) =>
-  //                       LoginPage())), // Add onTap functionality for logout
-  //           title: Text('تسجيل خروج',
-  //               textAlign: TextAlign.right,
-  //               style: TextStyle(
-  //                   fontFamily: 'Amiri',
-  //                   fontSize: 16,
-  //                   color: Color(0xFF071533))),
-  //           trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+//   Widget _buildDrawer() {
+//     return Drawer(
+//       child: ListView(
+//         padding: EdgeInsets.zero,
+//         children: <Widget>[
+//           Container(
+//             padding: EdgeInsets.only(top: 40, bottom: 20),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.end,
+//                     children: [
+//                       Text(
+//                         'بانه خالد حمدان',
+//                         style: TextStyle(
+//                             color: Color(0xFF071533),
+//                             fontWeight: FontWeight.bold,
+//                             fontSize: 20,
+//                             fontFamily: 'Amiri'),
+//                       ),
+//                     ],
+//                   ),
+//                   SizedBox(width: 16.0),
+//                   GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => ProfilePage( userRole: widget.userRole, userId: widget.userId,)));
+//                     },
+//                     child: CircleAvatar(
+//                       radius: 30,
+//                       backgroundImage: AssetImage(
+//                           'assets/banah.jpg'), // Replace with your image path
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) => bar(
+//                           userId: '',
+//                           userRole: '',
+//                         ))),
+//             title: Text('الرئيسية',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         universityTrainingPage( userRole: widget.userRole, userId: widget.userId,))), // Add onTap functionality
+//             title: Text('تقديم طلب تدريب للخريجين',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+//                 color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         SuggestionsPage( userRole: widget.userRole,userId: widget.userId,))), // Add onTap functionality
+//             title: Text('شاركنا باقتراحاتك وافكارك',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing:
+//                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
+//             title: Text('تسجيل خروج',
+//                 textAlign: TextAlign.right,
+//                 style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 16,
+//                     color: Color(0xFF071533))),
+//             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
 
 //   Widget _buildTab(String label, bool isSelected) {
 //     return Padding(
@@ -359,6 +455,7 @@
 //       key: ValueKey('تقاريري'),
 //       children: [
 //         Container(
+//           // width: 370,
 //           decoration: BoxDecoration(
 //             color: Colors.white,
 //             borderRadius: BorderRadius.circular(25),
@@ -372,15 +469,17 @@
 //           ),
 //           padding: EdgeInsets.all(18),
 //           child: Table(
+            
 //             border: TableBorder.all(color: Colors.grey),
 //             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
 //             columnWidths: {
-//               // 0: FractionColumnWidth(0.19),
-//               0: FractionColumnWidth(0.2),
-//               1: FractionColumnWidth(0.3),
-//               2: FractionColumnWidth(0.3),
-//               // 4: FractionColumnWidth(0.14),
-//               3: FractionColumnWidth(0.2),
+//               0: FractionColumnWidth(0.19),
+//               // 1: FractionColumnWidth(0.12),
+//               1: FractionColumnWidth(0.19),
+//               2: FractionColumnWidth(0.22),
+//               3: FractionColumnWidth(0.22),
+//               // 5: FractionColumnWidth(0.12),
+//               4: FractionColumnWidth(0.19),
 //             },
 //             children: [
 //               TableRow(
@@ -388,6 +487,7 @@
 //                   color: Color(0xFF071533).withOpacity(0.1),
 //                 ),
 //                 children: [
+//                   _buildTableCell('إلغاء الاشتراك', true),
 //                   // _buildTableCell('استمرارية النشاط', true),
 //                   _buildTableCell('عدد الساعات'),
 //                   _buildTableCell('تاريخ النهاية'),
@@ -396,62 +496,86 @@
 //                   _buildTableCell('اسم النشاط'),
 //                 ],
 //               ),
-//               TableRow(
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
+//               for (var event in events)
+//                 TableRow(
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                   ),
+//                   children: [
+//                     _buildUnsubscribeCell(event),
+//                     _buildStatusCell(
+//                         DateTime.parse(event['eventId']['endDate'])
+//                                 .isAfter(DateTime.now())
+//                             ? 'مستمر'
+//                             : 'منتهي',
+//                         DateTime.parse(event['eventId']['endDate'])
+//                             .isAfter(DateTime.now())),
+//                     _buildTableCell((DateTime.parse(event['eventId']['endDate'])
+//                             .difference(
+//                                 DateTime.parse(event['eventId']['startDate'])))
+//                         .inHours
+//                         .toString()),
+//                     _buildTableCell(
+//                         event['eventId']['endDate'].substring(0, 10)),
+//                     _buildTableCell(
+//                         event['eventId']['startDate'].substring(0, 10)),
+//                     _buildTableCell(event['eventId']['interests']),
+//                     _buildTableCell(event['eventId']['name']),
+//                   ],
 //                 ),
-//                 children: [
-//                   // _buildStatusCell('مستمر', true),
-//                   _buildTableCell('50'),
-//                   _buildTableCell('2023-12-31'),
-//                   _buildTableCell('2023-01-01'),
-//                   // _buildTableCell('تعليم'),
-//                   _buildTableCell('نشاط 1'),
-//                 ],
-//               ),
-//               TableRow(
-//                 decoration: BoxDecoration(
-//                   color: Color(0xFF071533).withOpacity(0.1),
-//                 ),
-//                 children: [
-//                   // _buildStatusCell('منتهي', false),
-//                   _buildTableCell('30'),
-//                   _buildTableCell('2023-06-30'),
-//                   _buildTableCell('2023-02-01'),
-//                   // _buildTableCell('رياضة'),
-//                   _buildTableCell('نشاط 2'),
-//                 ],
-//               ),
-//               TableRow(
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                 ),
-//                 children: [
-//                   // _buildStatusCell('مستمر', true),
-//                   _buildTableCell('20'),
-//                   _buildTableCell('2023-11-30'),
-//                   _buildTableCell('2023-03-01'),
-//                   // _buildTableCell('صحة'),
-//                   _buildTableCell('نشاط 3'),
-//                 ],
-//               ),
-//               TableRow(
-//                 decoration: BoxDecoration(
-//                   color: Color(0xFF071533).withOpacity(0.1),
-//                 ),
-//                 children: [
-//                   // _buildStatusCell('منتهي', false),
-//                   _buildTableCell('40'),
-//                   _buildTableCell('2023-08-31'),
-//                   _buildTableCell('2023-04-01'),
-//                   // _buildTableCell('ثقافة'),
-//                   _buildTableCell('نشاط 4'),
-//                 ],
-//               ),
 //             ],
 //           ),
 //         ),
 //       ],
+//     );
+//   }
+
+//   Widget _buildUnsubscribeCell(event) {
+//     return Padding(
+//       padding: EdgeInsets.all(8.0),
+//       child: ElevatedButton(
+//         onPressed: () => _showUnsubscribeDialog(event['eventId']['_id']),
+//         child: Text(
+//           'إلغاء الاشتراك',
+//           style: TextStyle(
+//             fontSize: 10,
+//             fontFamily: 'Amiri',
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   void _showUnsubscribeDialog(String eventId) {
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(20),
+//           ),
+//           title: Text(
+//             'هل انت متاكد انك تريد سحب الاشتراك من هذا النشاط؟',
+//             textAlign: TextAlign.right,
+//             style: TextStyle(fontFamily: 'Amiri'),
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//               child: Text('لا', style: TextStyle(fontFamily: 'Amiri')),
+//             ),
+//             TextButton(
+//               onPressed: () {
+//                 _unsubscribeEvent(eventId);
+//                 Navigator.of(context).pop();
+//               },
+//               child: Text('نعم', style: TextStyle(fontFamily: 'Amiri')),
+//             ),
+//           ],
+//         );
+//       },
 //     );
 //   }
 
@@ -476,7 +600,7 @@
 //         text,
 //         textAlign: TextAlign.center,
 //         style: TextStyle(
-//           fontSize: 12,
+//           fontSize: 10,
 //           fontFamily: 'Amiri',
 //           color: isOngoing ? Colors.green : Color(0xFF071533),
 //         ),
@@ -488,112 +612,18 @@
 //     return Column(
 //       key: ValueKey('معلوماتي'),
 //       children: [
-//         _buildInfoCard(
-//             'البريد الإلكتروني', 'banah.hamdan@gmail.com', Icons.email, false),
+//         _buildInfoCard('البريد الإلكتروني', email, Icons.email, false),
 //         _buildInfoCard('رقم الهاتف', phoneNumber, Icons.phone, true),
 //         _buildInfoCard(
-//             'تاريخ الميلاد', '2001/10/06', Icons.calendar_today, false),
+//             'تاريخ الميلاد',
+//             '${birthDate.year}/${birthDate.month}/${birthDate.day}',
+//             Icons.calendar_today,
+//             false),
 //         _buildInfoCard('مكان السكن', location, Icons.location_city, true),
 //         _buildInfoCard('فصيلة الدم', bloodType, Icons.bloodtype, true),
 //         _buildInfoCard(
 //             'تاريخ آخر تبرع بالدم', '2024/03/09', Icons.date_range, false),
 //       ],
-//     );
-//   }
-
-//   Widget _buildSettingsContent() {
-//     return Column(
-//       key: ValueKey('إعدادات الحساب'),
-//       children: [
-//         ListTile(
-//           title: Text(
-//             'تسجيل الخروج',
-//             style: TextStyle(
-//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
-//             textAlign: TextAlign.right,
-//           ),
-//           trailing: Container(
-//             width: 30,
-//             height: 30,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               color: Color(0xFF071533)
-//                   .withOpacity(0.1), // Same color as the app bar
-//             ),
-//             child: Icon(Icons.logout, color: Color(0xFF071533), size: 20),
-//           ),
-//           onTap: _logout,
-//         ),
-//         Divider(color: Colors.grey[300]),
-//         ListTile(
-//           title: Text(
-//             'إلغاء الحساب',
-//             style: TextStyle(
-//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
-//             textAlign: TextAlign.right,
-//           ),
-//           trailing: Container(
-//             width: 30,
-//             height: 30,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               color: Color(0xFF071533)
-//                   .withOpacity(0.1), // Same color as the app bar
-//             ),
-//             child: Icon(Icons.delete, color: Color(0xFF071533), size: 20),
-//           ),
-//           onTap: _showDeleteAccountDialog,
-//         ),
-//         Divider(color: Colors.grey[300]),
-//       ],
-//     );
-//   }
-
-//   Widget _buildArticleCard(String imagePath, String title, String readTime) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 8.0),
-//       child: Card(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(15),
-//         ),
-//         elevation: 2,
-//         child: ListTile(
-//           contentPadding: EdgeInsets.all(10),
-//           leading: ClipRRect(
-//             borderRadius: BorderRadius.circular(10),
-//             child: Image.asset(
-//               imagePath,
-//               width: 60,
-//               height: 60,
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//           title: Text(
-//             title,
-//             style: TextStyle(
-//               fontSize: 14,
-//               fontWeight: FontWeight.bold,
-//               fontFamily: 'Amiri',
-//               color: Color(0xFF071533),
-//             ),
-//           ),
-//           subtitle: Row(
-//             children: [
-//               Icon(Icons.favorite_border, size: 16, color: Colors.grey),
-//               SizedBox(width: 5),
-//               Text(
-//                 readTime,
-//                 style: TextStyle(
-//                   fontSize: 12,
-//                   fontFamily: 'Amiri',
-//                   color: Colors.grey,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           trailing: Icon(Icons.more_vert, color: Colors.grey),
-//         ),
-//       ),
 //     );
 //   }
 
@@ -619,7 +649,7 @@
 //                   value,
 //                   textAlign: TextAlign.right,
 //                   style: TextStyle(
-//                     fontSize: 14,
+//                     fontSize: 16,
 //                     fontFamily: 'Amiri',
 //                   ),
 //                 ),
@@ -640,13 +670,58 @@
 //                 height: 30,
 //                 decoration: BoxDecoration(
 //                   shape: BoxShape.circle,
-//                   color: Color(0xFF071533)
-//                       .withOpacity(0.1), // Same color as the app bar
+//                   color: Color(0xFF071533).withOpacity(0.1),
 //                 ),
 //                 child: Icon(icon, color: Color(0xFF071533), size: 20),
 //               ),
 //             ],
 //           ),
+//         ),
+//         Divider(color: Colors.grey[300]),
+//       ],
+//     );
+//   }
+
+//   Widget _buildSettingsContent() {
+//     return Column(
+//       key: ValueKey('إعدادات الحساب'),
+//       children: [
+//         ListTile(
+//           title: Text(
+//             'تسجيل الخروج',
+//             style: TextStyle(
+//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
+//             textAlign: TextAlign.right,
+//           ),
+//           trailing: Container(
+//             width: 30,
+//             height: 30,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               color: Color(0xFF071533).withOpacity(0.1),
+//             ),
+//             child: Icon(Icons.logout, color: Color(0xFF071533), size: 20),
+//           ),
+//           onTap: _logout,
+//         ),
+//         Divider(color: Colors.grey[300]),
+//         ListTile(
+//           title: Text(
+//             'إلغاء الحساب',
+//             style: TextStyle(
+//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
+//             textAlign: TextAlign.right,
+//           ),
+//           trailing: Container(
+//             width: 30,
+//             height: 30,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               color: Color(0xFF071533).withOpacity(0.1),
+//             ),
+//             child: Icon(Icons.delete, color: Color(0xFF071533), size: 20),
+//           ),
+//           onTap: _showDeleteAccountDialog,
 //         ),
 //         Divider(color: Colors.grey[300]),
 //       ],
@@ -705,11 +780,11 @@
 //               onPressed: () {
 //                 setState(() {
 //                   if (title == 'رقم الهاتف') {
-//                     phoneNumber = controller.text;
+//                     editUserData('phoneNumber', controller.text);
 //                   } else if (title == 'مكان السكن') {
-//                     location = controller.text;
+//                     editUserData('city', controller.text);
 //                   } else if (title == 'فصيلة الدم') {
-//                     bloodType = controller.text;
+//                     editUserData('bloodType', controller.text);
 //                   }
 //                 });
 //                 Navigator.of(context).pop();
@@ -791,8 +866,10 @@
 //                   onPressed: () {
 //                     if (codeController.text == correctCode) {
 //                       // Perform account deletion and navigate to login page
-//                       Navigator.of(context).pushReplacement(
-//                           MaterialPageRoute(builder: (context) => LoginPage()));
+//                       Navigator.of(context).pushReplacement(MaterialPageRoute(
+//                           builder: (context) => LoginPage(
+//                                 userId: widget.userId,
+//                               )));
 //                     } else {
 //                       setState(() {
 //                         isError = true;
@@ -813,11 +890,10 @@
 
 //   void _logout() {
 //     // Perform logout and navigate to login page
-//     Navigator.push(
-//         context,
-//         MaterialPageRoute(
-//             builder: (context) =>
-//                 LoginPage())); // Add onTap functionality for logout
+//     Navigator.of(context).pushReplacement(MaterialPageRoute(
+//         builder: (context) => LoginPage(
+//               userId: widget.userId,
+//             )));
 //   }
 
 //   void _pickProfileImage() async {
@@ -853,22 +929,19 @@
 //   }
 // }
 
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
-import 'package:cytc/UserPages/screen/auth/login.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, library_private_types_in_public_api, use_key_in_widget_constructors
+import 'dart:io' show Platform; // Import this at the top of your file
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
-import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:image_picker/image_picker.dart';
-import 'package:cytc/linkapi.dart';
+///////////////////////////
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ProfilePage extends StatefulWidget {
   final String userId;
@@ -888,10 +961,11 @@ class _ProfilePageState extends State<ProfilePage> {
   String phoneNumber = '1234567890';
   String location = 'نابلس';
   String bloodType = 'AB+';
-  String profileImagePath = 'assets/banah.jpg';
+  String profileImagePath =
+      'https://path-to-your-default-image.jpg'; // default image URL
   DateTime birthDate = DateTime.now();
   String email = '';
-  String username = ''; // New field for username
+  String username = '';
 
   final ImagePicker _picker = ImagePicker();
   final String correctCode = "123456";
@@ -906,8 +980,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> fetchUserData() async {
-    final response =
-        await http.get(Uri.parse('${LinkApi.user}/${widget.userId}'));
+    final response = await http
+        .get(Uri.parse('http://127.0.0.1:9999/user/${widget.userId}'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -918,13 +992,15 @@ class _ProfilePageState extends State<ProfilePage> {
           bloodType = data['user']['bloodType'];
           birthDate = DateTime.parse(data['user']['birthDate']);
           email = data['user']['email'];
-          username = data['user']['username']; // Fetch username
+          username = data['user']['username'];
+          profileImagePath = data['user']['imageUrl'] ??
+              'https://path-to-your-default-image.jpg';
         });
       } else {
-        // Handle the case where the API returns a failure status
+        print('Failed to fetch user data: ${data['message']}');
       }
     } else {
-      // Handle the case where the API call fails
+      print('Failed to fetch user data: ${response.statusCode}');
     }
   }
 
@@ -939,32 +1015,23 @@ class _ProfilePageState extends State<ProfilePage> {
           events = data['events'];
         });
       } else {
-        // Handle the case where the API returns a failure status
+        print('Failed to fetch user events: ${data['message']}');
       }
     } else {
-      // Handle the case where the API call fails
+      print('Failed to fetch user events: ${response.statusCode}');
     }
   }
 
   Future<void> editUserData(String field, String newValue) async {
-    final url = '${LinkApi.editUser}/${widget.userId}';
-    final headers = {
-      'Content-Type': 'application/json',
-    };
-    final body = json.encode({
-      field: newValue,
-    });
-
-    print('Sending PUT request to $url with body: $body and headers: $headers');
+    final url = 'http://localhost:9999/user/edit-user/${widget.userId}';
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({field: newValue});
 
     final response = await http.put(
       Uri.parse(url),
       headers: headers,
       body: body,
     );
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       final data = json.decode(response.body);
@@ -974,7 +1041,7 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Failed to update user information: ${data['message']}');
       }
     } else {
-      print('Failed to update user information');
+      print('Failed to update user information: ${response.statusCode}');
     }
   }
 
@@ -997,7 +1064,90 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Failed to unsubscribe from the event: ${data['message']}');
       }
     } else {
-      print('Failed to unsubscribe from the event');
+      print('Failed to unsubscribe from the event: ${response.statusCode}');
+    }
+  }
+
+  Future<String?> uploadImageToFirebase(XFile file) async {
+    try {
+      String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('userImages');
+      Reference referenceImageToUpload =
+          referenceDirImages.child(uniqueFileName);
+
+      UploadTask uploadTask;
+      if (kIsWeb) {
+        uploadTask = referenceImageToUpload.putData(
+          await file.readAsBytes(),
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+      } else {
+        uploadTask = referenceImageToUpload.putFile(
+          File(file.path),
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+      }
+
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+      String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      print('Image URL: $downloadUrl');
+      return downloadUrl;
+    } catch (e) {
+      print('Error uploading image to Firebase: $e');
+      return null;
+    }
+  }
+
+  Future<void> _pickProfileImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      String? imageUrl = await uploadImageToFirebase(pickedFile);
+      print('here image url');
+      print(imageUrl);
+      if (imageUrl != null) {
+        await updateUserProfileImage(imageUrl);
+      } else {
+        print('Failed to get image URL from Firebase');
+      }
+    } else {
+      print('No image selected');
+    }
+  }
+
+  Future<void> updateUserProfileImage(String imageUrl) async {
+    final url = 'http://localhost:9999/user/update-image/${widget.userId}';
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({'imageUrl': imageUrl});
+    print('body :');
+    print(body);
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = json.decode(response.body);
+
+      if (data['status']) {
+        setState(() {
+          profileImagePath =
+              imageUrl; // Update the displayed image with the new URL
+          print('Profile image updated: $imageUrl');
+        });
+      } else {
+        print('Failed to update user image: ${data['message']}');
+      }
+    } else if (response.statusCode == 404) {
+      print('Failed to update user image: 404 Not Found');
+    } else {
+      print('Failed to update user image: ${response.statusCode}');
     }
   }
 
@@ -1010,30 +1160,30 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0,
         actions: [
           IconButton(
-          icon: Icon(
-            LineAwesomeIcons.angle_right_solid,
-            color: Color(0xFF071533),
-            size: 20,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        ],
-        leading: Builder(
-            builder: (context) {
-              return IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Color(0xFF071533),
-                  size: 20,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
+            icon: Icon(
+              LineAwesomeIcons.angle_right_solid,
+              color: Color(0xFF071533),
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
             },
           ),
+        ],
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Color(0xFF071533),
+                size: 20,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
       ),
       drawer: _buildDrawer(),
       body: SingleChildScrollView(
@@ -1049,6 +1199,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Color(0xFF071533).withOpacity(0.1),
                   ),
                 ),
+              //   Container(
+              //     height: 160,
+              //     color: Color(0xFF071533).withOpacity(0.1),
+              //   ),
                 Positioned(
                   top: 70,
                   left: 0,
@@ -1060,7 +1214,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: AssetImage(profileImagePath),
+                            backgroundImage: NetworkImage(
+                                profileImagePath), // Use NetworkImage for loading from URL
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 4.0,
+                                ),
+                              ),
+                            ),
                           ),
                           Positioned(
                             right: 0,
@@ -1085,7 +1251,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        username, // Display the fetched username
+                        username,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -1201,7 +1367,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage( userRole: widget.userRole, userId: widget.userId,)));
+                              builder: (context) => ProfilePage(
+                                    userRole: widget.userRole,
+                                    userId: widget.userId,
+                                  )));
                     },
                     child: CircleAvatar(
                       radius: 30,
@@ -1215,12 +1384,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           ListTile(
             onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => bar(
-                          userId: '',
-                          userRole: '',
-                        ))),
+                context, MaterialPageRoute(builder: (context) => Container())),
             title: Text('الرئيسية',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1234,7 +1398,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        universityTrainingPage( userRole: widget.userRole, userId: widget.userId,))), // Add onTap functionality
+                        Container())), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1249,7 +1413,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        SuggestionsPage( userRole: widget.userRole,userId: widget.userId,))), // Add onTap functionality
+                        Container())), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1264,7 +1428,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
+                        Container())), // Add onTap functionality for logout
             title: Text('تسجيل خروج',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1277,7 +1441,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
 
   Widget _buildTab(String label, bool isSelected) {
     return Padding(
@@ -1310,7 +1473,6 @@ class _ProfilePageState extends State<ProfilePage> {
       key: ValueKey('تقاريري'),
       children: [
         Container(
-          // width: 370,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(25),
@@ -1324,17 +1486,13 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           padding: EdgeInsets.all(18),
           child: Table(
-            
             border: TableBorder.all(color: Colors.grey),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             columnWidths: {
-              0: FractionColumnWidth(0.19),
-              // 1: FractionColumnWidth(0.12),
-              1: FractionColumnWidth(0.19),
-              2: FractionColumnWidth(0.22),
-              3: FractionColumnWidth(0.22),
-              // 5: FractionColumnWidth(0.12),
-              4: FractionColumnWidth(0.19),
+              0: FractionColumnWidth(0.25),
+              1: FractionColumnWidth(0.25),
+              2: FractionColumnWidth(0.25),
+              3: FractionColumnWidth(0.25),
             },
             children: [
               TableRow(
@@ -1342,13 +1500,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Color(0xFF071533).withOpacity(0.1),
                 ),
                 children: [
-                  _buildTableCell('إلغاء الاشتراك', true),
-                  // _buildTableCell('استمرارية النشاط', true),
-                  _buildTableCell('عدد الساعات'),
-                  _buildTableCell('تاريخ النهاية'),
-                  _buildTableCell('تاريخ البداية'),
-                  // _buildTableCell('التصنيف'),
                   _buildTableCell('اسم النشاط'),
+                  _buildTableCell('تاريخ البداية'),
+                  _buildTableCell('تاريخ النهاية'),
+                  _buildTableCell('عدد الساعات'),
                 ],
               ),
               for (var event in events)
@@ -1357,25 +1512,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.white,
                   ),
                   children: [
-                    _buildUnsubscribeCell(event),
-                    _buildStatusCell(
-                        DateTime.parse(event['eventId']['endDate'])
-                                .isAfter(DateTime.now())
-                            ? 'مستمر'
-                            : 'منتهي',
-                        DateTime.parse(event['eventId']['endDate'])
-                            .isAfter(DateTime.now())),
+                    _buildTableCell(event['eventId']['name']),
+                    _buildTableCell(
+                        event['eventId']['startDate'].substring(0, 10)),
+                    _buildTableCell(
+                        event['eventId']['endDate'].substring(0, 10)),
                     _buildTableCell((DateTime.parse(event['eventId']['endDate'])
                             .difference(
                                 DateTime.parse(event['eventId']['startDate'])))
                         .inHours
                         .toString()),
-                    _buildTableCell(
-                        event['eventId']['endDate'].substring(0, 10)),
-                    _buildTableCell(
-                        event['eventId']['startDate'].substring(0, 10)),
-                    _buildTableCell(event['eventId']['interests']),
-                    _buildTableCell(event['eventId']['name']),
                   ],
                 ),
             ],
@@ -1443,21 +1589,6 @@ class _ProfilePageState extends State<ProfilePage> {
         style: TextStyle(
           fontSize: 10,
           fontFamily: 'Amiri',
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusCell(String text, bool isOngoing) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 10,
-          fontFamily: 'Amiri',
-          color: isOngoing ? Colors.green : Color(0xFF071533),
         ),
       ),
     );
@@ -1721,10 +1852,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     if (codeController.text == correctCode) {
                       // Perform account deletion and navigate to login page
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => LoginPage(
-                                userId: widget.userId,
-                              )));
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => Container()));
                     } else {
                       setState(() {
                         isError = true;
@@ -1745,23 +1874,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _logout() {
     // Perform logout and navigate to login page
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => LoginPage(
-              userId: widget.userId,
-            )));
-  }
-
-  void _pickProfileImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        profileImagePath = pickedFile.path;
-      });
-    }
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Container()));
   }
 }
 
+
+/////////////////////////////////
 class BackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -1783,3 +1902,4 @@ class BackgroundClipper extends CustomClipper<Path> {
     return false;
   }
 }
+/////////////////////////////////
