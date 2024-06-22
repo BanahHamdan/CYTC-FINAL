@@ -1,19 +1,10 @@
-// // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
 // import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
 // import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 // import 'package:flutter/material.dart';
 // import 'package:charts_flutter/flutter.dart' as charts;
-
 // import 'VolunteerOfTheMonth.dart';
-
-// class Volunteer {
-//   final String name;
-//   final String imageUrl;
-//   bool isSelected;
-
-//   Volunteer(this.name, this.imageUrl, {this.isSelected = false});
-// }
 
 // class AdminHomePage extends StatelessWidget {
 //   final String userId;
@@ -47,10 +38,34 @@
 //   late List<charts.Series<PersonEvent, String>> _seriesData;
 //   late List<charts.Series<EventParticipants, String>> _seriesEventData;
 
-//   List<Volunteer> volunteers = [
-//     Volunteer('بانه خالد حمدان', 'assets/banah.jpg'),
-//     Volunteer('Person 2', 'assets/images/person2.png'),
-//     Volunteer('Person 3', 'assets/images/person3.png'),
+//   List<Volunteer> adminVolunteers = [
+//     Volunteer(
+//       name: 'بانه خالد حمدان',
+//       email: 'banah@example.com',
+//       phoneNumber: '123-456-7890',
+//       address: 'شارع النخيل',
+//       bloodType: 'O+',
+//       birthDate: '01/01/1990',
+//       imageUrl: 'assets/banah.jpg',
+//     ),
+//     Volunteer(
+//       name: 'Person 2',
+//       email: 'person2@example.com',
+//       phoneNumber: '987-654-3210',
+//       address: 'شارع الزيتون',
+//       bloodType: 'A-',
+//       birthDate: '02/02/1985',
+//       imageUrl: 'assets/images/person2.png',
+//     ),
+//     Volunteer(
+//       name: 'Person 3',
+//       email: 'person3@example.com',
+//       phoneNumber: '555-555-5555',
+//       address: 'شارع الورود',
+//       bloodType: 'B+',
+//       birthDate: '03/03/1980',
+//       imageUrl: 'assets/images/person3.png',
+//     ),
 //   ];
 
 //   Volunteer? selectedVolunteer;
@@ -121,17 +136,27 @@
 //     _generateData();
 //   }
 
-//   // bool isEditing1 = false;
-//   // bool isEditing2 = false;
-//   // TextEditingController controller1 = TextEditingController(text: 'اسم المتطوع:');
-//   // TextEditingController controller2 = TextEditingController(text: 'المركز هو');
+//   void _chooseVolunteerAutomatically() {
+//     // Replace with your logic for automated selection
+//     Volunteer automatedVolunteer = adminVolunteers[0]; // Example
+//     setState(() {
+//       selectedVolunteer = automatedVolunteer;
+//     });
+//   }
 
-//   // void _saveEdit() {
-//   //   setState(() {
-//   //     isEditing1 = false;
-//   //     isEditing2 = false;
-//   //   });
-//   // }
+//   void _chooseVolunteerManually() {
+//     Navigator.of(context).push(
+//       MaterialPageRoute(
+//         builder: (context) => VolunteerOfTheMonth(
+//           onSelected: (volunteer) {
+//             setState(() {
+//               selectedVolunteer = volunteer;
+//             });
+//           },
+//         ),
+//       ),
+//     );
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -269,104 +294,6 @@
 //     );
 //   }
 
-// /////////////////////////////////////////////////////////
-//   void _chooseVolunteerAutomatically() {
-//     // Replace with your logic for automated selection
-//     Volunteer automatedVolunteer = volunteers[0]; // Example
-//     // SizedBox(height: 10,);
-//     showDialog(
-//       context: context,
-//       builder: (context) => AlertDialog(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(15.0),
-//         ),
-//         title: Text(
-//           'متطوع الشهر المثالي وفقا للاحصائيات',
-//           textAlign: TextAlign.center,
-//           style: TextStyle(
-//             color: Color(0xFF071533),
-//             fontFamily: 'Amiri',
-//             fontWeight: FontWeight.bold,
-//             fontSize: 17,
-//           ),
-//         ),
-//         content: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             ClipOval(
-//               child: Image.asset(
-//                 automatedVolunteer.imageUrl,
-//                 height: 100,
-//                 width: 100,
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//             SizedBox(
-//               height: 5,
-//             ),
-//             Text(
-//               automatedVolunteer.name,
-//               style: TextStyle(
-//                 color: Color(0xFF071533),
-//                 fontFamily: 'Amiri',
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 15,
-//               ),
-//             ),
-//           ],
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//               setState(() {
-//                 selectedVolunteer = automatedVolunteer;
-//               });
-//             },
-//             child: Text(
-//               'حفظ',
-//               style: TextStyle(
-//                 color: Color(0xFFffe145),
-//                 fontFamily: 'Amiri',
-//                 fontSize: 12,
-//               ),
-//             ),
-//           ),
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             child: Text(
-//               'رجوع',
-//               style: TextStyle(
-//                 color: Color(0xFFE94444),
-//                 fontFamily: 'Amiri',
-//                 fontSize: 12,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   void _chooseVolunteerManually() {
-//     Navigator.of(context).push(
-//     MaterialPageRoute(
-//       builder: (context) => VolunteerOfTheMonth( onSelected: (Volunteer ) {  }, //volunteers: [],
-//         // volunteers: volunteers,
-//         // onSelected: (volunteer) {
-//         //   setState(() {
-//         //     selectedVolunteer = volunteer;
-//         //   });
-//         // },
-//       ), // Replace with your new page
-//     ),
-//     );
-//   }
-
 //   Widget _buildEditableCardVolunteerOfTheMonth() {
 //     return SizedBox(
 //       width: 100, // Adjust the width as needed
@@ -407,10 +334,6 @@
 //               ),
 //               TextButton(
 //                 onPressed: _chooseVolunteerAutomatically,
-//                 // style: ElevatedButton.styleFrom(
-//                 //   backgroundColor: Color(0xFF071533).withOpacity(0.4), // Background color
-//                 //   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//                 // ),
 //                 child: Text('بشكل اوتوماتيكي',
 //                     style: TextStyle(
 //                       fontSize: 10,
@@ -420,10 +343,6 @@
 //               ),
 //               TextButton(
 //                 onPressed: _chooseVolunteerManually,
-//                 // style: ElevatedButton.styleFrom(
-//                 //   backgroundColor: Color(0xFF071533).withOpacity(0.4), // Background color
-//                 //   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//                 // ),
 //                 child: Text('بشكل يدوي',
 //                     style: TextStyle(
 //                       fontSize: 10,
@@ -473,7 +392,6 @@
 //                                 fontSize: 10,
 //                                 color: Color(0xFF071533),
 //                                 fontFamily: 'Amiri',
-//                                 // fontWeight:
 //                               )),
 //                         ],
 //                       ),
@@ -489,7 +407,6 @@
 //                     onPressed: _saveEdit,
 //                     style: ElevatedButton.styleFrom(
 //                       backgroundColor: Colors.white, // Background color
-//                       // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
 //                       shape: RoundedRectangleBorder(
 //                         borderRadius: BorderRadius.circular(10.0),
 //                         side: BorderSide(color: Color(0xFF071533), width: 1.0),
@@ -500,18 +417,6 @@
 //                       style: TextStyle(fontSize: 10, color: Color(0xFF071533)),
 //                     ),
 //                   ),
-//                   // ElevatedButton(
-//                   //   onPressed: () {
-//                   //     setState(() {
-//                   //       isEditing1 = true;
-//                   //     });
-//                   //   },
-//                   //   style: ElevatedButton.styleFrom(
-//                   //     backgroundColor: Color(0xFF071533), // Background color
-//                   //     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//                   //   ),
-//                   //   child: Text('تعديل', style: TextStyle(fontSize: 10, color: Colors.white)),
-//                   // ),
 //                 ],
 //               ),
 //             ],
@@ -520,78 +425,6 @@
 //       ),
 //     );
 //   }
-
-//   // Widget _buildEditableCardVolunteerOfTheMonth() {
-//   //   return SizedBox(
-//   //     width: 100, // Adjust the width as needed
-//   //     height: 270, // Adjust the height as needed
-//   //     child: Card(
-//   // shape: RoundedRectangleBorder(
-//   //   borderRadius: BorderRadius.circular(10),
-//   // ),
-//   //       child: Container(
-//   //         height: 200,
-//   //         padding: EdgeInsets.all(12.0),
-//   //         child: Column(
-//   //           mainAxisSize: MainAxisSize.min,
-//   //           crossAxisAlignment: CrossAxisAlignment.end,
-//   //           children: [
-//   //             Text(
-//   //               'متطوع الشهر',
-//   //               style: TextStyle(
-//   //                 color: Color(0xFF071533),
-//   //                 fontSize: 12,
-//   //                 fontWeight: FontWeight.bold,
-//   //               ),
-//   //             ),
-//   //             SizedBox(height: 6),
-//   //             isEditing1
-//   //                 ? TextField(
-//   //                     controller: controller1,
-//   //                     maxLines: null,
-//   //                     style: TextStyle(color: Color(0xFF071533), fontSize: 10),
-//   //                     decoration: InputDecoration(
-//   //                       border: OutlineInputBorder(),
-//   //                     ),
-//   //                   )
-//   //                 : Text(
-//   //                     controller1.text,
-//   //                     style: TextStyle(
-//   //                       fontSize: 10,
-//   //                     ),
-//   //                   ),
-//   //             SizedBox(height: 6),
-//   //             Row(
-//   //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//   //               children: [
-//   //                 ElevatedButton(
-//   //                   onPressed: _saveEdit,
-//   //                   style: ElevatedButton.styleFrom(
-//   //                     backgroundColor: Color(0xFF071533).withOpacity(0.4), // Background color
-//   //                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//   //                   ),
-//   //                   child: Text('حفظ', style: TextStyle(fontSize: 10, color: Colors.white)),
-//   //                 ),
-//   //                 ElevatedButton(
-//   //                   onPressed: () {
-//   //                     setState(() {
-//   //                       isEditing1 = true;
-//   //                     });
-//   //                   },
-//   //                   style: ElevatedButton.styleFrom(
-//   //                     backgroundColor: Color(0xFF071533), // Background color
-//   //                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//   //                   ),
-//   //                   child: Text('تعديل', style: TextStyle(fontSize: 10, color: Colors.white)),
-//   //                 ),
-//   //               ],
-//   //             ),
-//   //           ],
-//   //         ),
-//   //       ),
-//   //     ),
-//   //   );
-//   // }
 
 //   Widget _buildEditableCardCenterInfo() {
 //     return SizedBox(
@@ -654,9 +487,6 @@
 //                         borderRadius: BorderRadius.circular(10.0),
 //                         side: BorderSide(color: Color(0xFF071533), width: 1.0),
 //                       ),
-//                       // .withOpacity(0.4), // Background color
-//                       // padding:
-//                       //     EdgeInsets.symmetric(horizontal: 5, vertical: 2),
 //                     ),
 //                     child: Text('حفظ',
 //                         style: TextStyle(
@@ -672,7 +502,6 @@
 //                     },
 //                     style: ElevatedButton.styleFrom(
 //                       backgroundColor: Colors.white, // Background color
-//                       // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
 //                       shape: RoundedRectangleBorder(
 //                         borderRadius: BorderRadius.circular(10.0),
 //                         side: BorderSide(color: Color(0xFF071533), width: 1.0),
@@ -700,13 +529,9 @@
 //       child: InkWell(
 //         onTap: () {
 //           Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => ParamedicsRequests()
-//                       ),
-//                     );
-//           // Add your onTap functionality here
-//           print('Card clicked');
+//             context,
+//             MaterialPageRoute(builder: (context) => ParamedicsRequests()),
+//           );
 //         },
 //         child: Card(
 //           shape: RoundedRectangleBorder(
@@ -750,13 +575,9 @@
 //       child: InkWell(
 //         onTap: () {
 //           Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => BloodRequests()
-//                       ),
-//                     );
-//           // Add your onTap functionality here
-//           print('Card clicked22222');
+//             context,
+//             MaterialPageRoute(builder: (context) => BloodRequests()),
+//           );
 //         },
 //         child: Card(
 //           shape: RoundedRectangleBorder(
@@ -810,11 +631,20 @@
 // }
 
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
+import 'dart:convert';
 import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
 import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'VolunteerOfTheMonth.dart';
+/////////////////////////////
+import 'dart:convert';
+import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
+import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'VolunteerOfTheMonth.dart';
 
@@ -832,9 +662,7 @@ class AdminHomePage extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFF071533),
         fontFamily: 'Amiri',
-        textTheme: TextTheme(
-            // : TextStyle(color: Colors.black),
-            ),
+        textTheme: TextTheme(),
       ),
       home: AdminHome(),
     );
@@ -849,6 +677,8 @@ class AdminHome extends StatefulWidget {
 class _AdminHomePageState extends State<AdminHome> {
   late List<charts.Series<PersonEvent, String>> _seriesData;
   late List<charts.Series<EventParticipants, String>> _seriesEventData;
+  bool isLoading = true;
+  bool isParticipantsLoading = true;
 
   List<Volunteer> adminVolunteers = [
     Volunteer(
@@ -896,48 +726,97 @@ class _AdminHomePageState extends State<AdminHome> {
     });
   }
 
-  _generateData() {
-    var personData = [
-      PersonEvent('Person 1', 10),
-      PersonEvent('Person 2', 15),
-      PersonEvent('Person 3', 20),
-      PersonEvent('Person 4', 25),
-      PersonEvent('Person 5', 30),
-    ];
+  Future<void> _fetchTopParticipants() async {
+    final response = await http
+        .get(Uri.parse('http://localhost:9999/event-user/top-participants'));
 
-    _seriesData.add(
-      charts.Series(
-        domainFn: (PersonEvent personEvent, _) => personEvent.person,
-        measureFn: (PersonEvent personEvent, _) => personEvent.events,
-        id: 'Events',
-        data: personData,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (PersonEvent personEvent, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFFffe145)),
-      ),
-    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['status']) {
+        List<PersonEvent> personData = [];
 
-    var eventData = [
-      EventParticipants('Event 1', 10),
-      EventParticipants('Event 2', 20),
-      EventParticipants('Event 3', 30),
-      EventParticipants('Event 4', 40),
-      EventParticipants('Event 5', 50),
-    ];
+        for (var participant in data['topParticipants']) {
+          final userId = participant['userId'];
+          final eventCount = participant['eventCount'];
+          final userResponse =
+              await http.get(Uri.parse('http://localhost:9999/user/$userId'));
+          // .get(Uri.parse('http://127.0.0.1:9999/user/${widget.userId}'));
 
-    _seriesEventData.add(
-      charts.Series(
-        domainFn: (EventParticipants eventParticipants, _) =>
-            eventParticipants.event,
-        measureFn: (EventParticipants eventParticipants, _) =>
-            eventParticipants.participants,
-        id: 'Participants',
-        data: eventData,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (EventParticipants eventParticipants, _) =>
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(17, 36, 78, 0.576)),
-      ),
-    );
+          if (userResponse.statusCode == 200) {
+            final userData = jsonDecode(userResponse.body);
+            if (userData['status']) {
+              final username = userData['user']['username'];
+              personData.add(PersonEvent(username, eventCount));
+            } else {
+              print('Error: Failed to get user data for userId: $userId');
+            }
+          } else {
+            print(
+                'Error: Failed to fetch user data for userId: $userId, StatusCode: ${userResponse.statusCode}');
+          }
+        }
+
+               setState(() {
+          _seriesData = [
+            charts.Series(
+              domainFn: (PersonEvent personEvent, _) => personEvent.person,
+              measureFn: (PersonEvent personEvent, _) => personEvent.events,
+              id: 'Events',
+              data: personData,
+              fillPatternFn: (_, __) => charts.FillPatternType.solid,
+              fillColorFn: (PersonEvent personEvent, __) =>
+                  charts.ColorUtil.fromDartColor(Color(0xFFffe145)),
+            ),
+          ];
+          isParticipantsLoading = false;
+        });
+
+      } else {
+        print('Error: Failed to fetch top participants');
+      }
+    } else {
+      print(
+          'Error: Failed to fetch top participants, StatusCode: ${response.statusCode}');
+    }
+  }
+
+  Future<void> _fetchTopEvents() async {
+    final response = await http
+        .get(Uri.parse('http://localhost:9999/event-user/top-events'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['status']) {
+        final List<EventParticipants> eventData = (data['topEvents'] as List)
+            .map((event) =>
+                EventParticipants(event['name'], event['participantCount']))
+            .toList();
+
+                setState(() {
+          _seriesEventData = [
+            charts.Series(
+              domainFn: (EventParticipants eventParticipants, _) =>
+                  eventParticipants.event,
+              measureFn: (EventParticipants eventParticipants, _) =>
+                  eventParticipants.participants,
+              id: 'Participants',
+              data: eventData,
+              fillPatternFn: (_, __) => charts.FillPatternType.solid,
+              fillColorFn: (EventParticipants eventParticipants, __) =>
+                  charts.ColorUtil.fromDartColor(
+                      Color.fromRGBO(17, 36, 78, 0.576)),
+            ),
+          ];
+          isLoading = false;
+        });
+
+      } else {
+        print('Error: Failed to fetch top events');
+      }
+    } else {
+      print(
+          'Error: Failed to fetch top events, StatusCode: ${response.statusCode}');
+    }
   }
 
   @override
@@ -945,7 +824,8 @@ class _AdminHomePageState extends State<AdminHome> {
     super.initState();
     _seriesData = <charts.Series<PersonEvent, String>>[];
     _seriesEventData = <charts.Series<EventParticipants, String>>[];
-    _generateData();
+    _fetchTopParticipants();
+    _fetchTopEvents();
   }
 
   void _chooseVolunteerAutomatically() {
@@ -962,7 +842,7 @@ class _AdminHomePageState extends State<AdminHome> {
         builder: (context) => VolunteerOfTheMonth(
           onSelected: (volunteer) {
             setState(() {
-              selectedVolunteer = volunteer;
+              // selectedVolunteer = volunteer;
             });
           },
         ),
@@ -1049,16 +929,19 @@ class _AdminHomePageState extends State<AdminHome> {
                 ),
               ),
               SizedBox(height: 8),
-              SizedBox(
-                height: 150, // Adjust the height to make the chart smaller
-                width: 350,
-                child: charts.BarChart(
-                  _seriesData,
-                  animate: true,
-                  barGroupingType: charts.BarGroupingType.grouped,
-                  animationDuration: Duration(seconds: 5),
-                ),
-              ),
+              isParticipantsLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : SizedBox(
+                      height:
+                          150, // Adjust the height to make the chart smaller
+                      width: 350,
+                      child: charts.BarChart(
+                        _seriesData,
+                        animate: true,
+                        barGroupingType: charts.BarGroupingType.grouped,
+                        animationDuration: Duration(seconds: 5),
+                      ),
+                    ),
             ],
           ),
         ),
@@ -1068,7 +951,7 @@ class _AdminHomePageState extends State<AdminHome> {
 
   Widget _buildCardPopularActivities() {
     return SizedBox(
-      width: 300, // Adjust the width as needed
+      width: 500, // Increase the width to utilize empty space
       height: 220, // Adjust the height as needed
       child: Card(
         shape: RoundedRectangleBorder(
@@ -1089,16 +972,28 @@ class _AdminHomePageState extends State<AdminHome> {
                 ),
               ),
               SizedBox(height: 8),
-              SizedBox(
-                height: 150, // Adjust the height to make the chart smaller
-                width: 350,
-                child: charts.BarChart(
-                  _seriesEventData,
-                  animate: true,
-                  barGroupingType: charts.BarGroupingType.grouped,
-                  animationDuration: Duration(seconds: 5),
-                ),
-              ),
+              isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : SizedBox(
+                      height:
+                          150, // Adjust the height to make the chart smaller
+                      width: 480, // Adjust the width to fit within the card
+                      child: charts.BarChart(
+                        _seriesEventData,
+                        animate: true,
+                        barGroupingType: charts.BarGroupingType.grouped,
+                        animationDuration: Duration(seconds: 5),
+                        domainAxis: charts.OrdinalAxisSpec(
+                          renderSpec: charts.SmallTickRendererSpec(
+                            labelRotation: 45,
+                            labelStyle: charts.TextStyleSpec(
+                              fontSize: 10, // Adjust the font size as needed
+                              color: charts.MaterialPalette.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
@@ -1339,10 +1234,12 @@ class _AdminHomePageState extends State<AdminHome> {
       width: 80, // Adjust the width as needed
       height: 150, // Adjust the height as needed
       child: InkWell(
-        onTap: () {
+        onTap: () { 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ParamedicsRequests()),
+            MaterialPageRoute(
+              builder: (context) => ParamedicsRequests()
+              ),
           );
         },
         child: Card(
@@ -1440,4 +1337,26 @@ class EventParticipants {
   int participants;
 
   EventParticipants(this.event, this.participants);
+}
+
+class Volunteer {
+  final String name;
+  final String email;
+  final String phoneNumber;
+  final String address;
+  final String bloodType;
+  final String birthDate;
+  final String imageUrl;
+  bool isSelected;
+
+  Volunteer({
+    required this.name,
+    required this.email,
+    required this.phoneNumber,
+    required this.address,
+    required this.bloodType,
+    required this.birthDate,
+    required this.imageUrl,
+    this.isSelected = false,
+  });
 }

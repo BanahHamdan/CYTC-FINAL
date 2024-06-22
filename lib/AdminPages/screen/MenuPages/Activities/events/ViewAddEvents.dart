@@ -1,12 +1,899 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_interpolation_to_compose_strings
+// import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
+// import 'package:flutter/material.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
-import 'package:cytc/AdminPages/screen/MenuPages/Activities/activities.dart';
+// class ViewAddEventsPage extends StatefulWidget {
+//   final String userId;
+//   final String userRole;
+//   const ViewAddEventsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+
+//   @override
+//   _ViewAddEventsPageState createState() => _ViewAddEventsPageState();
+// }
+
+// class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
+//   List<Event> events = [];
+//   bool isEditing = false;
+//   int? editingIndex;
+//   List<String> categories = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchEvents();
+//     fetchCategories().then((value) {
+//       setState(() {
+//         categories = value;
+//       });
+//     });
+//   }
+
+//   Future<void> fetchEvents() async {
+//     // Fetch data from the backend
+//     // This is just a placeholder. Replace it with your actual backend call.
+//     List<Event> fetchedEvents = [
+//       Event(
+//         date: DateTime.now(),
+//         time: TimeOfDay.now(),
+//         name: 'ورشة عمل تطوير تطبيقات',
+//         category: 'ورش عمل ولقاءات توعوية',
+//         description: 'ورشة لتعليم تطوير التطبيقات باستخدام Flutter',
+//         startDate: DateTime.now(),
+//         endDate: DateTime.now().add(Duration(days: 1)),
+//         participantAges: '18-25',
+//         numberOfParticipants: 30,
+//         participantsInfo: 'info.pdf',
+//         shownToUser: false,
+//         isEditing: false,
+//       ),
+//       // Add more events as needed
+//     ];
+
+//     setState(() {
+//       events = fetchedEvents;
+//     });
+//   }
+
+//   Future<List<String>> fetchCategories() async {
+//     final response = await http.get(Uri.parse('http://localhost:9999/interest/all'));
+//     if (response.statusCode == 200) {
+//       List<dynamic> data = json.decode(response.body);
+//       return data.map<String>((item) => item['interestName'].toString()).toList();
+//     } else {
+//       // Handle error
+//       print('Failed to load categories');
+//       return [];
+//     }
+//   }
+
+//   void _addEvent(Event event) {
+//     setState(() {
+//       events.add(event);
+//     });
+//   }
+
+//   void _editEvent(int index, Event event) {
+//     setState(() {
+//       events[index] = event;
+//     });
+//   }
+
+//   void _deleteEvent(int index) {
+//     setState(() {
+//       events.removeAt(index);
+//     });
+//   }
+
+//   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+//     DateTime? picked = await showDatePicker(
+//       context: context,
+//       initialDate: DateTime.now(),
+//       firstDate: DateTime(2000),
+//       lastDate: DateTime(2101),
+//       builder: (context, child) {
+//         return Theme(
+//           data: ThemeData.light().copyWith(
+//             primaryColor: Color(0xFF071533),
+//             hintColor: Color(0xFF071533),
+//             colorScheme: ColorScheme.light(primary: Color(0xFF071533)),
+//             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+//           ),
+//           child: child!,
+//         );
+//       },
+//     );
+//     if (picked != null) {
+//       setState(() {
+//         controller.text = picked.toLocal().toString().split(' ')[0];
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primaryColor: Color(0xFF071533),
+//         fontFamily: 'Amiri',
+//         textTheme: TextTheme(
+//           bodyText2: TextStyle(color: Color(0xFF071533)),
+//         ),
+//       ),
+//       home: Scaffold(
+//         appBar: AppBar(
+//           backgroundColor: Colors.transparent,
+//           elevation: 0,
+//           actions: [
+//             IconButton(
+//               icon: Icon(
+//                 LineAwesomeIcons.angle_right_solid,
+//                 color: Color(0xFF071533),
+//                 size: 20,
+//               ),
+//               onPressed: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (context) => AdminBar(userId: widget.userId, userRole: widget.userRole),
+//                   ),
+//                 );
+//               },
+//             ),
+//           ],
+//         ),
+//         backgroundColor: Colors.white,
+//         floatingActionButton: FloatingActionButton(
+//           onPressed: () => _showAddEventDialog(),
+//           child: Icon(
+//             Icons.add,
+//           ),
+//           backgroundColor: Color(0xFFffe145),
+//         ),
+//         body: Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: SingleChildScrollView(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 Card(
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(20),
+//                   ),
+//                   elevation: 4,
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(16.0),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.stretch,
+//                       children: [
+//                         Center(
+//                           child: Text(
+//                             'انشطة المركز',
+//                             style: TextStyle(
+//                               fontFamily: 'Amiri',
+//                               fontWeight: FontWeight.bold,
+//                               color: Color(0xFF071533),
+//                               fontSize: 20,
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(height: 16),
+//                         Container(
+//                           decoration: BoxDecoration(
+//                             border: Border.all(color: Color(0xFF071533)),
+//                             borderRadius: BorderRadius.circular(20),
+//                           ),
+//                           child: Table(
+//                             columnWidths: {
+//                               0: FlexColumnWidth(1),
+//                               1: FlexColumnWidth(0.8),
+//                               2: FlexColumnWidth(1),
+//                               3: FlexColumnWidth(1),
+//                               4: FlexColumnWidth(1),
+//                               5: FlexColumnWidth(1),
+//                               6: FlexColumnWidth(2),
+//                               7: FlexColumnWidth(1),
+//                               8: FlexColumnWidth(1),
+//                               9: FlexColumnWidth(0.9),
+//                               10: FlexColumnWidth(1),
+//                             },
+//                             children: [
+//                               TableRow(
+//                                 decoration: BoxDecoration(
+//                                   color: Color(0xFFe0e0e0),
+//                                   borderRadius: BorderRadius.only(
+//                                     topLeft: Radius.circular(20),
+//                                     topRight: Radius.circular(20),
+//                                   ),
+//                                 ),
+//                                 children: [
+//                                   _buildHeaderCell('معلومات المشاركين'),
+//                                   _buildHeaderCell('عدد المشاركين'),
+//                                   _buildHeaderCell('ظهوره للمستخدم'),
+//                                   _buildHeaderCell('تعديل'),
+//                                   _buildHeaderCell('أعمار المشاركين'),
+//                                   _buildHeaderCell('تاريخ بداية وانتهاء النشاط'),
+//                                   _buildHeaderCell('الوصف'),
+//                                   _buildHeaderCell('تصنيف النشاط'),
+//                                   _buildHeaderCell('اسم النشاط'),
+//                                   _buildHeaderCell('الوقت'),
+//                                   _buildHeaderCell('التاريخ'),
+//                                 ],
+//                               ),
+//                               ...events.asMap().entries.map((entry) {
+//                                 int index = entry.key;
+//                                 Event event = entry.value;
+//                                 return TableRow(
+//                                   children: [
+//                                     _buildTableCellWithButton('معلومات', () => _showParticipantsInfo(event.participantsInfo)),
+//                                     _buildTableCell(event.numberOfParticipants.toString()),
+//                                     _buildTableCell(event.shownToUser ? 'تم إظهاره للمستخدم' : ''),
+//                                     _buildEditDeleteSaveButtons(index),
+//                                     _buildTableCell(event.participantAges),
+//                                     _buildTableCell('${event.startDate.toLocal()}'.split(' ')[0] + ' - ' + '${event.endDate.toLocal()}'.split(' ')[0]),
+//                                     _buildTableCell(event.description),
+//                                     _buildTableCell(event.category),
+//                                     _buildTableCell(event.name),
+//                                     _buildTableCell('${event.time.format(context)}'),
+//                                     _buildTableCell('${event.date.toLocal()}'.split(' ')[0]),
+//                                   ],
+//                                 );
+//                               }).toList(),
+//                             ],
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   TableCell _buildHeaderCell(String text) {
+//     return TableCell(
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Text(
+//           text,
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             fontFamily: 'Amiri',
+//             fontWeight: FontWeight.bold,
+//             color: Color(0xFF071533),
+//             fontSize: 14,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   TableCell _buildTableCell(String text) {
+//     return TableCell(
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Text(
+//           text,
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             fontFamily: 'Amiri',
+//             color: Color(0xFF071533),
+//             fontSize: 12,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   TableCell _buildTableCellWithButton(String text, VoidCallback onPressed) {
+//     return TableCell(
+//       child: Padding(
+//         padding: const EdgeInsets.all(4.0),
+//         child: ElevatedButton(
+//           onPressed: onPressed,
+//           child: Text(
+//             text,
+//             style: TextStyle(
+//               fontFamily: 'Amiri',
+//               color: Colors.white,
+//               fontSize: 10,
+//             ),
+//           ),
+//           style: ElevatedButton.styleFrom(
+//             backgroundColor: Color(0xFF071533),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   TableCell _buildEditDeleteSaveButtons(int index) {
+//     return TableCell(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               IconButton(
+//                 icon: Icon(
+//                   Icons.edit,
+//                   color: Color(0xFFffe145),
+//                 ),
+//                 onPressed: () {
+//                   setState(() {
+//                     events[index].isEditing = true;
+//                     editingIndex = index;
+//                   });
+//                   _showEditEventDialog(index);
+//                 },
+//               ),
+//               IconButton(
+//                 icon: Icon(
+//                   Icons.delete,
+//                   color: Colors.red,
+//                 ),
+//                 onPressed: () => _deleteEvent(index),
+//               ),
+//             ],
+//           ),
+//           if (!events[index].shownToUser)
+//             IconButton(
+//               icon: Icon(Icons.save, color: Colors.blue),
+//               onPressed: () {
+//                 setState(() {
+//                   events[index].shownToUser = true;
+//                   events[index].isEditing = false;
+//                   editingIndex = null;
+//                 });
+//               },
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   void _showAddEventDialog() {
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         TextEditingController nameController = TextEditingController();
+//         TextEditingController categoryController = TextEditingController();
+//         TextEditingController descriptionController = TextEditingController();
+//         TextEditingController startDateController = TextEditingController();
+//         TextEditingController endDateController = TextEditingController();
+//         TextEditingController participantAgesController = TextEditingController();
+//         String errorMessage = '';
+
+//         return StatefulBuilder(
+//           builder: (context, setState) {
+//             return AlertDialog(
+//               title: Center(
+//                 child: Text(
+//                   'إضافة نشاط جديد',
+//                   style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 18,
+//                     color: Color(0xFF071533)
+//                   ),
+//                 ),
+//               ),
+//               content: SingleChildScrollView(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   crossAxisAlignment: CrossAxisAlignment.end,
+//                   children: [
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: nameController,
+//                       decoration: InputDecoration(
+//                         hintText: 'اسم النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     FutureBuilder<List<String>>(
+//                       future: fetchCategories(),
+//                       builder: (context, snapshot) {
+//                         if (snapshot.connectionState == ConnectionState.waiting) {
+//                           return CircularProgressIndicator();
+//                         } else if (snapshot.hasError) {
+//                           return Text('Error: ${snapshot.error}');
+//                         } else {
+//                           return DropdownButtonFormField(
+//                             items: snapshot.data!.map((String category) {
+//                               return DropdownMenuItem(
+//                                 value: category,
+//                                 child: Text(category),
+//                               );
+//                             }).toList(),
+//                             onChanged: (value) {
+//                               categoryController.text = value.toString();
+//                             },
+//                             decoration: InputDecoration(
+//                               hintText: 'تصنيف النشاط',
+//                               hintStyle: TextStyle(
+//                                 fontFamily: 'Amiri',
+//                                 fontSize: 12,
+//                                 color: Color(0xFF071533)
+//                               ),
+//                                focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                             ),
+//                           );
+//                         }
+//                       },
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: descriptionController,
+//                       maxLines: 3,
+//                       decoration: InputDecoration(
+//                         hintText: 'الوصف',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: startDateController,
+//                       decoration: InputDecoration(
+//                         hintText: 'تاريخ بداية النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                       onTap: () async {
+//                         await _selectDate(context, startDateController);
+//                       },
+//                       readOnly: true,
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: endDateController,
+//                       decoration: InputDecoration(
+//                         hintText: 'تاريخ نهاية النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                       onTap: () async {
+//                         await _selectDate(context, endDateController);
+//                       },
+//                       readOnly: true,
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: participantAgesController,
+//                       decoration: InputDecoration(
+//                         hintText: 'أعمار المشاركين',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     if (errorMessage.isNotEmpty)
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 8.0),
+//                         child: Text(
+//                           errorMessage,
+//                           style: TextStyle(color: Colors.red),
+//                         ),
+//                       ),
+//                   ],
+//                 ),
+//               ),
+//               actions: [
+//                 TextButton(
+//                   child: Text(
+//                     'إلغاء',
+//                     style: TextStyle(
+//                       fontFamily: 'Amiri',
+//                       fontSize: 15,
+//                       color: Colors.red,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   onPressed: () {
+//                     Navigator.of(context).pop();
+//                   },
+//                 ),
+//                 ElevatedButton(
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: Colors.white,
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(15),
+//                       side: BorderSide(color: Color(0xFF071533)),
+//                     ),
+//                   ),
+//                   child: Text(
+//                     'إضافة',
+//                     style: TextStyle(
+//                       fontFamily: 'Amiri',
+//                       fontSize: 15,
+//                       color: Color(0xFF071533),
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   onPressed: () {
+//                     if (nameController.text.isEmpty ||
+//                         categoryController.text.isEmpty ||
+//                         descriptionController.text.isEmpty ||
+//                         startDateController.text.isEmpty ||
+//                         endDateController.text.isEmpty ||
+//                         participantAgesController.text.isEmpty) {
+//                       setState(() {
+//                         errorMessage = 'يرجى ملء جميع الحقول';
+//                         TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 15,
+//                           color: Colors.red,
+//                         );
+//                       });
+//                     } else {
+//                       Event newEvent = Event(
+//                         date: DateTime.now(),
+//                         time: TimeOfDay.now(),
+//                         name: nameController.text,
+//                         category: categoryController.text,
+//                         description: descriptionController.text,
+//                         startDate: DateTime.parse(startDateController.text),
+//                         endDate: DateTime.parse(endDateController.text),
+//                         participantAges: participantAgesController.text,
+//                         numberOfParticipants: 0, // This should be set based on actual data
+//                         participantsInfo: 'info.pdf', // Placeholder
+//                         shownToUser: false,
+//                         isEditing: false,
+//                       );
+//                       _addEvent(newEvent);
+//                       Navigator.of(context).pop();
+//                     }
+//                   },
+//                 ),
+//               ],
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+
+//   void _showEditEventDialog(int index) {
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         Event event = events[index];
+//         TextEditingController nameController = TextEditingController(text: event.name);
+//         TextEditingController categoryController = TextEditingController(text: event.category);
+//         TextEditingController descriptionController = TextEditingController(text: event.description);
+//         TextEditingController startDateController = TextEditingController(text: event.startDate.toLocal().toString().split(' ')[0]);
+//         TextEditingController endDateController = TextEditingController(text: event.endDate.toLocal().toString().split(' ')[0]);
+//         TextEditingController participantAgesController = TextEditingController(text: event.participantAges);
+//         String errorMessage = '';
+
+//         return StatefulBuilder(
+//           builder: (context, setState) {
+//             return AlertDialog(
+//               title: Center(
+//               child: Text(
+//                 'تعديل النشاط',
+//                 style: TextStyle(
+//                   fontFamily: 'Amiri',
+//                   fontSize: 18,
+//                   color: Color(0xFF071533)
+//                 ),
+//               ),
+//               ),
+//               content: SingleChildScrollView(
+//                 child: Column(
+//                   children: [
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: nameController,
+//                       decoration: InputDecoration(
+//                         hintText: 'اسم النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     FutureBuilder<List<String>>(
+//                       future: fetchCategories(),
+//                       builder: (context, snapshot) {
+//                         if (snapshot.connectionState == ConnectionState.waiting) {
+//                           return CircularProgressIndicator();
+//                         } else if (snapshot.hasError) {
+//                           return Text('Error: ${snapshot.error}');
+//                         } else {
+//                           return DropdownButtonFormField(
+//                             value: snapshot.data!.contains(event.category) ? event.category : null,
+//                             items: snapshot.data!.map((String category) {
+//                               return DropdownMenuItem(
+//                                 value: category,
+//                                 child: Text(category),
+//                               );
+//                             }).toList(),
+//                             onChanged: (value) {
+//                               categoryController.text = value.toString();
+//                             },
+//                             decoration: InputDecoration(
+//                               hintText: 'تصنيف النشاط',
+//                               hintStyle: TextStyle(
+//                                 fontFamily: 'Amiri',
+//                                 fontSize: 15,
+//                                 color: Color(0xFF071533)
+//                               ),
+//                             ),
+//                           );
+//                         }
+//                       },
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: descriptionController,
+//                       maxLines: 3,
+//                       decoration: InputDecoration(
+//                         hintText: 'الوصف',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: startDateController,
+//                       decoration: InputDecoration(
+//                         hintText: 'تاريخ بداية النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                       onTap: () async {
+//                         await _selectDate(context, startDateController);
+//                       },
+//                       readOnly: true,
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: endDateController,
+//                       decoration: InputDecoration(
+//                         hintText: 'تاريخ نهاية النشاط',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                       onTap: () async {
+//                         await _selectDate(context, endDateController);
+//                       },
+//                       readOnly: true,
+//                     ),
+//                     TextField(
+//                       textAlign: TextAlign.end,
+//                       cursorColor: Color(0xFFffe145),
+//                       controller: participantAgesController,
+//                       decoration: InputDecoration(
+//                         hintText: 'أعمار المشاركين',
+//                         hintStyle: TextStyle(
+//                           fontFamily: 'Amiri',
+//                           fontSize: 12,
+//                           color: Color(0xFF071533)
+//                         ),
+//                         focusedBorder: UnderlineInputBorder(
+//                           borderSide: BorderSide(color: Color(0xFFffe145)),
+//                         ),
+//                       ),
+//                     ),
+//                     if (errorMessage.isNotEmpty)
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 8.0),
+//                         child: Text(
+//                           errorMessage,
+//                           style: TextStyle(color: Colors.red),
+//                         ),
+//                       ),
+//                   ],
+//                 ),
+//               ),
+//               actions: [
+//                 TextButton(
+//                   child: Text(
+//                     'إلغاء',
+//                     style: TextStyle(
+//                       fontFamily: 'Amiri',
+//                       fontSize: 15,
+//                       color: Colors.red,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   onPressed: () {
+//                     Navigator.of(context).pop();
+//                   },
+//                 ),
+//                 ElevatedButton(
+//                   child: Text(
+//                     'حفظ',
+//                     style: TextStyle(
+//                       fontFamily: 'Amiri',
+//                       fontSize: 15,
+//                       color: Color(0xFF071533),
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: Colors.white,
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(15),
+//                       side: BorderSide(color: Color(0xFF071533)),
+//                     ),
+//                   ),
+//                   onPressed: () {
+//                     if (nameController.text.isEmpty ||
+//                         categoryController.text.isEmpty ||
+//                         descriptionController.text.isEmpty ||
+//                         startDateController.text.isEmpty ||
+//                         endDateController.text.isEmpty ||
+//                         participantAgesController.text.isEmpty) {
+//                       setState(() {
+//                         errorMessage = 'يرجى ملء جميع الحقول';
+//                       });
+//                     } else {
+//                       Event updatedEvent = Event(
+//                         date: event.date,
+//                         time: event.time,
+//                         name: nameController.text,
+//                         category: categoryController.text,
+//                         description: descriptionController.text,
+//                         startDate: DateTime.parse(startDateController.text),
+//                         endDate: DateTime.parse(endDateController.text),
+//                         participantAges: participantAgesController.text,
+//                         numberOfParticipants: event.numberOfParticipants,
+//                         participantsInfo: event.participantsInfo,
+//                         shownToUser: event.shownToUser,
+//                         isEditing: false,
+//                       );
+//                       _editEvent(index, updatedEvent);
+//                       Navigator.of(context).pop();
+//                     }
+//                   },
+//                 ),
+//               ],
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+
+//   void _showParticipantsInfo(String info) {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => ParticipantsInfoPage(info: info),
+//       ),
+//     );
+//   }
+// }
+
+// class Event {
+//   DateTime date;
+//   TimeOfDay time;
+//   String name;
+//   String category;
+//   String description;
+//   DateTime startDate;
+//   DateTime endDate;
+//   String participantAges;
+//   int numberOfParticipants;
+//   String participantsInfo;
+//   bool shownToUser;
+//   bool isEditing;
+
+//   Event({
+//     required this.date,
+//     required this.time,
+//     required this.name,
+//     required this.category,
+//     required this.description,
+//     required this.startDate,
+//     required this.endDate,
+//     required this.participantAges,
+//     required this.numberOfParticipants,
+//     required this.participantsInfo,
+//     required this.shownToUser,
+//     required this.isEditing,
+//   });
+// }
+
+// class ParticipantsInfoPage extends StatelessWidget {
+//   final String info;
+//   const ParticipantsInfoPage({Key? key, required this.info}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('معلومات المشاركين'),
+//         backgroundColor: Color(0xFF071533),
+//       ),
+//       body: Center(
+//         child: Text(info),
+//       ),
+//     );
+//   }
+// }
+
+import 'package:cytc/AdminPages/screen/MenuPages/Activities/events/EventsParticipantsView.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ViewAddEventsPage extends StatefulWidget {
-  
   final String userId;
   final String userRole;
   const ViewAddEventsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
@@ -19,22 +906,27 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
   List<Event> events = [];
   bool isEditing = false;
   int? editingIndex;
+  List<String> categories = [];
 
   @override
   void initState() {
     super.initState();
     fetchEvents();
+    fetchCategories().then((value) {
+      setState(() {
+        categories = value;
+      });
+    });
   }
 
   Future<void> fetchEvents() async {
-    // Fetch data from the backend
-    // This is just a placeholder. Replace it with your actual backend call.
     List<Event> fetchedEvents = [
       Event(
         date: DateTime.now(),
         time: TimeOfDay.now(),
         name: 'ورشة عمل تطوير تطبيقات',
         category: 'ورش عمل ولقاءات توعوية',
+        description: 'ورشة لتعليم تطوير التطبيقات باستخدام Flutter',
         startDate: DateTime.now(),
         endDate: DateTime.now().add(Duration(days: 1)),
         participantAges: '18-25',
@@ -43,12 +935,22 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
         shownToUser: false,
         isEditing: false,
       ),
-      // Add more events as needed
     ];
 
     setState(() {
       events = fetchedEvents;
     });
+  }
+
+  Future<List<String>> fetchCategories() async {
+    final response = await http.get(Uri.parse('http://localhost:9999/interest/all'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map<String>((item) => item['interestName'].toString()).toList();
+    } else {
+      print('Failed to load categories');
+      return [];
+    }
   }
 
   void _addEvent(Event event) {
@@ -69,20 +971,45 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
     });
   }
 
-  Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      setState(() {
-        controller.text = picked.toLocal().toString().split(' ')[0];
-      });
-    }
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+  DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+    builder: (context, child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          primaryColor: Color(0xFF071533),
+          hintColor: Color(0xFF071533),
+          colorScheme: ColorScheme.light(primary: Color(0xFF071533)),
+          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          dialogBackgroundColor: Colors.white,
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Color(0xFF071533),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            ),
+          ),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
+  );
+  if (picked != null) {
+    setState(() {
+      controller.text = picked.toLocal().toString().split(' ')[0];
+    });
   }
+}
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -110,26 +1037,16 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        AdminBar(userId: widget.userId, userRole: widget.userRole), //EventsPage(userId: widget.userId, userRole: widget.userRole),
+                    builder: (context) => AdminBar(userId: widget.userId, userRole: widget.userRole),
                   ),
                 );
               },
             ),
           ],
-          // title: Text(
-          //   'النشاطات',
-          //   style: TextStyle(
-          //     fontFamily: 'Amiri',
-          //     fontWeight: FontWeight.bold,
-          //     color: Colors.white,
-          //     fontSize: 18,
-          //   ),
-          // ),
         ),
         backgroundColor: Colors.white,
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showAddEventDialog(),
+          onPressed: () => _showAddEventDialog(context),
           child: Icon(
             Icons.add,
           ),
@@ -152,15 +1069,15 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Center(
-                        child: Text(
-                          'انشطة المركز',
-                          style: TextStyle(
-                            fontFamily: 'Amiri',
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF071533),
-                            fontSize: 20,
+                          child: Text(
+                            'انشطة المركز',
+                            style: TextStyle(
+                              fontFamily: 'Amiri',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF071533),
+                              fontSize: 20,
+                            ),
                           ),
-                        ),
                         ),
                         SizedBox(height: 16),
                         Container(
@@ -171,15 +1088,16 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                           child: Table(
                             columnWidths: {
                               0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(1),
+                              1: FlexColumnWidth(0.8),
                               2: FlexColumnWidth(1),
                               3: FlexColumnWidth(1),
                               4: FlexColumnWidth(1),
                               5: FlexColumnWidth(1),
-                              6: FlexColumnWidth(1),
+                              6: FlexColumnWidth(2),
                               7: FlexColumnWidth(1),
                               8: FlexColumnWidth(1),
-                              9: FlexColumnWidth(1),
+                              9: FlexColumnWidth(0.9),
+                              10: FlexColumnWidth(1),
                             },
                             children: [
                               TableRow(
@@ -196,8 +1114,8 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                   _buildHeaderCell('ظهوره للمستخدم'),
                                   _buildHeaderCell('تعديل'),
                                   _buildHeaderCell('أعمار المشاركين'),
-                                  _buildHeaderCell(
-                                      'تاريخ بداية وانتهاء النشاط'),
+                                  _buildHeaderCell('تاريخ بداية وانتهاء النشاط'),
+                                  _buildHeaderCell('الوصف'),
                                   _buildHeaderCell('تصنيف النشاط'),
                                   _buildHeaderCell('اسم النشاط'),
                                   _buildHeaderCell('الوقت'),
@@ -209,29 +1127,17 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                 Event event = entry.value;
                                 return TableRow(
                                   children: [
-                                    _buildTableCellWithButton(
-                                        'معلومات',
-                                        () => _showParticipantsInfo(
-                                            event.participantsInfo)),
-                                    _buildTableCell(
-                                        event.numberOfParticipants.toString()),
-                                    _buildTableCell(event.shownToUser
-                                        ? 'تم إظهاره للمستخدم'
-                                        : ''),
+                                    _buildTableCellWithButton('معلومات', () => _showParticipantsInfo(event.participantsInfo, context)),
+                                    _buildTableCell(event.numberOfParticipants.toString()),
+                                    _buildTableCell(event.shownToUser ? 'تم إظهاره للمستخدم' : ''),
                                     _buildEditDeleteSaveButtons(index),
                                     _buildTableCell(event.participantAges),
-                                    _buildTableCell(
-                                        '${event.startDate.toLocal()}'
-                                                .split(' ')[0] +
-                                            ' - ' +
-                                            '${event.endDate.toLocal()}'
-                                                .split(' ')[0]),
+                                    _buildTableCell('${event.startDate.toLocal()}'.split(' ')[0] + ' - ' + '${event.endDate.toLocal()}'.split(' ')[0]),
+                                    _buildTableCell(event.description),
                                     _buildTableCell(event.category),
                                     _buildTableCell(event.name),
-                                    _buildTableCell(
-                                        '${event.time.format(context)}'),
-                                    _buildTableCell('${event.date.toLocal()}'
-                                        .split(' ')[0]),
+                                    _buildTableCell('${event.time.format(context)}'),
+                                    _buildTableCell('${event.date.toLocal()}'.split(' ')[0]),
                                   ],
                                 );
                               }).toList(),
@@ -288,7 +1194,7 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
   TableCell _buildTableCellWithButton(String text, VoidCallback onPressed) {
     return TableCell(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: ElevatedButton(
           onPressed: onPressed,
           child: Text(
@@ -296,7 +1202,7 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
             style: TextStyle(
               fontFamily: 'Amiri',
               color: Colors.white,
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
           style: ElevatedButton.styleFrom(
@@ -325,7 +1231,7 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                     events[index].isEditing = true;
                     editingIndex = index;
                   });
-                  _showEditEventDialog(index);
+                  _showEditEventDialog(index, context);
                 },
               ),
               IconButton(
@@ -353,76 +1259,178 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
     );
   }
 
-  void _showAddEventDialog() {
+  void _showAddEventDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         TextEditingController nameController = TextEditingController();
         TextEditingController categoryController = TextEditingController();
+        TextEditingController descriptionController = TextEditingController();
         TextEditingController startDateController = TextEditingController();
         TextEditingController endDateController = TextEditingController();
-        TextEditingController participantAgesController =
-            TextEditingController();
+        TextEditingController participantAgesController = TextEditingController();
         String errorMessage = '';
 
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('إضافة نشاط جديد'),
+              title: Center(
+                child: Text(
+                  'إضافة نشاط جديد',
+                  style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 18,
+                    color: Color(0xFF071533)
+                  ),
+                ),
+              ),
               content: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: nameController,
-                      decoration: InputDecoration(labelText: 'اسم النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'اسم النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                     ),
-                    DropdownButtonFormField(
-                      items: [
-                        DropdownMenuItem(child: Text('دورات'), value: 'دورات'),
-                        DropdownMenuItem(
-                            child: Text('ورش عمل ولقاءات توعوية'),
-                            value: 'ورش عمل ولقاءات توعوية'),
-                        DropdownMenuItem(
-                            child: Text('مخيمات صيفية'), value: 'مخيمات صيفية'),
-                        DropdownMenuItem(
-                            child: Text('مبادرات شبابية'),
-                            value: 'مبادرات شبابية'),
-                        DropdownMenuItem(
-                            child: Text('حملات تطوعية'), value: 'حملات تطوعية'),
-                      ],
-                      onChanged: (value) {
-                        categoryController.text = value.toString();
+                    FutureBuilder<List<String>>(
+                      future: fetchCategories(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return DropdownButtonFormField(
+                            items: snapshot.data!.map((String category) {
+                              return DropdownMenuItem(
+                                value: category,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    category,
+                                    style: TextStyle(
+                                      fontFamily: 'Amiri',
+                                      fontSize: 12,
+                                      color: Color(0xFF071533),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              categoryController.text = value.toString();
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'تصنيف النشاط',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Amiri',
+                                fontSize: 12,
+                                color: Color(0xFF071533)
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFFffe145)),
+                              ),
+                            ),
+                          );
+                        }
                       },
-                      decoration: InputDecoration(labelText: 'تصنيف النشاط'),
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
+                      controller: descriptionController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: 'الوصف',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: startDateController,
-                      decoration:
-                          InputDecoration(labelText: 'تاريخ بداية النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'تاريخ بداية النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                       onTap: () async {
                         await _selectDate(context, startDateController);
                       },
                       readOnly: true,
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: endDateController,
-                      decoration:
-                          InputDecoration(labelText: 'تاريخ نهاية النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'تاريخ نهاية النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                       onTap: () async {
                         await _selectDate(context, endDateController);
                       },
                       readOnly: true,
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: participantAgesController,
-                      decoration: InputDecoration(labelText: 'أعمار المشاركين'),
+                      decoration: InputDecoration(
+                        hintText: 'أعمار المشاركين',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                     ),
                     if (errorMessage.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           errorMessage,
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(
+                            fontFamily: 'Amiri',
+                            fontSize: 18,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                   ],
@@ -430,21 +1438,50 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
               ),
               actions: [
                 TextButton(
-                  child: Text('إلغاء'),
+                  child: Text(
+                    'إلغاء',
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
-                  child: Text('إضافة'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      side: BorderSide(color: Color(0xFF071533)),
+                    ),
+                  ),
+                  child: Text(
+                    'إضافة',
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      fontSize: 15,
+                      color: Color(0xFF071533),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     if (nameController.text.isEmpty ||
                         categoryController.text.isEmpty ||
+                        descriptionController.text.isEmpty ||
                         startDateController.text.isEmpty ||
                         endDateController.text.isEmpty ||
                         participantAgesController.text.isEmpty) {
                       setState(() {
                         errorMessage = 'يرجى ملء جميع الحقول';
+                        TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 15,
+                          color: Colors.red,
+                        );
                       });
                     } else {
                       Event newEvent = Event(
@@ -452,11 +1489,11 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         time: TimeOfDay.now(),
                         name: nameController.text,
                         category: categoryController.text,
+                        description: descriptionController.text,
                         startDate: DateTime.parse(startDateController.text),
                         endDate: DateTime.parse(endDateController.text),
                         participantAges: participantAgesController.text,
-                        numberOfParticipants:
-                            0, // This should be set based on actual data
+                        numberOfParticipants: 0, // This should be set based on actual data
                         participantsInfo: 'info.pdf', // Placeholder
                         shownToUser: false,
                         isEditing: false,
@@ -474,82 +1511,180 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
     );
   }
 
-  void _showEditEventDialog(int index) {
+  void _showEditEventDialog(int index, BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         Event event = events[index];
-        TextEditingController nameController =
-            TextEditingController(text: event.name);
-        TextEditingController categoryController =
-            TextEditingController(text: event.category);
-        TextEditingController startDateController = TextEditingController(
-            text: event.startDate.toLocal().toString().split(' ')[0]);
-        TextEditingController endDateController = TextEditingController(
-            text: event.endDate.toLocal().toString().split(' ')[0]);
-        TextEditingController participantAgesController =
-            TextEditingController(text: event.participantAges);
+        TextEditingController nameController = TextEditingController(text: event.name);
+        TextEditingController categoryController = TextEditingController(text: event.category);
+        TextEditingController descriptionController = TextEditingController(text: event.description);
+        TextEditingController startDateController = TextEditingController(text: event.startDate.toLocal().toString().split(' ')[0]);
+        TextEditingController endDateController = TextEditingController(text: event.endDate.toLocal().toString().split(' ')[0]);
+        TextEditingController participantAgesController = TextEditingController(text: event.participantAges);
         String errorMessage = '';
 
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('تعديل النشاط'),
+              title: Center(
+              child: Text(
+                'تعديل النشاط',
+                style: TextStyle(
+                  fontFamily: 'Amiri',
+                  fontSize: 18,
+                  color: Color(0xFF071533)
+                ),
+              ),
+              ),
               content: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: nameController,
-                      decoration: InputDecoration(labelText: 'اسم النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'اسم النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                     ),
-                    DropdownButtonFormField(
-                      value: event.category,
-                      items: [
-                        DropdownMenuItem(child: Text('دورات'), value: 'دورات'),
-                        DropdownMenuItem(
-                            child: Text('ورش عمل ولقاءات توعوية'),
-                            value: 'ورش عمل ولقاءات توعوية'),
-                        DropdownMenuItem(
-                            child: Text('مخيمات صيفية'), value: 'مخيمات صيفية'),
-                        DropdownMenuItem(
-                            child: Text('مبادرات شبابية'),
-                            value: 'مبادرات شبابية'),
-                        DropdownMenuItem(
-                            child: Text('حملات تطوعية'), value: 'حملات تطوعية'),
-                      ],
-                      onChanged: (value) {
-                        categoryController.text = value.toString();
+                    FutureBuilder<List<String>>(
+                      future: fetchCategories(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return DropdownButtonFormField(
+                            value: snapshot.data!.contains(event.category) ? event.category : null,
+                            items: snapshot.data!.map((String category) {
+                              return DropdownMenuItem(
+                                value: category,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    category,
+                                    style: TextStyle(
+                                      fontFamily: 'Amiri',
+                                      fontSize: 12,
+                                      color: Color(0xFF071533),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              categoryController.text = value.toString();
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'تصنيف النشاط',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Amiri',
+                                fontSize: 12,
+                                color: Color(0xFF071533)
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFFffe145)),
+                              ),
+                            ),
+                          );
+                        }
                       },
-                      decoration: InputDecoration(labelText: 'تصنيف النشاط'),
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
+                      controller: descriptionController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: 'الوصف',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: startDateController,
-                      decoration:
-                          InputDecoration(labelText: 'تاريخ بداية النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'تاريخ بداية النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                       onTap: () async {
                         await _selectDate(context, startDateController);
                       },
                       readOnly: true,
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: endDateController,
-                      decoration:
-                          InputDecoration(labelText: 'تاريخ نهاية النشاط'),
+                      decoration: InputDecoration(
+                        hintText: 'تاريخ نهاية النشاط',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                       onTap: () async {
                         await _selectDate(context, endDateController);
                       },
                       readOnly: true,
                     ),
                     TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
                       controller: participantAgesController,
-                      decoration: InputDecoration(labelText: 'أعمار المشاركين'),
+                      decoration: InputDecoration(
+                        hintText: 'أعمار المشاركين',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533)
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
                     ),
                     if (errorMessage.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           errorMessage,
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(
+                            fontFamily: 'Amiri',
+                            fontSize: 18,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                   ],
@@ -557,16 +1692,40 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
               ),
               actions: [
                 TextButton(
-                  child: Text('إلغاء'),
+                  child: Text(
+                    'إلغاء',
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
-                  child: Text('حفظ'),
+                  child: Text(
+                    'حفظ',
+                    style: TextStyle(
+                      fontFamily: 'Amiri',
+                      fontSize: 15,
+                      color: Color(0xFF071533),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      side: BorderSide(color: Color(0xFF071533)),
+                    ),
+                  ),
                   onPressed: () {
                     if (nameController.text.isEmpty ||
                         categoryController.text.isEmpty ||
+                        descriptionController.text.isEmpty ||
                         startDateController.text.isEmpty ||
                         endDateController.text.isEmpty ||
                         participantAgesController.text.isEmpty) {
@@ -579,6 +1738,7 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         time: event.time,
                         name: nameController.text,
                         category: categoryController.text,
+                        description: descriptionController.text,
                         startDate: DateTime.parse(startDateController.text),
                         endDate: DateTime.parse(endDateController.text),
                         participantAges: participantAgesController.text,
@@ -600,8 +1760,13 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
     );
   }
 
-  void _showParticipantsInfo(String info) {
-    // Show participants info in a new page or dialog
+  void _showParticipantsInfo(String info, BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ParticipantsInfoPage(),
+      ),
+    );
   }
 }
 
@@ -610,6 +1775,7 @@ class Event {
   TimeOfDay time;
   String name;
   String category;
+  String description;
   DateTime startDate;
   DateTime endDate;
   String participantAges;
@@ -623,6 +1789,7 @@ class Event {
     required this.time,
     required this.name,
     required this.category,
+    required this.description,
     required this.startDate,
     required this.endDate,
     required this.participantAges,
@@ -632,3 +1799,5 @@ class Event {
     required this.isEditing,
   });
 }
+
+

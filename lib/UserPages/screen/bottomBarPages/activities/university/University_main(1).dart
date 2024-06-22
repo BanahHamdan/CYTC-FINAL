@@ -19,6 +19,7 @@
 
 // class _universityTrainingPageState extends State<universityTrainingPage> {
 //   final TextEditingController nameController = TextEditingController();
+//   final TextEditingController emailController = TextEditingController();
 //   final TextEditingController universityController = TextEditingController();
 //   final TextEditingController majorController = TextEditingController();
 //   final TextEditingController trainingHoursController = TextEditingController();
@@ -77,6 +78,12 @@
 //                 controller: nameController,
 //                 icon: Icons.person,
 //                 hintText: 'الاسم الثلاثي',
+//               ),
+//               SizedBox(height: 16),
+//               _buildInputField(
+//                 controller: emailController,
+//                 icon: Icons.email,
+//                 hintText: 'البريد الإلكتروني',
 //               ),
 //               SizedBox(height: 16),
 //               _buildInputField(
@@ -378,6 +385,7 @@
 //   }
 // }
 
+
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
@@ -387,6 +395,16 @@ import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+////////////////////////////////////////////
+///
+import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class universityTrainingPage extends StatefulWidget {
   @override
@@ -394,7 +412,9 @@ class universityTrainingPage extends StatefulWidget {
 
   final String userId;
   final String userRole;
-  const universityTrainingPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const universityTrainingPage(
+      {Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 }
 
 class _universityTrainingPageState extends State<universityTrainingPage> {
@@ -406,6 +426,43 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
   final TextEditingController cvController = TextEditingController();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future<void> submitTrainingRequest() async {
+    final String apiUrl = "http://localhost:9999/university-training/create";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        "fullName": nameController.text,
+        "universityName": universityController.text,
+        "field": majorController.text,
+        "trainingHours": trainingHoursController.text,
+        "cv": cvController.text,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Successfully added training request
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('تم ارسال طلب التدريب بنجاح')),
+      );
+      // Clear the form fields
+      nameController.clear();
+      emailController.clear();
+      universityController.clear();
+      majorController.clear();
+      trainingHoursController.clear();
+      cvController.clear();
+    } else {
+      // Error occurred
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('هناك نقص تاكد انك قمت بملئ جميع المتطلبات ')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +495,8 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
             centerTitle: true,
             actions: [
               IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
+                icon: Icon(LineAwesomeIcons.angle_right_solid,
+                    color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -484,12 +542,15 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
                 hintText: 'عدد ساعات التدريب',
               ),
               SizedBox(height: 16),
-              _buildCvUploadField(),
+              _buildInputField(
+                controller: cvController,
+                icon: Icons.attach_file,
+                hintText: 'ضع الرابط للسي في الخاص بك',
+              ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   _showParticipationDialog(context);
-                  // Handle form submission
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFffe145),
@@ -557,67 +618,11 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
                     width: 2), // Border color when focused
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.grey), // Border color when enabled
+                borderSide:
+                    BorderSide(color: Colors.grey), // Border color when enabled
               ),
             ),
             cursorColor: Color(0xFFffe145),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCvUploadField() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFF071533).withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Icon(Icons.attach_file, color: Color(0xFF071533), size: 40),
-          SizedBox(height: 8),
-          ElevatedButton.icon(
-            onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-              if (result != null) {
-                PlatformFile file = result.files.first;
-                // Do something with the file, such as upload it to a server or display its path
-                print('File name: ${file.name}');
-                print('File path: ${file.path}');
-              } else {
-                // User canceled the picker
-              }
-            },
-            icon: Icon(Icons.upload_file, color: Color(0xFFffe145)),
-            label: Text(
-              'ارفق السيرة الذاتية',
-              style: TextStyle(
-                color: Color(0xFF071533),
-                fontFamily: 'Amiri',
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white, // Background color
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-                side: BorderSide(
-                  color: Color(0xFF071533), // Border color
-                  width: 1, // Border width
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -649,8 +654,9 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Handle donate button press
+                onPressed: () async {
+                  await submitTrainingRequest();
+                  Navigator.pop(context); // Close the bottom sheet
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF071533),
@@ -706,11 +712,17 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                  userId: widget.userId,
+                                  userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                      backgroundImage: AssetImage(
+                          'assets/banah.jpg'), // Replace with your image path
                     ),
                   ),
                 ],
@@ -718,23 +730,63 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: '', userRole: ''))),
-            title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => bar(userId: '', userRole: ''))),
+            title: Text('الرئيسية',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
-            title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => universityTrainingPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+                color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
-            title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SuggestionsPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing:
+                Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
-            title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(
+                          userId: widget.userId,
+                        ))), // Add onTap functionality for logout
+            title: Text('تسجيل خروج',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),
         ],

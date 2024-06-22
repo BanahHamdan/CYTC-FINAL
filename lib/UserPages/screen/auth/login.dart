@@ -444,9 +444,9 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           ClipPath(
             clipper: BackgroundClipper(),
-            child: Container(
-              color: Color(0xFFffe145),
-            ),
+            // child: Container(
+            //   color: Color(0xFF071533).withOpacity(0.3),
+            // ),
           ),
           SingleChildScrollView(
             child: Center(
@@ -464,13 +464,13 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {},
                           child: Icon(
                             LineAwesomeIcons.angle_right_solid,
-                            color: Colors.white,
+                            color: Color(0xFF071533),
                             size: 20,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 20),
                     Text(
                       '!مرحبًا بعودتك',
                       textAlign: TextAlign.center,
@@ -478,11 +478,13 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Amiri',
-                        color: Colors.white,
+                        color: Color(0xFF071533),
                       ),
                     ),
-                    Image.asset('assets/homePage/groupUsersWhite.png',
-                        width: 140, height: 140),
+                    SizedBox(height: 10,),
+                    Image.asset('assets/Logo.png',
+                        width: 100, height: 100),
+                        SizedBox(height: 20,),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.7,
                       padding: EdgeInsets.all(16.0),

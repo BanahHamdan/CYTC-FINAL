@@ -890,14 +890,16 @@ class _ParamedicsRequestsPageState extends State<ParamedicsRequestsPage> {
             ),
           ),
           actions: [
-            ElevatedButton(
+            // ElevatedButton(
+              // onPressed: () => Navigator.pop(context),
+              // style: ElevatedButton.styleFrom(
+              //   backgroundColor: Colors.white, // Background color
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(15), // Rounded edges
+              //   ),
+              // ),
+             TextButton(
               onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // Background color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15), // Rounded edges
-                ),
-              ),
               child: Text(
                 'رجوع',
                 style: TextStyle(

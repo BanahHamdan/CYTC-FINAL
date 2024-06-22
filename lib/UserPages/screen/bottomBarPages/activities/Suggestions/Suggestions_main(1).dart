@@ -1,14 +1,21 @@
 // // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+// import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+// import 'package:cytc/UserPages/screen/auth/login.dart';
+// import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+// import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
-// import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
-// import 'package:flutter/material.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 // class SuggestionsPage extends StatefulWidget {
 //   @override
 //   _SuggestionsPageState createState() => _SuggestionsPageState();
+
+//   final String userId;
+//   final String userRole;
+//   const SuggestionsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
 // }
 
 // class _SuggestionsPageState extends State<SuggestionsPage> {
@@ -16,6 +23,8 @@
 //   final TextEditingController emailController = TextEditingController();
 //   final TextEditingController titleController = TextEditingController();
 //   final TextEditingController descriptionController = TextEditingController();
+
+//   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 //   Future<void> submitSuggestion() async {
 //     final String apiUrl = "http://localhost:9999/suggestion/create";
@@ -54,170 +63,44 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       backgroundColor: Color(0xFFF9F7F2),
+//       backgroundColor: Colors.white,
+//       key: _scaffoldKey,
 //       appBar: PreferredSize(
-//         preferredSize: Size.fromHeight(105.0), // Set the height you want
-//         child: ClipRRect(
-//           borderRadius: BorderRadius.vertical(
-//             bottom: Radius.circular(20),
-//           ),
-//           child: Container(
-//             decoration: BoxDecoration(
-//               gradient: LinearGradient(
-//                 colors: [
-//                   Color(0xFFffe145),
-//                   Color(0xFFffe145),
-//                 ],
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//               ),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Color(0xFF071533).withOpacity(0.1),
-//                   spreadRadius: 2,
-//                   blurRadius: 10,
-//                   offset: Offset(0, 3),
-//                 ),
-//               ],
+//         preferredSize: Size.fromHeight(80.0),
+//         child: ClipPath(
+//           clipper: CustomAppBarClipper(),
+//           child: AppBar(
+//             backgroundColor: Color(0xFFffe145).withOpacity(0.7),
+//             elevation: 0,
+//             leading: IconButton(
+//               icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
+//               onPressed: () {
+//                 _scaffoldKey.currentState?.openDrawer();
+//               },
 //             ),
-//             child: SafeArea(
-//               child: Padding(
-//                 padding: const EdgeInsets.all(10),
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Row(
-//                           children: [
-//                             IconButton(
-//                               icon: Icon(
-//                                 Icons.arrow_back_ios_new,
-//                                 color: Colors.white,
-//                                 size: 20,
-//                               ),
-//                               onPressed: () {
-//                                 // Navigator.pop(context);
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                     builder: (context) => bar(
-//                                       userId: null,
-//                                       userRole: null,
-//                                     ),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                             IconButton(
-//                               icon: Icon(
-//                                 Icons.menu,
-//                                 color: Colors.white,
-//                               ),
-//                               onPressed: () {
-//                                 // Add functionality for burger menu
-//                               },
-//                             ),
-//                           ],
-//                         ),
-//                         Text(
-//                           'شاركنا ب اقتراحاتك لانشطة جديدة',
-//                           style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Amiri',
-//                           ),
-//                         ),
-//                         Row(
-//                           children: [
-//                             IconButton(
-//                               onPressed: () {
-//                                 // Add functionality for notification icon
-//                               },
-//                               padding: EdgeInsets.zero,
-//                               icon: Container(
-//                                 padding: EdgeInsets.all(4),
-//                                 decoration: BoxDecoration(
-//                                   shape: BoxShape.circle,
-//                                   color: Color(0xFF071533),
-//                                 ),
-//                                 child: Icon(
-//                                   Icons.notifications,
-//                                   color: Colors.white,
-//                                   size: 18,
-//                                 ),
-//                               ),
-//                             ),
-//                             SizedBox(width: 5),
-//                             GestureDetector(
-//                               onTap: () {
-//                                 // Add functionality to navigate to profile page
-//                               },
-//                               child: Padding(
-//                                 padding: const EdgeInsets.only(right: 16.0),
-//                                 child: Container(
-//                                   width: 30,
-//                                   height: 30,
-//                                   decoration: BoxDecoration(
-//                                     shape: BoxShape.circle,
-//                                     border: Border.all(
-//                                       color: Colors.white,
-//                                       width: 2,
-//                                     ),
-//                                     image: DecorationImage(
-//                                       image: AssetImage('assets/banah.jpg'),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                     SizedBox(height: 5),
-//                     Container(
-//                       height: 30,
-//                       margin: EdgeInsets.fromLTRB(120, 0, 120, 0),
-//                       decoration: BoxDecoration(
-//                         color:
-//                             Color.fromARGB(255, 247, 250, 252).withOpacity(0.5),
-//                         borderRadius: BorderRadius.circular(10),
-//                       ),
-//                       child: TextField(
-//                         textAlign: TextAlign.right,
-//                         cursorColor: Colors.white.withOpacity(0.9),
-//                         decoration: InputDecoration(
-//                           contentPadding: EdgeInsets.only(top: 0),
-//                           hintText: '... ابحث',
-//                           hintStyle: TextStyle(
-//                             color: Colors.white.withOpacity(0.9),
-//                             fontFamily: 'Amiri',
-//                             fontSize: 15,
-//                           ),
-//                           suffixIcon: IconButton(
-//                             icon: Icon(
-//                               Icons.search,
-//                               color: Colors.white.withOpacity(0.9),
-//                               size: 18,
-//                             ),
-//                             onPressed: () {
-//                               // Search functionality
-//                             },
-//                           ),
-//                           border: InputBorder.none,
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(height: 10),
-//                   ],
-//                 ),
+//             title: Text(
+//               'تعرف على الاحتفالات والمهرجانات القادمة',
+//               style: TextStyle(
+//                 fontFamily: 'Amiri',
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: 15,
+//                 color: Colors.white,
 //               ),
+//               textAlign: TextAlign.center,
 //             ),
+//             centerTitle: true,
+//             actions: [
+//               IconButton(
+//                 icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                 },
+//               ),
+//             ],
 //           ),
 //         ),
 //       ),
+//       drawer: _buildDrawer(),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
 //         child: Column(
@@ -431,6 +314,7 @@
 //                 // submitSuggestion();
 //               },
 //               style: ElevatedButton.styleFrom(
+//                 backgroundColor: Color(0xFFffe145),
 //                 shape: RoundedRectangleBorder(
 //                   borderRadius: BorderRadius.circular(10),
 //                 ),
@@ -450,9 +334,8 @@
 //       ),
 //     );
 //   }
-// }
 
-// void _showParticipationDialog(BuildContext context) {
+//   void _showParticipationDialog(BuildContext context) {
 //     showModalBottomSheet(
 //       context: context,
 //       isScrollControlled: true,
@@ -474,7 +357,7 @@
 //                   fontWeight: FontWeight.bold,
 //                   fontFamily: 'Amiri',
 //                 ),
-//               ),         
+//               ),
 //               SizedBox(height: 20),
 //               ElevatedButton(
 //                 onPressed: () {
@@ -503,9 +386,109 @@
 //     );
 //   }
 
+//   Drawer _buildDrawer() {
+//     return Drawer(
+//       child: ListView(
+//         padding: EdgeInsets.zero,
+//         children: <Widget>[
+//           Container(
+//             padding: EdgeInsets.only(top: 40, bottom: 20),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.end,
+//                     children: [
+//                       Text(
+//                         'بانه خالد حمدان',
+//                         style: TextStyle(
+//                           color: Color(0xFF071533),
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 20,
+//                           fontFamily: 'Amiri',
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                   SizedBox(width: 16.0),
+//                   GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole)));
+//                     },
+//                     child: CircleAvatar(
+//                       radius: 30,
+//                       backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: widget.userId, userRole: ''))),
+//             title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+//             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
+//             title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+//             trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
+//             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+//             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+//           ),
+//           ListTile(
+//             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId))), // Add onTap functionality for logout
+//             title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+//             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class CustomAppBarClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     Path path = Path();
+//     path.lineTo(0, size.height * 0.6);
+//     path.quadraticBezierTo(
+//       size.width / 2,
+//       size.height,
+//       size.width,
+//       size.height * 0.6,
+//     );
+//     path.lineTo(size.width, 0);
+//     path.close();
+//     return path;
+//   }
+
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) {
+//     return false;
+//   }
+// }
+
 
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+///////////////////////////////////
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
@@ -521,7 +504,9 @@ class SuggestionsPage extends StatefulWidget {
 
   final String userId;
   final String userRole;
-  const SuggestionsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const SuggestionsPage(
+      {Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 }
 
 class _SuggestionsPageState extends State<SuggestionsPage> {
@@ -551,7 +536,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
     if (response.statusCode == 201) {
       // Successfully added suggestion
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Suggestion added successfully!')),
+        SnackBar(content: Text('تم ارسال اقتراحك بنجاح')),
       );
       // Clear the form fields
       nameController.clear();
@@ -597,7 +582,8 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             centerTitle: true,
             actions: [
               IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Colors.white),
+                icon: Icon(LineAwesomeIcons.angle_right_solid,
+                    color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -817,7 +803,6 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             ElevatedButton(
               onPressed: () {
                 _showParticipationDialog(context);
-                // submitSuggestion();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFffe145),
@@ -866,9 +851,9 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // submitSuggestion();
-                  // Handle donate button press
+                onPressed: () async {
+                  await submitSuggestion();
+                  Navigator.pop(context); // Close the bottom sheet
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF071533),
@@ -924,11 +909,17 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                  userId: widget.userId,
+                                  userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                      backgroundImage: AssetImage(
+                          'assets/banah.jpg'), // Replace with your image path
                     ),
                   ),
                 ],
@@ -936,23 +927,64 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: widget.userId, userRole: ''))),
-            title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        bar(userId: widget.userId, userRole: ''))),
+            title: Text('الرئيسية',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
-            title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => universityTrainingPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+                color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
-            title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SuggestionsPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing:
+                Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId))), // Add onTap functionality for logout
-            title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(
+                        userId: widget
+                            .userId))), // Add onTap functionality for logout
+            title: Text('تسجيل خروج',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),
         ],

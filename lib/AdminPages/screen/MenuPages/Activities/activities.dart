@@ -132,6 +132,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/AdminPages/screen/MenuPages/Activities/events/ViewAddEvents.dart';
+import 'package:cytc/AdminPages/screen/MenuPages/Activities/festivals/ViewAddFestPage.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Campaigns/Campaigns_list(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Events/events_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Festivals/Fest_main(1).dart';
@@ -191,12 +192,12 @@ class _AdminActivitiesState extends State<AdminActivities> {
                           'المهرجانات والاحتفالات',
                           'assets/homePage/fest2.jpg',
                           () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => FestivalsPage(userId: widget.userId, userRole: widget.userRole),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewAddFestPage(userId: widget.userId, userRole: widget.userRole),
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -221,7 +222,7 @@ class _AdminActivitiesState extends State<AdminActivities> {
                           'الانشطة والدورات والحملات التطوعية',
                           'assets/homePage/campaignss.jpg',
                           () {
-                            Navigator.push(
+                            Navigator.push( 
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>   ViewAddEventsPage(userId: widget.userId, userRole: widget.userRole,),//EventsPage(userId: widget.userId, userRole: widget.userRole),
