@@ -1,7 +1,9 @@
 // // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 // import 'package:cytc/AdminPages/Home/AdminHome.dart';
+// import 'package:cytc/AdminPages/screen/MenuPages/chat/ListOfUsers.dart';
 // import 'package:cytc/AdminPages/screen/MenuPages/posts/Adminviewpost.dart';
+// import 'package:cytc/AdminPages/screen/MenuPages/Activities/suggestion/ViewSuggessions.dart';
 // import 'package:cytc/UserPages/screen/auth/login.dart';
 // import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
 // import 'package:cytc/UserPages/screen/bottomBarPages/activities/activities_main.dart';
@@ -11,6 +13,9 @@
 // import 'package:cytc/UserPages/screen/bottomBarPages/posts/posts.dart';
 // import 'package:flutter/material.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
+// import 'Activities/University/viewTrainingRequests.dart';
+// import 'Activities/activities.dart';
 
 // class AdminBar extends StatefulWidget {
 //   final String userId;
@@ -44,7 +49,7 @@
 //       case 0:
 //         return CalendarPage(userId: widget.userId);
 //       case 1:
-//         // return ChatPage(userId: widget.userId);
+//         return ListOfUsers(userId: widget.userId, userRole: widget.userRole);
 //       case 2:
 //         return UserPostsPage(userId: widget.userId);
 //       case 3:
@@ -52,15 +57,15 @@
 //       case 4:
 //         return AdminHomePage(userId: widget.userId,  child: Text(''),);
 //       case 5:
-//         return universityTrainingPage(userId: widget.userId, userRole: widget.userRole);
+//         return ViewTrainingRequestsPage();
 //       case 6:
-//         return SuggestionsPage(userId: widget.userId, userRole: widget.userRole);
+//         return ViewSuggestionsPage();
 //       case 7:
 //         return LoginPage(userId: widget.userId);
 //       case 8:
 //         return Adminviewpost(userId: widget.userId);
 //       case 9:
-//         // return Activities(userId: widget.userId);
+//         return AdminActivities(userId: widget.userId, userRole: widget.userRole,);
 //       default:
 //         return AdminHomePage(userId: widget.userId, child: Text(''),);
 //     }
@@ -193,44 +198,25 @@
 //                 ),
 //               ),
 //             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(4),
-//               title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(Icons.home, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(5),
-//               title: Text('طلبات التدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(6),
-//               title: Text('اقتراحات وافكار المستخدمين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(LineAwesomeIcons.comment_dots, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(8),
-//               title: Text('الانجازات', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(Icons.star, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(1),
-//               title: Text('الرسائل', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(Icons.contact_mail, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(9),
-//               title: Text('الانشطة', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(Icons.group_add, color: Colors.white, size: 15),
-//             ),
-//             ListTile(
-//               onTap: () => _onItemTapped(7),
-//               title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
-//               trailing: Icon(Icons.logout, color: Colors.white, size: 15),
-//             ),
+//             _buildDrawerItem(Icons.home, 'الرئيسية', 4),
+//             _buildDrawerItem(LineAwesomeIcons.graduation_cap_solid, 'طلبات التدريب للخريجين', 5),
+//             _buildDrawerItem(LineAwesomeIcons.comment_dots, 'اقتراحات وافكار المستخدمين', 6),
+//             _buildDrawerItem(Icons.star, 'الانجازات', 8),
+//             _buildDrawerItem(Icons.contact_mail, 'الرسائل', 1),
+//             _buildDrawerItem(Icons.group_add, 'الانشطة', 9),
+//             _buildDrawerItem(Icons.logout, 'تسجيل خروج', 7),
 //           ],
 //         ),
 //       ),
+//     );
+//   }
+
+//   Widget _buildDrawerItem(IconData icon, String title, int index) {
+//     bool isSelected = _selectedIndex == index;
+//     return ListTile(
+//       onTap: () => _onItemTapped(index),
+//       title: Text(title, textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
+//       trailing: Icon(icon, color: isSelected ? Color(0xFFffe145) : Colors.white, size: 15),
 //     );
 //   }
 // }
@@ -238,6 +224,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/AdminPages/Home/AdminHome.dart';
+import 'package:cytc/AdminPages/Home/UserToParamedic.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/chat/ListOfUsers.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/posts/Adminviewpost.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/Activities/suggestion/ViewSuggessions.dart';
@@ -303,6 +290,8 @@ class _AdminBarState extends State<AdminBar> {
         return Adminviewpost(userId: widget.userId);
       case 9:
         return AdminActivities(userId: widget.userId, userRole: widget.userRole,);
+      case 10:
+        return UserToParamedic();
       default:
         return AdminHomePage(userId: widget.userId, child: Text(''),);
     }
@@ -429,7 +418,7 @@ class _AdminBarState extends State<AdminBar> {
                     Text(
                       'مركز تدريب الشباب المجتمعي \n التابع للاغاثة الطبية',
                       textAlign: TextAlign.right,
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15, fontFamily: 'Amiri'),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14, fontFamily: 'Amiri'),
                     ),
                   ],
                 ),
@@ -441,6 +430,7 @@ class _AdminBarState extends State<AdminBar> {
             _buildDrawerItem(Icons.star, 'الانجازات', 8),
             _buildDrawerItem(Icons.contact_mail, 'الرسائل', 1),
             _buildDrawerItem(Icons.group_add, 'الانشطة', 9),
+            _buildDrawerItem(Icons.person_add_alt_1, 'تغيير دور المستخدم', 10), // New menu item
             _buildDrawerItem(Icons.logout, 'تسجيل خروج', 7),
           ],
         ),
@@ -452,7 +442,7 @@ class _AdminBarState extends State<AdminBar> {
     bool isSelected = _selectedIndex == index;
     return ListTile(
       onTap: () => _onItemTapped(index),
-      title: Text(title, textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 11, color: Colors.white)),
+      title: Text(title, textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 10, color: Colors.white)),
       trailing: Icon(icon, color: isSelected ? Color(0xFFffe145) : Colors.white, size: 15),
     );
   }

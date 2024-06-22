@@ -334,20 +334,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-/////////////////////
-// ignore_for_file: prefer_const_constructors
-
-import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
-import 'package:cytc/UserPages/screen/auth/login.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:async';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 class AdminChatPage extends StatefulWidget {
   final String userId;
   final String userRole;
@@ -456,12 +442,12 @@ class _AdminChatPageState extends State<AdminChatPage> {
         child: ClipPath(
           clipper: CustomAppBarClipper(),
           child: AppBar(
-            backgroundColor: Color(0xFFffe145).withOpacity(0.7),
+            backgroundColor: Color(0xFF071533).withOpacity(0.1),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(LineAwesomeIcons.bars_solid, color: Colors.white),
+              icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
               onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
+                _scaffoldKey.currentState?.openDrawer(); 
               },
             ),
             title: Text(
@@ -470,7 +456,7 @@ class _AdminChatPageState extends State<AdminChatPage> {
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
-                color: Colors.white,
+                color: Color(0xFF071533),
               ),
               textAlign: TextAlign.center,
             ),
@@ -478,7 +464,7 @@ class _AdminChatPageState extends State<AdminChatPage> {
             actions: [
               IconButton(
                 icon: Icon(LineAwesomeIcons.angle_right_solid,
-                    color: Colors.white),
+                    color: Color(0xFF071533)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -691,8 +677,8 @@ class ChatBubble extends StatelessWidget {
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: isMe
-              ? Color(0xFFffe145).withOpacity(0.4)
-              : Color(0xFF071533).withOpacity(0.4),
+              ? Color(0xFF071533)
+              : Color(0xFF071533).withOpacity(0.3),
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Text(

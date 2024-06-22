@@ -50,7 +50,7 @@ class _ParamedicsPageState extends State<ParamedicsPage>
     _controller.dispose();
     super.dispose();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,28 +181,28 @@ class _ParamedicsPageState extends State<ParamedicsPage>
                   ],
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'خطرة ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Amiri',
-                        color: Color(0xFF071533),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      ':تقييم الحالة',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Amiri',
-                        color: Color(0xFF071533),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'خطرة ',
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         fontFamily: 'Amiri',
+                //         color: Color(0xFF071533),
+                //       ),
+                //     ),
+                //     SizedBox(width: 8),
+                //     Text(
+                //       ':تقييم الحالة',
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         fontFamily: 'Amiri',
+                //         color: Color(0xFF071533),
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
             SizedBox(height: 20),

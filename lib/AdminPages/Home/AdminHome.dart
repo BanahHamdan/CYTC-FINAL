@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
+// // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
 // import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
 // import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
@@ -99,7 +100,7 @@
 //         measureFn: (PersonEvent personEvent, _) => personEvent.events,
 //         id: 'Events',
 //         data: personData,
-//         fillPatternFn: (_, __) => charts.FillPatternType.solid,
+//         fillPatternFn: (, _) => charts.FillPatternType.solid,
 //         fillColorFn: (PersonEvent personEvent, _) =>
 //             charts.ColorUtil.fromDartColor(Color(0xFFffe145)),
 //       ),
@@ -121,7 +122,7 @@
 //             eventParticipants.participants,
 //         id: 'Participants',
 //         data: eventData,
-//         fillPatternFn: (_, __) => charts.FillPatternType.solid,
+//         fillPatternFn: (, _) => charts.FillPatternType.solid,
 //         fillColorFn: (EventParticipants eventParticipants, _) =>
 //             charts.ColorUtil.fromDartColor(Color.fromRGBO(17, 36, 78, 0.576)),
 //       ),
@@ -949,57 +950,120 @@ class _AdminHomePageState extends State<AdminHome> {
     );
   }
 
-  Widget _buildCardPopularActivities() {
-    return SizedBox(
-      width: 500, // Increase the width to utilize empty space
-      height: 220, // Adjust the height as needed
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(11.25),
-        ),
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'الانشطة ذات الاقبال الاكبر',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF071533),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+Widget _buildCardPopularActivities() {
+  return SizedBox(
+    width: 500, // Increase the width to utilize empty space
+    height: 220, // Adjust the height as needed
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(11.25),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'الانشطة ذات الاقبال الاكبر',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF071533),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 8),
-              isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : SizedBox(
-                      height:
-                          150, // Adjust the height to make the chart smaller
-                      width: 480, // Adjust the width to fit within the card
-                      child: charts.BarChart(
-                        _seriesEventData,
-                        animate: true,
-                        barGroupingType: charts.BarGroupingType.grouped,
-                        animationDuration: Duration(seconds: 5),
-                        domainAxis: charts.OrdinalAxisSpec(
-                          renderSpec: charts.SmallTickRendererSpec(
-                            labelRotation: 45,
-                            labelStyle: charts.TextStyleSpec(
-                              fontSize: 10, // Adjust the font size as needed
-                              color: charts.MaterialPalette.black,
-                            ),
+            ),
+            SizedBox(height: 8),
+            isLoading
+                ? Center(child: CircularProgressIndicator())
+                : SizedBox(
+                    height: 150, // Adjust the height to make the chart smaller
+                    width: 480, // Adjust the width to fit within the card
+                    child: charts.BarChart(
+                      _seriesEventData,
+                      animate: true,
+                      barGroupingType: charts.BarGroupingType.grouped,
+                      animationDuration: Duration(seconds: 5),
+                      domainAxis: charts.OrdinalAxisSpec(
+                        renderSpec: charts.SmallTickRendererSpec(
+                          labelStyle: charts.TextStyleSpec(
+                            fontSize: 10, // Adjust the font size as needed
+                            color: charts.MaterialPalette.black,
                           ),
+                          labelRotation: 0, // No rotation
+                          labelAnchor: charts.TickLabelAnchor.centered,
+                        ),
+                        tickProviderSpec: charts.StaticOrdinalTickProviderSpec(
+                          _seriesEventData.first.data.map((e) {
+                            String formattedLabel = e.event
+                                .replaceAllMapped(
+                                  RegExp(r'(\S{8})'),
+                                  (match) => '${match[1]}\n',
+                                )
+                                .trim();
+                            return charts.TickSpec(formattedLabel);
+                          }).toList(),
                         ),
                       ),
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+  // Widget _buildCardPopularActivities() {
+  //   return SizedBox(
+  //     width: 500, // Increase the width to utilize empty space
+  //     height: 220, // Adjust the height as needed
+  //     child: Card(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(11.25),
+  //       ),
+  //       child: Container(
+  //         padding: EdgeInsets.all(10.0),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.end,
+  //           children: [
+  //             Text(
+  //               'الانشطة ذات الاقبال الاكبر',
+  //               textAlign: TextAlign.center,
+  //               style: TextStyle(
+  //                 color: Color(0xFF071533),
+  //                 fontSize: 15,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //             ),
+  //             SizedBox(height: 8),
+  //             isLoading
+  //                 ? Center(child: CircularProgressIndicator())
+  //                 : SizedBox(
+  //                     height:
+  //                         150, // Adjust the height to make the chart smaller
+  //                     width: 480, // Adjust the width to fit within the card
+  //                     child: charts.BarChart(
+  //                       _seriesEventData,
+  //                       animate: true,
+  //                       barGroupingType: charts.BarGroupingType.grouped,
+  //                       animationDuration: Duration(seconds: 5),
+  //                       domainAxis: charts.OrdinalAxisSpec(
+  //                         renderSpec: charts.SmallTickRendererSpec(
+  //                           labelRotation: 45,
+  //                           labelStyle: charts.TextStyleSpec(
+  //                             fontSize: 10, // Adjust the font size as needed
+  //                             color: charts.MaterialPalette.black,
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildEditableCardVolunteerOfTheMonth() {
     return SizedBox(

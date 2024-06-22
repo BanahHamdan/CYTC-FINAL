@@ -785,10 +785,10 @@ class _HomePageState extends State<HomePage> {
               child: CarouselSlider(
                 items: [
                   _buildSliderItem("assets/homePage/slider10.jpg", "نشاط رقم 1"),
-                  _buildSliderItem("assets/homePage/slider1.jpg", "نشاط رقم 2"),
+                  _buildSliderItem("assets/homePage/slider1.jpg", "حفل تخريج طلاب دورة الاسعاف المتقدم"),
                   _buildSliderItem("assets/homePage/slider8.jpg", "نشاط رقم 3"),
                   _buildSliderItem("assets/homePage/slider6.jpg", "نشاط رقم 4"),
-                  _buildSliderItem("assets/homePage/slider7.jpg", "نشاط رقم 5"),
+                  _buildSliderItem("assets/homePage/slider7.jpg", "مهرجان الربيع"),
                 ],
                 options: CarouselOptions(
                   height: 240.0, // Adjusted height

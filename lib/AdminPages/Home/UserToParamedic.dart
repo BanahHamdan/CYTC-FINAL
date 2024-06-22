@@ -2,27 +2,15 @@
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
-// import 'package:intl/intl.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-// class ParticipantsInfoPage extends StatefulWidget {
+// class UserToParamedic extends StatefulWidget {
 //   @override
-//   _ParticipantsInfoPageState createState() => _ParticipantsInfoPageState();
+//   _UserToParamedicState createState() => _UserToParamedicState();
 // }
 
-// class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
-//   List<Participant> participants = [
-//     Participant(
-//       name: 'راما عصام مفيد عوكل',
-//       email: 'rama@example.com',
-//       phoneNumber: '123-456-7890',
-//       city: 'نابلس',
-//       bloodType: 'O+',
-//       birthDate: '1995-01-01',
-//       role: 0,
-//       status: 'مقبول',
-//     ),
-//   ];
+// class _UserToParamedicState extends State<UserToParamedic> {
+//   List<Participant> participants = [];
 
 //   @override
 //   void initState() {
@@ -31,15 +19,14 @@
 //   }
 
 //   Future<void> fetchParticipants() async {
-//     // Replace with your actual API endpoint
-//     final response = await http.get(Uri.parse('http://localhost:9999/participants'));
+//     final response = await http.get(Uri.parse('http://localhost:9999/user/all'));
 
 //     if (response.statusCode == 200) {
 //       final data = jsonDecode(response.body);
 //       setState(() {
-//         participants.addAll((data['participants'] as List)
+//         participants = (data as List)
 //             .map((participant) => Participant.fromJson(participant))
-//             .toList());
+//             .toList();
 //       });
 //     } else {
 //       print('Failed to load participants');
@@ -47,20 +34,51 @@
 //   }
 
 //   int calculateAge(String birthDate) {
-//     DateTime birthDateTime = DateTime.parse(birthDate);
-//     DateTime today = DateTime.now();
-//     int age = today.year - birthDateTime.year;
-//     if (today.month < birthDateTime.month ||
-//         (today.month == birthDateTime.month && today.day < birthDateTime.day)) {
-//       age--;
+//     try {
+//       DateTime birthDateTime = DateTime.parse(birthDate);
+//       DateTime today = DateTime.now();
+//       int age = today.year - birthDateTime.year;
+//       if (today.month < birthDateTime.month ||
+//           (today.month == birthDateTime.month && today.day < birthDateTime.day)) {
+//         age--;
+//       }
+//       return age;
+//     } catch (e) {
+//       print('Invalid date format: $birthDate');
+//       return 0; // Return a default value or handle it accordingly
 //     }
-//     return age;
 //   }
 
-//   void updateParticipantStatus(int index, bool isAccepted) {
+//   void updateParticipantRole(int index, int role) {
 //     setState(() {
-//       participants[index].status = isAccepted ? 'مقبول' : 'مرفوض';
+//       participants[index].role = role;
 //     });
+//   }
+
+//   Color getRoleColor(int role) {
+//     switch (role) {
+//       case 1:
+//         return Colors.blue;
+//       case 2:
+//         return Color(0xFFffe145);
+//       case 3:
+//         return Colors.red;
+//       default:
+//         return Color(0xFF071533);
+//     }
+//   }
+
+//   String getRoleText(int role) {
+//     switch (role) {
+//       case 1:
+//         return 'مسعف';
+//       case 2:
+//         return 'ادمن';
+//       case 3:
+//         return 'مسؤول التبرع بالدم(طوارئ)';
+//       default:
+//         return 'مستخدم';
+//     }
 //   }
 
 //   @override
@@ -136,7 +154,6 @@
 //                               6: FlexColumnWidth(1),
 //                               7: FlexColumnWidth(1.2),
 //                               8: FlexColumnWidth(1.2),
-//                               9: FlexColumnWidth(1.5),
 //                             },
 //                             children: [
 //                               TableRow(
@@ -148,9 +165,8 @@
 //                                   ),
 //                                 ),
 //                                 children: [
-//                                   _buildHeaderCell('الحالة'),
-//                                   _buildHeaderCell('قبول ام حذف'),
-//                                   _buildHeaderCell('المسعفين'),
+//                                   _buildHeaderCell('تغيير الدور'),
+//                                   _buildHeaderCell('دور المستخدم'),
 //                                   _buildHeaderCell('العمر'),
 //                                   _buildHeaderCell('فصيلة الدم'),
 //                                   _buildHeaderCell('المدينة'),
@@ -164,9 +180,8 @@
 //                                 Participant participant = entry.value;
 //                                 return TableRow(
 //                                   children: [
-//                                     _buildTableCell(participant.status),
-//                                     _buildActionButtons(index),
-//                                     _buildTableCell(participant.role == 1 ? 'مسعف' : ''),
+//                                     _buildRoleDropdown(index, participant.role),
+//                                     _buildColoredTableCell(getRoleText(participant.role), getRoleColor(participant.role)),
 //                                     _buildTableCell(calculateAge(participant.birthDate).toString()),
 //                                     _buildTableCell(participant.bloodType),
 //                                     _buildTableCell(participant.city),
@@ -226,26 +241,74 @@
 //     );
 //   }
 
-//   TableCell _buildActionButtons(int index) {
+//   TableCell _buildColoredTableCell(String text, Color color) {
 //     return TableCell(
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           IconButton(
-//             icon: Icon(
-//               Icons.check,
-//               color: Colors.green,
-//             ),
-//             onPressed: () => updateParticipantStatus(index, true),
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Text(
+//           text,
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             fontFamily: 'Amiri',
+//             color: color,
+//             fontSize: 12,
 //           ),
-//           IconButton(
-//             icon: Icon(
-//               Icons.delete,
-//               color: Colors.red,
-//             ),
-//             onPressed: () => updateParticipantStatus(index, false),
+//         ),
+//       ),
+//     );
+//   }
+
+//   TableCell _buildRoleDropdown(int index, int currentRole) {
+//     return TableCell(
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: DropdownButton<int>(
+//           value: currentRole,
+//           style: TextStyle(
+//             fontFamily: 'Amiri',
+//             color: Color(0xFF071533),
+//             fontSize: 12,
 //           ),
-//         ],
+//           dropdownColor: Colors.white,
+//           icon: Icon(Icons.arrow_drop_down, color: Color(0xFF071533)),
+//           isExpanded: true,
+//           alignment: Alignment.centerRight,
+//           items: [
+//             DropdownMenuItem(
+//               value: 0,
+//               child: Align(
+//                 alignment: Alignment.centerRight,
+//                 child: Text('مستخدم'),
+//               ),
+//             ),
+//             DropdownMenuItem(
+//               value: 1,
+//               child: Align(
+//                 alignment: Alignment.centerRight,
+//                 child: Text('مسعف'),
+//               ),
+//             ),
+//             DropdownMenuItem(
+//               value: 2,
+//               child: Align(
+//                 alignment: Alignment.centerRight,
+//                 child: Text('ادمن'),
+//               ),
+//             ),
+//             DropdownMenuItem(
+//               value: 3,
+//               child: Align(
+//                 alignment: Alignment.centerRight,
+//                 child: Text('(طوارئ)مسؤول التبرع بالدم'),
+//               ),
+//             ),
+//           ],
+//           onChanged: (int? newValue) {
+//             if (newValue != null) {
+//               updateParticipantRole(index, newValue);
+//             }
+//           },
+//         ),
 //       ),
 //     );
 //   }
@@ -258,8 +321,7 @@
 //   final String city;
 //   final String bloodType;
 //   final String birthDate;
-//   final int role;
-//   String status;
+//   int role;
 
 //   Participant({
 //     required this.name,
@@ -268,92 +330,120 @@
 //     required this.city,
 //     required this.bloodType,
 //     required this.birthDate,
-//     required this.role,
-//     this.status = '',
+//     this.role = 0,
 //   });
 
 //   factory Participant.fromJson(Map<String, dynamic> json) {
 //     return Participant(
-//       name: json['name'],
+//       name: json['username'],
 //       email: json['email'],
 //       phoneNumber: json['phoneNumber'],
 //       city: json['city'],
 //       bloodType: json['bloodType'],
-//       birthDate: json['birthDate'],
-//       role: json['role'],
+//       birthDate: json['birthDate'] ?? '',
+//       role: int.parse(json['role']),
 //     );
 //   }
 // }
 
+
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-class ParticipantsInfoPage extends StatefulWidget {
-  final String eventId;
-  const ParticipantsInfoPage({Key? key, required this.eventId})
-      : super(key: key);
-
+class UserToParamedic extends StatefulWidget {
   @override
-  _ParticipantsInfoPageState createState() => _ParticipantsInfoPageState();
+  _UserToParamedicState createState() => _UserToParamedicState();
 }
 
-class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
+class _UserToParamedicState extends State<UserToParamedic> {
   List<Participant> participants = [];
 
   @override
   void initState() {
     super.initState();
-    print('Event ID: ${widget.eventId}'); // Print the event ID here
     fetchParticipants();
   }
 
   Future<void> fetchParticipants() async {
-    final response = await http.get(
-        Uri.parse('http://localhost:9999/event-user/users/${widget.eventId}'));
-    print(
-        'Response status: ${response.statusCode}'); // Print the response status code
-    print('Response body: ${response.body}'); // Print the response body
+    final response = await http.get(Uri.parse('http://localhost:9999/user/all'));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print('Parsed JSON: $data'); // Print the parsed JSON data
-
-      if (data != null && data['users'] != null) {
-        setState(() {
-          participants = (data['users'] as List).map((participant) {
-            print(
-                'Participant data: $participant'); // Print each participant data
-            return Participant.fromJson(participant['userId']);
-          }).toList();
-        });
-        print(
-            'Participants loaded: ${participants.length}'); // Print the number of participants
-      } else {
-        print('No participants found in the response');
-      }
+      setState(() {
+        participants = (data as List)
+            .map((participant) => Participant.fromJson(participant))
+            .toList();
+      });
     } else {
       print('Failed to load participants');
     }
   }
 
-  int calculateAge(String birthDate) {
-    DateTime birthDateTime = DateTime.parse(birthDate);
-    DateTime today = DateTime.now();
-    int age = today.year - birthDateTime.year;
-    if (today.month < birthDateTime.month ||
-        (today.month == birthDateTime.month && today.day < birthDateTime.day)) {
-      age--;
+  Future<void> updateParticipantRole(int index, int role) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:9999/user/edit-role'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'_id': participants[index].id, 'role': role.toString()}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['status']) {
+        setState(() {
+          participants[index].role = role;
+        });
+      } else {
+        print('Failed to update role in database');
+      }
+    } else {
+      print('Failed to update role');
     }
-    return age;
   }
 
-  void updateParticipantStatus(int index, bool isAccepted) {
-    setState(() {
-      participants[index].status = isAccepted ? 'مقبول' : 'مرفوض';
-    });
+  int calculateAge(String birthDate) {
+    try {
+      DateTime birthDateTime = DateTime.parse(birthDate);
+      DateTime today = DateTime.now();
+      int age = today.year - birthDateTime.year;
+      if (today.month < birthDateTime.month ||
+          (today.month == birthDateTime.month && today.day < birthDateTime.day)) {
+        age--;
+      }
+      return age;
+    } catch (e) {
+      print('Invalid date format: $birthDate');
+      return 0; // Return a default value or handle it accordingly
+    }
+  }
+
+  Color getRoleColor(int role) {
+    switch (role) {
+      case 1:
+        return Colors.blue;
+      case 2:
+        return Colors.yellow;
+      case 3:
+        return Colors.red;
+      default:
+        return Colors.indigo;
+    }
+  }
+
+  String getRoleText(int role) {
+    switch (role) {
+      case 1:
+        return 'مسعف';
+      case 2:
+        return 'ادمن';
+      case 3:
+        return 'ادمن2';
+      default:
+        return 'مستخدم';
+    }
   }
 
   @override
@@ -371,26 +461,18 @@ class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              LineAwesomeIcons.angle_right_solid,
-              color: Color(0xFF071533),
-              size: 20,
+          actions: [
+            IconButton(
+              icon: Icon(
+                LineAwesomeIcons.angle_right_solid,
+                color: Color(0xFF071533),
+                size: 20,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          title: Text(
-            'Event ID: ${widget.eventId}',
-            style: TextStyle(
-              color: Color(0xFF071533),
-              fontSize: 16,
-              fontFamily: 'Amiri',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
+          ],
         ),
         backgroundColor: Colors.white,
         body: Padding(
@@ -437,7 +519,6 @@ class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
                               6: FlexColumnWidth(1),
                               7: FlexColumnWidth(1.2),
                               8: FlexColumnWidth(1.2),
-                              9: FlexColumnWidth(1.5),
                             },
                             children: [
                               TableRow(
@@ -449,9 +530,8 @@ class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
                                   ),
                                 ),
                                 children: [
-                                  _buildHeaderCell('الحالة'),
-                                  _buildHeaderCell('قبول ام حذف'),
-                                  _buildHeaderCell('تحديد المسعفين'),
+                                  _buildHeaderCell('تغيير الدور'),
+                                  _buildHeaderCell('دور المستخدم'),
                                   _buildHeaderCell('العمر'),
                                   _buildHeaderCell('فصيلة الدم'),
                                   _buildHeaderCell('المدينة'),
@@ -465,13 +545,9 @@ class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
                                 Participant participant = entry.value;
                                 return TableRow(
                                   children: [
-                                    _buildTableCell(participant.status),
-                                    _buildActionButtons(index),
-                                    _buildTableCell(
-                                        participant.role == 1 ? 'مسعف' : ''),
-                                    _buildTableCell(
-                                        calculateAge(participant.birthDate)
-                                            .toString()),
+                                    _buildRoleDropdown(index, participant.role),
+                                    _buildColoredTableCell(getRoleText(participant.role), getRoleColor(participant.role)),
+                                    _buildTableCell(calculateAge(participant.birthDate).toString()),
                                     _buildTableCell(participant.bloodType),
                                     _buildTableCell(participant.city),
                                     _buildTableCell(participant.phoneNumber),
@@ -530,62 +606,113 @@ class _ParticipantsInfoPageState extends State<ParticipantsInfoPage> {
     );
   }
 
-  TableCell _buildActionButtons(int index) {
+  TableCell _buildColoredTableCell(String text, Color color) {
     return TableCell(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            onPressed: () => updateParticipantStatus(index, true),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Amiri',
+            color: color,
+            fontSize: 12,
           ),
-          IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-            onPressed: () => updateParticipantStatus(index, false),
+        ),
+      ),
+    );
+  }
+
+  TableCell _buildRoleDropdown(int index, int currentRole) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownButton<int>(
+          value: currentRole,
+          style: TextStyle(
+            fontFamily: 'Amiri',
+            color: Color(0xFF071533),
+            fontSize: 12,
           ),
-        ],
+          dropdownColor: Colors.white,
+          icon: Icon(Icons.arrow_drop_down, color: Color(0xFF071533)),
+          isExpanded: true,
+          alignment: Alignment.centerRight,
+          items: [
+            DropdownMenuItem(
+              value: 0,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('مستخدم'),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 1,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('مسعف'),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 2,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('ادمن'),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 3,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('ادمن2'),
+              ),
+            ),
+          ],
+          onChanged: (int? newValue) async {
+            if (newValue != null) {
+              await updateParticipantRole(index, newValue);
+              setState(() {
+                participants[index].role = newValue;
+              });
+            }
+          },
+        ),
       ),
     );
   }
 }
 
 class Participant {
+  final String id;
   final String name;
   final String email;
   final String phoneNumber;
   final String city;
   final String bloodType;
   final String birthDate;
-  final int role;
-  String status;
+  int role;
 
   Participant({
+    required this.id,
     required this.name,
     required this.email,
     required this.phoneNumber,
     required this.city,
     required this.bloodType,
     required this.birthDate,
-    required this.role,
-    this.status = '',
+    this.role = 0,
   });
 
   factory Participant.fromJson(Map<String, dynamic> json) {
     return Participant(
-      name: json['username'] ?? 'Unknown Name',
-      email: json['email'] ?? 'Unknown Email',
-      phoneNumber: json['phoneNumber'] ?? 'Unknown Phone Number',
-      city: json['city'] ?? 'Unknown City',
-      bloodType: json['bloodType'] ?? 'Unknown Blood Type',
-      birthDate: json['birthDate'] ?? '2000-01-01',
-      role: int.tryParse(json['role'].toString()) ?? 0,
+      id: json['_id'],
+      name: json['username'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      city: json['city'],
+      bloodType: json['bloodType'],
+      birthDate: json['birthDate'] ?? '',
+      role: int.parse(json['role']),
     );
   }
 }
-

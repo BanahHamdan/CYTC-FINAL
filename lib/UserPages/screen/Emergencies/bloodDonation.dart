@@ -129,7 +129,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                   },
                 );
               },
-            ),
+            ), 
             actions: [
               IconButton(
                 icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
@@ -228,7 +228,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                         color: Color(0xFF071533),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: 6),
                     Text(
                       ':اسم المستشفى',
                       style: TextStyle(
@@ -254,6 +254,29 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                     SizedBox(width: 8),
                     Text(
                       ':فصيلة الدم المطلوبة',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Amiri',
+                        color: Color(0xFF071533),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '5 ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Amiri',
+                        color: Color(0xFF071533),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      ':عدد وحدات الدم الطلوبة',
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'Amiri',

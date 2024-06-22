@@ -1,28 +1,11 @@
-// // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_constructors
-
-import 'package:cytc/AdminPages/Home/AdminHome.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
-import 'package:cytc/AdminPages/screen/MenuPages/posts/Adminviewpost.dart';
-import 'package:cytc/UserPages/screen/auth/login.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Events/events_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Festivals/Fest_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/chat/AdminChatPage.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/posts/posts.dart';
-// import 'package:cytc/view/homeTest.dart';
-// import 'package:cytc/view/test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async'; 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core/firebase_core.dart';
-// import 'screen/bottomBarPages/createpost.dart';
-// import 'package:cytc/view/screen/auth/login.dart';
-// import 'screen/bottomBarPages/buttonBar.dart'; // Ensure this path is correct
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,11 +67,11 @@ class _WelcomePageState extends State<WelcomePage>
     // Set up the timer to navigate after 10 seconds
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
-      // Get.to(() => bar(userId: '123', userRole: '0'));
+      Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage(userId: ''));
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
-      Get.to(() => AdminBar(userId: '', userRole: '',));
+      // Get.to(() => AdminBar(userId: '', userRole: '',));
     });
   }
 
