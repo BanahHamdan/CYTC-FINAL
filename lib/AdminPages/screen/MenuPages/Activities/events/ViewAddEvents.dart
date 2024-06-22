@@ -1,4 +1,5 @@
-// // ignore_for_file: sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_interpolation_to_compose_strings
+// // ignore_for_file: prefer_const_constructors
+
 // import 'package:cytc/AdminPages/screen/MenuPages/Activities/events/EventsParticipantsView.dart';
 // import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 // import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@
 // class ViewAddEventsPage extends StatefulWidget {
 //   final String userId;
 //   final String userRole;
-//   const ViewAddEventsPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+//   const ViewAddEventsPage(
+//       {Key? key, required this.userId, required this.userRole})
+//       : super(key: key);
 
 //   @override
 //   _ViewAddEventsPageState createState() => _ViewAddEventsPageState();
@@ -33,33 +36,48 @@
 //   }
 
 //   Future<void> fetchEvents() async {
-//     List<Event> fetchedEvents = [
-//       Event(
-//         date: DateTime.now(),
-//         time: TimeOfDay.now(),
-//         name: 'ورشة عمل تطوير تطبيقات',
-//         category: 'ورش عمل ولقاءات توعوية',
-//         description: 'ورشة لتعليم تطوير التطبيقات باستخدام Flutter',
-//         startDate: DateTime.now(),
-//         endDate: DateTime.now().add(Duration(days: 1)),
-//         participantAges: '18-25',
-//         numberOfParticipants: 30,
-//         participantsInfo: 'info.pdf',
-//         shownToUser: false,
-//         isEditing: false,
-//       ),
-//     ];
+//     final response =
+//         await http.get(Uri.parse('http://localhost:9999/event/all'));
 
-//     setState(() {
-//       events = fetchedEvents;
-//     });
+//     if (response.statusCode == 200) {
+//       List<dynamic> data = json.decode(response.body);
+//       List<Event> fetchedEvents = data
+//           .map((item) {
+//             return Event(
+//               id: item['_id'],
+//               date: DateTime.parse(item['startDate']),
+//               time: TimeOfDay.fromDateTime(DateTime.parse(item['startDate'])),
+//               name: item['name'],
+//               category: item['interests'],
+//               description: item['description'],
+//               startDate: DateTime.parse(item['startDate']),
+//               endDate: DateTime.parse(item['endDate']),
+//               maxParticipants: item['maxParticipants'],
+//               registeredParticipants: item['registeredParticipants'],
+//               numberOfParticipants: item['maxParticipants'],
+//               shownToUser: false,
+//               isEditing: false,
+//             );
+//           })
+//           .toList()
+//           .cast<Event>();
+
+//       setState(() {
+//         events = fetchedEvents;
+//       });
+//     } else {
+//       print('Failed to load events');
+//     }
 //   }
 
 //   Future<List<String>> fetchCategories() async {
-//     final response = await http.get(Uri.parse('http://localhost:9999/interest/all'));
+//     final response =
+//         await http.get(Uri.parse('http://localhost:9999/interest/all'));
 //     if (response.statusCode == 200) {
 //       List<dynamic> data = json.decode(response.body);
-//       return data.map<String>((item) => item['interestName'].toString()).toList();
+//       return data
+//           .map<String>((item) => item['interestName'].toString())
+//           .toList();
 //     } else {
 //       print('Failed to load categories');
 //       return [];
@@ -84,45 +102,68 @@
 //     });
 //   }
 
-//   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
-//   DateTime? picked = await showDatePicker(
-//     context: context,
-//     initialDate: DateTime.now(),
-//     firstDate: DateTime(2000),
-//     lastDate: DateTime(2101),
-//     builder: (context, child) {
-//       return Theme(
-//         data: ThemeData.light().copyWith(
-//           primaryColor: Color(0xFF071533),
-//           hintColor: Color(0xFF071533),
-//           colorScheme: ColorScheme.light(primary: Color(0xFF071533)),
-//           buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-//           dialogBackgroundColor: Colors.white,
-//           textButtonTheme: TextButtonThemeData(
-//             style: TextButton.styleFrom(
-//               primary: Color(0xFF071533),
+//   Future<void> _selectDate(
+//       BuildContext context, TextEditingController controller) async {
+//     DateTime? picked = await showDatePicker(
+//       context: context,
+//       initialDate: DateTime.now(),
+//       firstDate: DateTime(2000),
+//       lastDate: DateTime(2101),
+//       builder: (context, child) {
+//         return Theme(
+//           data: ThemeData.light().copyWith(
+//             primaryColor: Color(0xFF071533),
+//             hintColor: Color(0xFF071533),
+//             colorScheme: ColorScheme.light(primary: Color(0xFF071533)),
+//             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+//             dialogBackgroundColor: Colors.white,
+//             textButtonTheme: TextButtonThemeData(
+//               style: TextButton.styleFrom(
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(15.0),
+//                 ),
+//               ),
+//             ),
+//             dialogTheme: DialogTheme(
 //               shape: RoundedRectangleBorder(
 //                 borderRadius: BorderRadius.circular(15.0),
 //               ),
 //             ),
 //           ),
-//           dialogTheme: DialogTheme(
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(15.0),
-//             ),
-//           ),
-//         ),
-//         child: child!,
-//       );
-//     },
-//   );
-//   if (picked != null) {
-//     setState(() {
-//       controller.text = picked.toLocal().toString().split(' ')[0];
-//     });
+//           child: child!,
+//         );
+//       },
+//     );
+//     if (picked != null) {
+//       setState(() {
+//         controller.text = picked.toLocal().toString().split(' ')[0];
+//       });
+//     }
 //   }
-// }
- 
+
+//   Future<void> _createEvent(String name, String startDate, String endDate,
+//       String description, int maxParticipants, String category) async {
+//     final response = await http.post(
+//       Uri.parse('http://localhost:9999/event/create'),
+//       headers: <String, String>{
+//         'Content-Type': 'application/json; charset=UTF-8',
+//       },
+//       body: jsonEncode(<String, dynamic>{
+//         'name': name,
+//         'startDate': startDate,
+//         'endDate': endDate,
+//         'description': description,
+//         'maxParticipants': maxParticipants,
+//         'interests': category,
+//       }),
+//     );
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       fetchEvents();
+//     } else {
+//       throw Exception('Failed to create event');
+//     }
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -150,7 +191,8 @@
 //                 Navigator.push(
 //                   context,
 //                   MaterialPageRoute(
-//                     builder: (context) => AdminBar(userId: widget.userId, userRole: widget.userRole),
+//                     builder: (context) => AdminBar(
+//                         userId: widget.userId, userRole: widget.userRole),
 //                   ),
 //                 );
 //               },
@@ -223,11 +265,13 @@
 //                                 ),
 //                                 children: [
 //                                   _buildHeaderCell('معلومات المشاركين'),
+//                                   _buildHeaderCell('المشاركين المسجلين'),
 //                                   _buildHeaderCell('عدد المشاركين'),
+//                                   _buildHeaderCell('العدد الاقصى للمشاركين'),
 //                                   _buildHeaderCell('ظهوره للمستخدم'),
 //                                   _buildHeaderCell('تعديل'),
-//                                   _buildHeaderCell('أعمار المشاركين'),
-//                                   _buildHeaderCell('تاريخ بداية وانتهاء النشاط'),
+//                                   _buildHeaderCell(
+//                                       'تاريخ بداية وانتهاء النشاط'),
 //                                   _buildHeaderCell('الوصف'),
 //                                   _buildHeaderCell('تصنيف النشاط'),
 //                                   _buildHeaderCell('اسم النشاط'),
@@ -240,17 +284,33 @@
 //                                 Event event = entry.value;
 //                                 return TableRow(
 //                                   children: [
-//                                     _buildTableCellWithButton('معلومات', () => _showParticipantsInfo(event.participantsInfo, context)),
-//                                     _buildTableCell(event.numberOfParticipants.toString()),
-//                                     _buildTableCell(event.shownToUser ? 'تم إظهاره للمستخدم' : ''),
+//                                     _buildTableCellWithButton(
+//                                         'معلومات',
+//                                         () => _showParticipantsInfo(
+//                                             event.id, context)),
+//                                     _buildTableCell(event.registeredParticipants
+//                                         .toString()),
+//                                     _buildTableCell(
+//                                         event.numberOfParticipants.toString()),
+//                                     _buildTableCell(
+//                                         event.maxParticipants.toString()),
+//                                     _buildTableCell(event.shownToUser
+//                                         ? 'تم إظهاره للمستخدم'
+//                                         : ''),
 //                                     _buildEditDeleteSaveButtons(index),
-//                                     _buildTableCell(event.participantAges),
-//                                     _buildTableCell('${event.startDate.toLocal()}'.split(' ')[0] + ' - ' + '${event.endDate.toLocal()}'.split(' ')[0]),
+//                                     _buildTableCell(
+//                                         '${event.startDate.toLocal()}'
+//                                                 .split(' ')[0] +
+//                                             ' - ' +
+//                                             '${event.endDate.toLocal()}'
+//                                                 .split(' ')[0]),
 //                                     _buildTableCell(event.description),
 //                                     _buildTableCell(event.category),
 //                                     _buildTableCell(event.name),
-//                                     _buildTableCell('${event.time.format(context)}'),
-//                                     _buildTableCell('${event.date.toLocal()}'.split(' ')[0]),
+//                                     _buildTableCell(
+//                                         '${event.time.format(context)}'),
+//                                     _buildTableCell('${event.date.toLocal()}'
+//                                         .split(' ')[0]),
 //                                   ],
 //                                 );
 //                               }).toList(),
@@ -381,7 +441,8 @@
 //         TextEditingController descriptionController = TextEditingController();
 //         TextEditingController startDateController = TextEditingController();
 //         TextEditingController endDateController = TextEditingController();
-//         TextEditingController participantAgesController = TextEditingController();
+//         TextEditingController maxParticipantsController =
+//             TextEditingController();
 //         String errorMessage = '';
 
 //         return StatefulBuilder(
@@ -393,7 +454,7 @@
 //                   style: TextStyle(
 //                     fontFamily: 'Amiri',
 //                     fontSize: 18,
-//                     color: Color(0xFF071533)
+//                     color: Color(0xFF071533),
 //                   ),
 //                 ),
 //               ),
@@ -411,7 +472,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -421,7 +482,8 @@
 //                     FutureBuilder<List<String>>(
 //                       future: fetchCategories(),
 //                       builder: (context, snapshot) {
-//                         if (snapshot.connectionState == ConnectionState.waiting) {
+//                         if (snapshot.connectionState ==
+//                             ConnectionState.waiting) {
 //                           return CircularProgressIndicator();
 //                         } else if (snapshot.hasError) {
 //                           return Text('Error: ${snapshot.error}');
@@ -451,10 +513,11 @@
 //                               hintStyle: TextStyle(
 //                                 fontFamily: 'Amiri',
 //                                 fontSize: 12,
-//                                 color: Color(0xFF071533)
+//                                 color: Color(0xFF071533),
 //                               ),
 //                               focusedBorder: UnderlineInputBorder(
-//                                 borderSide: BorderSide(color: Color(0xFFffe145)),
+//                                 borderSide:
+//                                     BorderSide(color: Color(0xFFffe145)),
 //                               ),
 //                             ),
 //                           );
@@ -471,7 +534,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -487,7 +550,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -507,7 +570,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -521,13 +584,13 @@
 //                     TextField(
 //                       textAlign: TextAlign.end,
 //                       cursorColor: Color(0xFFffe145),
-//                       controller: participantAgesController,
+//                       controller: maxParticipantsController,
 //                       decoration: InputDecoration(
-//                         hintText: 'أعمار المشاركين',
+//                         hintText: 'العدد الاقصى للمشاركين',
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -581,37 +644,25 @@
 //                       fontWeight: FontWeight.bold,
 //                     ),
 //                   ),
-//                   onPressed: () {
+//                   onPressed: () async {
 //                     if (nameController.text.isEmpty ||
 //                         categoryController.text.isEmpty ||
 //                         descriptionController.text.isEmpty ||
 //                         startDateController.text.isEmpty ||
 //                         endDateController.text.isEmpty ||
-//                         participantAgesController.text.isEmpty) {
+//                         maxParticipantsController.text.isEmpty) {
 //                       setState(() {
 //                         errorMessage = 'يرجى ملء جميع الحقول';
-//                         TextStyle(
-//                           fontFamily: 'Amiri',
-//                           fontSize: 15,
-//                           color: Colors.red,
-//                         );
 //                       });
 //                     } else {
-//                       Event newEvent = Event(
-//                         date: DateTime.now(),
-//                         time: TimeOfDay.now(),
-//                         name: nameController.text,
-//                         category: categoryController.text,
-//                         description: descriptionController.text,
-//                         startDate: DateTime.parse(startDateController.text),
-//                         endDate: DateTime.parse(endDateController.text),
-//                         participantAges: participantAgesController.text,
-//                         numberOfParticipants: 0, // This should be set based on actual data
-//                         participantsInfo: 'info.pdf', // Placeholder
-//                         shownToUser: false,
-//                         isEditing: false,
+//                       await _createEvent(
+//                         nameController.text,
+//                         startDateController.text,
+//                         endDateController.text,
+//                         descriptionController.text,
+//                         int.parse(maxParticipantsController.text),
+//                         categoryController.text,
 //                       );
-//                       _addEvent(newEvent);
 //                       Navigator.of(context).pop();
 //                     }
 //                   },
@@ -629,26 +680,32 @@
 //       context: context,
 //       builder: (context) {
 //         Event event = events[index];
-//         TextEditingController nameController = TextEditingController(text: event.name);
-//         TextEditingController categoryController = TextEditingController(text: event.category);
-//         TextEditingController descriptionController = TextEditingController(text: event.description);
-//         TextEditingController startDateController = TextEditingController(text: event.startDate.toLocal().toString().split(' ')[0]);
-//         TextEditingController endDateController = TextEditingController(text: event.endDate.toLocal().toString().split(' ')[0]);
-//         TextEditingController participantAgesController = TextEditingController(text: event.participantAges);
+//         TextEditingController nameController =
+//             TextEditingController(text: event.name);
+//         TextEditingController categoryController =
+//             TextEditingController(text: event.category);
+//         TextEditingController descriptionController =
+//             TextEditingController(text: event.description);
+//         TextEditingController startDateController = TextEditingController(
+//             text: event.startDate.toLocal().toString().split(' ')[0]);
+//         TextEditingController endDateController = TextEditingController(
+//             text: event.endDate.toLocal().toString().split(' ')[0]);
+//         TextEditingController maxParticipantsController =
+//             TextEditingController(text: event.maxParticipants.toString());
 //         String errorMessage = '';
 
 //         return StatefulBuilder(
 //           builder: (context, setState) {
 //             return AlertDialog(
 //               title: Center(
-//               child: Text(
-//                 'تعديل النشاط',
-//                 style: TextStyle(
-//                   fontFamily: 'Amiri',
-//                   fontSize: 18,
-//                   color: Color(0xFF071533)
+//                 child: Text(
+//                   'تعديل النشاط',
+//                   style: TextStyle(
+//                     fontFamily: 'Amiri',
+//                     fontSize: 18,
+//                     color: Color(0xFF071533),
+//                   ),
 //                 ),
-//               ),
 //               ),
 //               content: SingleChildScrollView(
 //                 child: Column(
@@ -664,7 +721,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -674,13 +731,16 @@
 //                     FutureBuilder<List<String>>(
 //                       future: fetchCategories(),
 //                       builder: (context, snapshot) {
-//                         if (snapshot.connectionState == ConnectionState.waiting) {
+//                         if (snapshot.connectionState ==
+//                             ConnectionState.waiting) {
 //                           return CircularProgressIndicator();
 //                         } else if (snapshot.hasError) {
 //                           return Text('Error: ${snapshot.error}');
 //                         } else {
 //                           return DropdownButtonFormField(
-//                             value: snapshot.data!.contains(event.category) ? event.category : null,
+//                             value: snapshot.data!.contains(event.category)
+//                                 ? event.category
+//                                 : null,
 //                             items: snapshot.data!.map((String category) {
 //                               return DropdownMenuItem(
 //                                 value: category,
@@ -705,10 +765,11 @@
 //                               hintStyle: TextStyle(
 //                                 fontFamily: 'Amiri',
 //                                 fontSize: 12,
-//                                 color: Color(0xFF071533)
+//                                 color: Color(0xFF071533),
 //                               ),
 //                               focusedBorder: UnderlineInputBorder(
-//                                 borderSide: BorderSide(color: Color(0xFFffe145)),
+//                                 borderSide:
+//                                     BorderSide(color: Color(0xFFffe145)),
 //                               ),
 //                             ),
 //                           );
@@ -725,7 +786,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -741,7 +802,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -761,7 +822,7 @@
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -775,13 +836,13 @@
 //                     TextField(
 //                       textAlign: TextAlign.end,
 //                       cursorColor: Color(0xFFffe145),
-//                       controller: participantAgesController,
+//                       controller: maxParticipantsController,
 //                       decoration: InputDecoration(
-//                         hintText: 'أعمار المشاركين',
+//                         hintText: 'العدد الاقصى للمشاركين',
 //                         hintStyle: TextStyle(
 //                           fontFamily: 'Amiri',
 //                           fontSize: 12,
-//                           color: Color(0xFF071533)
+//                           color: Color(0xFF071533),
 //                         ),
 //                         focusedBorder: UnderlineInputBorder(
 //                           borderSide: BorderSide(color: Color(0xFFffe145)),
@@ -841,12 +902,13 @@
 //                         descriptionController.text.isEmpty ||
 //                         startDateController.text.isEmpty ||
 //                         endDateController.text.isEmpty ||
-//                         participantAgesController.text.isEmpty) {
+//                         maxParticipantsController.text.isEmpty) {
 //                       setState(() {
 //                         errorMessage = 'يرجى ملء جميع الحقول';
 //                       });
 //                     } else {
 //                       Event updatedEvent = Event(
+//                         id: event.id,
 //                         date: event.date,
 //                         time: event.time,
 //                         name: nameController.text,
@@ -854,9 +916,11 @@
 //                         description: descriptionController.text,
 //                         startDate: DateTime.parse(startDateController.text),
 //                         endDate: DateTime.parse(endDateController.text),
-//                         participantAges: participantAgesController.text,
-//                         numberOfParticipants: event.numberOfParticipants,
-//                         participantsInfo: event.participantsInfo,
+//                         maxParticipants:
+//                             int.parse(maxParticipantsController.text),
+//                         registeredParticipants: event.registeredParticipants,
+//                         numberOfParticipants:
+//                             int.parse(maxParticipantsController.text),
 //                         shownToUser: event.shownToUser,
 //                         isEditing: false,
 //                       );
@@ -873,17 +937,18 @@
 //     );
 //   }
 
-//   void _showParticipantsInfo(String info, BuildContext context) {
+//   void _showParticipantsInfo(String eventId, BuildContext context) {
 //     Navigator.push(
 //       context,
 //       MaterialPageRoute(
-//         builder: (context) => ParticipantsInfoPage(),
+//         builder: (context) => ParticipantsInfoPage(eventId: eventId),
 //       ),
 //     );
 //   }
 // }
 
 // class Event {
+//   String id;
 //   DateTime date;
 //   TimeOfDay time;
 //   String name;
@@ -891,13 +956,14 @@
 //   String description;
 //   DateTime startDate;
 //   DateTime endDate;
-//   String participantAges;
+//   int maxParticipants;
+//   int registeredParticipants;
 //   int numberOfParticipants;
-//   String participantsInfo;
 //   bool shownToUser;
 //   bool isEditing;
 
 //   Event({
+//     required this.id,
 //     required this.date,
 //     required this.time,
 //     required this.name,
@@ -905,14 +971,15 @@
 //     required this.description,
 //     required this.startDate,
 //     required this.endDate,
-//     required this.participantAges,
+//     required this.maxParticipants,
+//     required this.registeredParticipants,
 //     required this.numberOfParticipants,
-//     required this.participantsInfo,
 //     required this.shownToUser,
 //     required this.isEditing,
 //   });
 // }
 
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cytc/AdminPages/screen/MenuPages/Activities/events/EventsParticipantsView.dart';
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
@@ -1164,9 +1231,8 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                               5: FlexColumnWidth(1),
                               6: FlexColumnWidth(2),
                               7: FlexColumnWidth(1),
-                              8: FlexColumnWidth(1),
-                              9: FlexColumnWidth(0.9),
-                              10: FlexColumnWidth(1),
+                              8: FlexColumnWidth(0.9),
+                              9: FlexColumnWidth(1),
                             },
                             children: [
                               TableRow(
@@ -1180,7 +1246,6 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                 children: [
                                   _buildHeaderCell('معلومات المشاركين'),
                                   _buildHeaderCell('المشاركين المسجلين'),
-                                  _buildHeaderCell('عدد المشاركين'),
                                   _buildHeaderCell('العدد الاقصى للمشاركين'),
                                   _buildHeaderCell('ظهوره للمستخدم'),
                                   _buildHeaderCell('تعديل'),
@@ -1204,8 +1269,6 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                             event.id, context)),
                                     _buildTableCell(event.registeredParticipants
                                         .toString()),
-                                    _buildTableCell(
-                                        event.numberOfParticipants.toString()),
                                     _buildTableCell(
                                         event.maxParticipants.toString()),
                                     _buildTableCell(event.shownToUser

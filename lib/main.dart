@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
+import 'package:cytc/UserPages/Home/notification.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,11 +68,12 @@ class _WelcomePageState extends State<WelcomePage>
     // Set up the timer to navigate after 10 seconds
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
-      Get.to(() => bar(userId: '123', userRole: '0'));
+      // Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage(userId: ''));
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
       // Get.to(() => AdminBar(userId: '', userRole: '',));
+      Get.to(() => NotificationPage());
     });
   }
 
