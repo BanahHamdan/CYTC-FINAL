@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
+import 'package:cytc/UserPages/Home/notification.dart';
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
@@ -117,7 +118,12 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
                     child: IconButton(
                       icon: Icon(Icons.notifications, color: Color(0xFF071533), size: 20),
                       onPressed: () {
-                        // Handle notification click
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => NotificationPage()
+                          )
+                          );
                       },
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints(),
