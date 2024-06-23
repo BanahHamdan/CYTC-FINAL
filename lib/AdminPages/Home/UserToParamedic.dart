@@ -2,6 +2,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
+// import 'package:intl/intl.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 // class UserToParamedic extends StatefulWidget {
@@ -33,6 +34,27 @@
 //     }
 //   }
 
+//   Future<void> updateParticipantRole(int index, int role) async {
+//     final response = await http.post(
+//       Uri.parse('http://localhost:9999/user/edit-role'),
+//       headers: {'Content-Type': 'application/json'},
+//       body: jsonEncode({'_id': participants[index].id, 'role': role.toString()}),
+//     );
+
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//       if (data['status']) {
+//         setState(() {
+//           participants[index].role = role;
+//         });
+//       } else {
+//         print('Failed to update role in database');
+//       }
+//     } else {
+//       print('Failed to update role');
+//     }
+//   }
+
 //   int calculateAge(String birthDate) {
 //     try {
 //       DateTime birthDateTime = DateTime.parse(birthDate);
@@ -49,22 +71,16 @@
 //     }
 //   }
 
-//   void updateParticipantRole(int index, int role) {
-//     setState(() {
-//       participants[index].role = role;
-//     });
-//   }
-
 //   Color getRoleColor(int role) {
 //     switch (role) {
 //       case 1:
 //         return Colors.blue;
 //       case 2:
-//         return Color(0xFFffe145);
+//         return Colors.yellow;
 //       case 3:
 //         return Colors.red;
 //       default:
-//         return Color(0xFF071533);
+//         return Colors.indigo;
 //     }
 //   }
 
@@ -75,7 +91,7 @@
 //       case 2:
 //         return 'ادمن';
 //       case 3:
-//         return 'مسؤول التبرع بالدم(طوارئ)';
+//         return 'ادمن2';
 //       default:
 //         return 'مستخدم';
 //     }
@@ -299,13 +315,16 @@
 //               value: 3,
 //               child: Align(
 //                 alignment: Alignment.centerRight,
-//                 child: Text('(طوارئ)مسؤول التبرع بالدم'),
+//                 child: Text('ادمن2'),
 //               ),
 //             ),
 //           ],
-//           onChanged: (int? newValue) {
+//           onChanged: (int? newValue) async {
 //             if (newValue != null) {
-//               updateParticipantRole(index, newValue);
+//               await updateParticipantRole(index, newValue);
+//               setState(() {
+//                 participants[index].role = newValue;
+//               });
 //             }
 //           },
 //         ),
@@ -315,6 +334,7 @@
 // }
 
 // class Participant {
+//   final String id;
 //   final String name;
 //   final String email;
 //   final String phoneNumber;
@@ -324,6 +344,7 @@
 //   int role;
 
 //   Participant({
+//     required this.id,
 //     required this.name,
 //     required this.email,
 //     required this.phoneNumber,
@@ -335,6 +356,7 @@
 
 //   factory Participant.fromJson(Map<String, dynamic> json) {
 //     return Participant(
+//       id: json['_id'],
 //       name: json['username'],
 //       email: json['email'],
 //       phoneNumber: json['phoneNumber'],
@@ -346,12 +368,10 @@
 //   }
 // }
 
-
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class UserToParamedic extends StatefulWidget {
@@ -384,10 +404,10 @@ class _UserToParamedicState extends State<UserToParamedic> {
   }
 
   Future<void> updateParticipantRole(int index, int role) async {
-    final response = await http.post(
+    final response = await http.put(
       Uri.parse('http://localhost:9999/user/edit-role'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'_id': participants[index].id, 'role': role.toString()}),
+      body: jsonEncode({'userId': participants[index].id, 'newRole': role.toString()}),
     );
 
     if (response.statusCode == 200) {
@@ -395,6 +415,7 @@ class _UserToParamedicState extends State<UserToParamedic> {
       if (data['status']) {
         setState(() {
           participants[index].role = role;
+          participants[index].statusChanged = true;
         });
       } else {
         print('Failed to update role in database');
@@ -429,7 +450,7 @@ class _UserToParamedicState extends State<UserToParamedic> {
       case 3:
         return Colors.red;
       default:
-        return Colors.indigo;
+        return Color(0xFF071533);
     }
   }
 
@@ -440,7 +461,7 @@ class _UserToParamedicState extends State<UserToParamedic> {
       case 2:
         return 'ادمن';
       case 3:
-        return 'ادمن2';
+        return 'مسؤول التبرع بالدم';
       default:
         return 'مستخدم';
     }
@@ -510,15 +531,15 @@ class _UserToParamedicState extends State<UserToParamedic> {
                           ),
                           child: Table(
                             columnWidths: {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(1),
+                              0: FlexColumnWidth(1.2),
+                              1: FlexColumnWidth(1.2),
                               2: FlexColumnWidth(1),
                               3: FlexColumnWidth(1),
                               4: FlexColumnWidth(1),
                               5: FlexColumnWidth(1),
                               6: FlexColumnWidth(1),
-                              7: FlexColumnWidth(1.2),
-                              8: FlexColumnWidth(1.2),
+                              7: FlexColumnWidth(1),
+                              8: FlexColumnWidth(1),
                             },
                             children: [
                               TableRow(
@@ -530,6 +551,7 @@ class _UserToParamedicState extends State<UserToParamedic> {
                                   ),
                                 ),
                                 children: [
+                                  _buildHeaderCell('تغيير'),
                                   _buildHeaderCell('تغيير الدور'),
                                   _buildHeaderCell('دور المستخدم'),
                                   _buildHeaderCell('العمر'),
@@ -545,6 +567,7 @@ class _UserToParamedicState extends State<UserToParamedic> {
                                 Participant participant = entry.value;
                                 return TableRow(
                                   children: [
+                                    _buildChangeCell(index),
                                     _buildRoleDropdown(index, participant.role),
                                     _buildColoredTableCell(getRoleText(participant.role), getRoleColor(participant.role)),
                                     _buildTableCell(calculateAge(participant.birthDate).toString()),
@@ -664,19 +687,44 @@ class _UserToParamedicState extends State<UserToParamedic> {
               value: 3,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('ادمن2'),
+                child: Text('مسؤول التبرع بالدم'),
               ),
             ),
           ],
           onChanged: (int? newValue) async {
             if (newValue != null) {
-              await updateParticipantRole(index, newValue);
               setState(() {
                 participants[index].role = newValue;
+                participants[index].statusChanged = false;
               });
             }
           },
         ),
+      ),
+    );
+  }
+
+  TableCell _buildChangeCell(int index) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: participants[index].statusChanged
+            ? Text(
+                'تم التغيير',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Amiri',
+                  color: Colors.green,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : IconButton(
+                icon: Icon(Icons.save, color: Color(0xFF071533)),
+                onPressed: () async {
+                  await updateParticipantRole(index, participants[index].role);
+                },
+              ),
       ),
     );
   }
@@ -691,6 +739,7 @@ class Participant {
   final String bloodType;
   final String birthDate;
   int role;
+  bool statusChanged;
 
   Participant({
     required this.id,
@@ -701,6 +750,7 @@ class Participant {
     required this.bloodType,
     required this.birthDate,
     this.role = 0,
+    this.statusChanged = false,
   });
 
   factory Participant.fromJson(Map<String, dynamic> json) {

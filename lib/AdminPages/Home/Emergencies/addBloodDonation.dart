@@ -711,10 +711,12 @@
 
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 import 'package:cytc/UserPages/screen/Emergencies/chooseeLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class BloodRequests extends StatelessWidget {
   @override
@@ -1284,9 +1286,25 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
           ),
           child: AppBar(
             backgroundColor: Color(0xFF071533),
-            actions: [
-              Center(
-                child: Text(
+             actions: [
+              IconButton(
+              icon: Icon(
+                LineAwesomeIcons.angle_right_solid,
+                color: Colors.white,
+                size: 20,
+              ),
+              onPressed: () {
+                Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => AdminBar(userId: '', userRole:'')
+                          )
+                          );
+              } // Show dialog directly
+            ),
+            ],
+            title:Center(
+              child:Text(
                   '(إضافة حالة طوارئ جديدة (طلب وحدات دم',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -1296,9 +1314,7 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SizedBox(width: 10),
-            ],
+            ),
             leading: IconButton(
               icon: Icon(
                 Icons.add,

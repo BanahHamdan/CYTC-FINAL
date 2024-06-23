@@ -79,7 +79,6 @@ class _WelcomePageState extends State<WelcomePage>
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
       // Get.to(() => AdminBar(userId: '', userRole: '',));
       // Get.to(() => InterestsPage(userId: '',));
-      // Get.to(() => BloodAdminHomePage(userId: '',));
     });
   }
 

@@ -269,7 +269,7 @@ class _AdminBarState extends State<AdminBar> {
   }
 
   Widget _getPage(int index) {
-    switch (index) {
+    switch (index) { 
       case 0:
         return CalendarPage(userId: widget.userId);
       case 1:
@@ -279,7 +279,7 @@ class _AdminBarState extends State<AdminBar> {
       case 3:
         // return Activities(userId: widget.userId);
       case 4:
-        return AdminHomePage(userId: widget.userId,  child: Text(''),);
+        return AdminHome(userId: widget.userId,  child: Text(''),);
       case 5:
         return ViewTrainingRequestsPage();
       case 6:
@@ -293,7 +293,7 @@ class _AdminBarState extends State<AdminBar> {
       case 10:
         return UserToParamedic();
       default:
-        return AdminHomePage(userId: widget.userId, child: Text(''),);
+        return AdminHome(userId: widget.userId, child: Text(''),);
     }
   }
 

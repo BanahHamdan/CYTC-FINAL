@@ -147,15 +147,15 @@
 
 //   void _chooseVolunteerManually() {
 //     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (context) => VolunteerOfTheMonth(
-//           onSelected: (volunteer) {
-//             setState(() {
-//               selectedVolunteer = volunteer;
-//             });
-//           },
-//         ),
-//       ),
+      // MaterialPageRoute(
+      //   builder: (context) => VolunteerOfTheMonth(
+      //     onSelected: (volunteer) {
+      //       setState(() {
+      //         selectedVolunteer = volunteer;
+      //       });
+      //     },
+      //   ),
+      // ),
 //     );
 //   }
 
@@ -650,12 +650,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'VolunteerOfTheMonth.dart';
 
 class AdminHomePage extends StatelessWidget {
-  final String userId;
-  final Widget child;
-
-  const AdminHomePage({Key? key, required this.userId, required this.child})
-      : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -665,7 +659,8 @@ class AdminHomePage extends StatelessWidget {
         fontFamily: 'Amiri',
         textTheme: TextTheme(),
       ),
-      home: AdminHome(),
+      home: AdminHome(userId: '',
+      child: Text(''),),
     );
   }
 }
@@ -673,6 +668,12 @@ class AdminHomePage extends StatelessWidget {
 class AdminHome extends StatefulWidget {
   @override
   _AdminHomePageState createState() => _AdminHomePageState();
+
+    final String userId;
+  final Widget child;
+
+  const AdminHome({Key? key, required this.userId, required this.child})
+      : super(key: key);
 }
 
 class _AdminHomePageState extends State<AdminHome> {

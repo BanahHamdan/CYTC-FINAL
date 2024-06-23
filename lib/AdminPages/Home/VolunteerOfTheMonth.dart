@@ -52,7 +52,7 @@
 //           ),
 //           child: AppBar(
 //             backgroundColor: Color(0xFF071533),
-//             actions:[ 
+//             actions:[
 //               Align(
 //                 alignment: Alignment.centerRight,
 //              child: Text(
@@ -221,10 +221,11 @@
 //   });
 // }
 
-
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class VolunteerOfTheMonth extends StatelessWidget {
   final Function(Volunteer) onSelected;
@@ -265,7 +266,7 @@ class VolunteerOfTheMonth extends StatelessWidget {
         ),
       ),
       home: VolunteerOfTheMonthPage(
-          volunteers: volunteers, onSelected: onSelected),
+          volunteers: volunteers, onSelected: onSelected,),
     );
   }
 }
@@ -273,8 +274,7 @@ class VolunteerOfTheMonth extends StatelessWidget {
 class VolunteerOfTheMonthPage extends StatefulWidget {
   final List<Volunteer> volunteers;
   final Function(Volunteer) onSelected;
-
-  VolunteerOfTheMonthPage({required this.volunteers, required this.onSelected});
+  VolunteerOfTheMonthPage({required this.volunteers, required this.onSelected,});
 
   @override
   _VolunteerOfTheMonthPageState createState() =>
@@ -297,21 +297,34 @@ class _VolunteerOfTheMonthPageState extends State<VolunteerOfTheMonthPage> {
           child: AppBar(
             backgroundColor: Color(0xFF071533),
             actions: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'قم باختيار متطوع الشهر المثالي',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontFamily: 'Amiri',
-                    fontSize: 20,
+              IconButton(
+                  icon: Icon(
+                    LineAwesomeIcons.angle_right_solid,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                    size: 20,
                   ),
-                ),
-              ),
-              SizedBox(width: 15),
+                  onPressed: () {
+                    Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => AdminBar(userId: '', userRole:'')
+                          )
+                          );
+                  } // Show dialog directly
+                  ),
             ],
+            title: Center(
+              child:Text(
+              'قم باختيار متطوع الشهر المثالي',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontFamily: 'Amiri',
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           ),
         ),
       ),
@@ -368,7 +381,8 @@ class _VolunteerOfTheMonthPageState extends State<VolunteerOfTheMonthPage> {
                     if (selectedVolunteerIndex != null) {
                       widget.onSelected(
                           widget.volunteers[selectedVolunteerIndex!]);
-                      Navigator.pop(context, widget.volunteers[selectedVolunteerIndex!]);
+                      Navigator.pop(
+                          context, widget.volunteers[selectedVolunteerIndex!]);
                     }
                   },
                   style: ElevatedButton.styleFrom(

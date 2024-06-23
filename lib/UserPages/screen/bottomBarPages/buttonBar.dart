@@ -117,12 +117,12 @@
 //                     child: IconButton(
 //                       icon: Icon(Icons.notifications, color: Color(0xFF071533), size: 20),
 //                       onPressed: () {
-//                       Navigator.push(
-//                         context, 
-//                         MaterialPageRoute(
-//                           builder: (context) => NotificationPage()
-//                           )
-//                           );
+                      // Navigator.push(
+                      //   context, 
+                      //   MaterialPageRoute(
+                      //     builder: (context) => NotificationPage()
+                      //     )
+                      //     );
 //                       },
 //                       padding: EdgeInsets.zero,
 //                       constraints: BoxConstraints(),
@@ -274,7 +274,7 @@
 
 
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
 import 'package:cytc/UserPages/Home/notification.dart';
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
@@ -310,6 +310,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
+    _getPage(_selectedIndex);
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -325,7 +326,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
       isSearchBarVisible = !isSearchBarVisible;
       isSearchBarVisible ? _animationController.forward() : _animationController.reverse();
     });
-  }
+  } 
 
   void _onItemTapped(int index) {
     setState(() {
@@ -333,25 +334,52 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
     });
   }
 
-  Widget _getPage(int index) {
-    switch (index) {
-      case 0:
-        return CalendarPage(userId: widget.userId,);
-      case 1:
-        return ChatPage(userId: widget.userId, userRole: widget.userRole,);
-      case 2:
-        return UserPostsPage(userId: widget.userId);
-      case 3:
-        return Activities(userId: widget.userId, userRole: widget.userRole,);
-      case 4:
-        return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
-      default:
-        return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
-    }
+Widget _getPage(int index) {
+  switch (index) {
+    case 0:
+      return CalendarPage(userId: widget.userId,);
+    case 1:
+      return ChatPage(userId: widget.userId, userRole: widget.userRole,);
+    case 2:
+      return UserPostsPage(userId: widget.userId);
+    case 3:
+      return Activities(userId: widget.userId, userRole: widget.userRole,);
+    case 4:
+      return HomeTest(userId: widget.userId, userRole: widget.userRole,);
+    default:
+       return HomeTest(userId: widget.userId, userRole: widget.userRole,); 
   }
+}
+
+
+  // Widget _getPage(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return CalendarPage(userId: widget.userId,);
+  //     case 1:
+  //       return ChatPage(userId: widget.userId, userRole: widget.userRole,);
+  //     case 2:
+  //       return UserPostsPage(userId: widget.userId);
+  //     case 3:
+  //       return Activities(userId: widget.userId, userRole: widget.userRole,);
+  //     case 4:
+  //       return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
+  //     default:
+  //       return HomeTestGrey(userId: widget.userId, userRole: widget.userRole,);
+  //   }
+  // }
 
   bool isMobile(BuildContext context) {
     return MediaQuery.of(context).size.width < 700;
+  }
+
+Future<void> _launchFacebookPage() async {
+    const url = 'https://www.facebook.com/cytc.nablus'; // Replace with your Facebook page URL
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -498,7 +526,7 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'بانه خالد حمدان',
+                        'الملف الشخصي',
                         style: TextStyle(color: Color(0xFF071533), fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Amiri'),
                       ),
                     ],
@@ -508,10 +536,16 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId, userRole: widget.userRole,)));
                     },
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                    child: Image.asset(
+                      // ("assets/gif/profile.gif"), // Replace with your image path
+                      ("assets/homePage/user2.png"),
+                      width: 50,
+                      height: 50,
                     ),
+                    // child: CircleAvatar(
+                    //   radius: 30,
+                    //   backgroundImage: AssetImage('assets/gif/profile.gif'), // Replace with your image path
+                    // ),
                   ),
                 ],
               ),
@@ -531,6 +565,11 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId, userRole: widget.userRole))),  // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
             trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+          ),
+          ListTile(
+            onTap: _launchFacebookPage, // Launch the Facebook page URL
+            title: Text('صفحتنا على الفيسبوك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            trailing: Icon(Icons.facebook, color: Color(0xFFffe145)),
           ),
           ListTile(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId))), // Add onTap functionality for logout
@@ -561,32 +600,32 @@ class _BarState extends State<bar> with SingleTickerProviderStateMixin {
   Widget _buildSideNavigationBar() {
     return Container(
       width: 60,
-      color: Color(0xFF071533),
+      color: Color(0xFF071533).withOpacity(0.1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           IconButton(
-            icon: Icon(LineAwesomeIcons.calendar_alt, color: Colors.white),
-            onPressed: () => _onItemTapped(0),
+            icon: Icon(Icons.home, color: Color(0xFF071533)),
+            onPressed: () => _onItemTapped(4),
           ),
           IconButton(
-            icon: Icon(LineAwesomeIcons.comment_dots_solid, color: Colors.white),
-            onPressed: () => _onItemTapped(1),
-          ),
-          IconButton(
-            icon: Icon(LineAwesomeIcons.trophy_solid, color: Colors.white),
-            onPressed: () => _onItemTapped(2),
-          ),
-          IconButton(
-            icon: Icon(Icons.group_add, color: Colors.white),
+            icon: Icon(Icons.group_add, color: Color(0xFF071533)),
             onPressed: () => _onItemTapped(3),
           ),
           IconButton(
-            icon: Icon(Icons.home, color: Colors.white),
-            onPressed: () => _onItemTapped(4),
+            icon: Icon(LineAwesomeIcons.trophy_solid, color: Color(0xFF071533)),
+            onPressed: () => _onItemTapped(2),
+          ),
+          IconButton(
+            icon: Icon(LineAwesomeIcons.comment_dots_solid, color: Color(0xFF071533)),
+            onPressed: () => _onItemTapped(1),
+          ),IconButton(
+            icon: Icon(LineAwesomeIcons.calendar_alt, color: Color(0xFF071533)),
+            onPressed: () => _onItemTapped(0),
           ),
         ],
       ),
     );
   }
+  
 }
