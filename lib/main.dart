@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
+import 'package:cytc/BloodAdminPages/BloodAdminHome.dart';
 import 'package:cytc/UserPages/Home/notification.dart';
+import 'package:cytc/UserPages/interests.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+import 'package:cytc/main2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async'; 
 import 'package:firebase_core/firebase_core.dart';
+
+import 'UserPages/screen/auth/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +78,8 @@ class _WelcomePageState extends State<WelcomePage>
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
       // Get.to(() => AdminBar(userId: '', userRole: '',));
-      // Get.to(() => NotificationPage());
+      // Get.to(() => InterestsPage(userId: '',));
+      // Get.to(() => BloodAdminHomePage(userId: '',));
     });
   }
 

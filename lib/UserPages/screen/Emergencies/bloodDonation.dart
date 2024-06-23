@@ -15,13 +15,15 @@ class BloodDonationPage extends StatefulWidget {
 
   final String userId;
   final String userRole;
-  const BloodDonationPage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const BloodDonationPage(
+      {Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 }
 
 class _BloodDonationPageState extends State<BloodDonationPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Color?> _colorTween; 
+  late Animation<Color?> _colorTween;
 
   @override
   void initState() {
@@ -93,7 +95,7 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                     size: 18,
                   ),
                 ),
-              ), 
+              ),
             ],
           ),
           content: Text(
@@ -117,28 +119,30 @@ class _BloodDonationPageState extends State<BloodDonationPage>
         preferredSize: Size.fromHeight(35.0),
         // child: ClipPath(
         //   clipper: CustomAppBarClipper(),
-          child: AppBar(
-            backgroundColor: Color(0xFF071533).withOpacity(0.1),
-            elevation: 0, 
-            leading: Builder(
-              builder: (context) {
-                return IconButton(
-                  icon: Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                );
-              },
-            ), 
-            actions: [
-              IconButton(
-                icon: Icon(LineAwesomeIcons.angle_right_solid, color: Color(0xFF071533)),
+        child: AppBar(
+          backgroundColor: Color(0xFF071533).withOpacity(0.1),
+          elevation: 0,
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                icon:
+                    Icon(LineAwesomeIcons.bars_solid, color: Color(0xFF071533)),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Scaffold.of(context).openDrawer();
                 },
-              ),
-            ],
+              );
+            },
           ),
+          actions: [
+            IconButton(
+              icon: Icon(LineAwesomeIcons.angle_right_solid,
+                  color: Color(0xFF071533)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
         // ),
       ),
       backgroundColor: Colors.white,
@@ -300,10 +304,10 @@ class _BloodDonationPageState extends State<BloodDonationPage>
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _showLastDonationDateDialog(context);
+                // _showLastDonationDateDialog(context);
               },
               child: Text(
-                'اعرف تاريخ اخر مرة تبرعت بها بالدم',
+                'سأقوم بالتبرع',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Amiri',
@@ -322,7 +326,39 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 10,
+            ),
+/////////////////////////////////////////////////////////////////////////////
+            TextButton(
+              onPressed: () {
+                _showLastDonationDateDialog(context);
+              },
+              child: Text(
+                'اعرف تاريخ اخر مرة تبرعت بها بالدم',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Amiri',
+                  color: Color(0xFF071533),
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              // style: ElevatedButton.styleFrom(
+              //   backgroundColor: Color(0xFF071533),
+              //   padding: EdgeInsets.all(15),
+              //   textStyle: TextStyle(
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(
+              //         15.0), // Adjust the radius as needed
+              //   ),
+            //   ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+//////////////////////////////////////////////////////////////////////
           ],
         ),
       ),
@@ -349,18 +385,28 @@ class _BloodDonationPageState extends State<BloodDonationPage>
                     children: [
                       Text(
                         'بانه خالد حمدان',
-                        style: TextStyle(color: Color(0xFF071533), fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Amiri'),
+                        style: TextStyle(
+                            color: Color(0xFF071533),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'Amiri'),
                       ),
                     ],
                   ),
                   SizedBox(width: 16.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.userId,userRole: widget.userRole)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                  userId: widget.userId,
+                                  userRole: widget.userRole)));
                     },
                     child: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/banah.jpg'), // Replace with your image path
+                      backgroundImage: AssetImage(
+                          'assets/banah.jpg'), // Replace with your image path
                     ),
                   ),
                 ],
@@ -368,23 +414,66 @@ class _BloodDonationPageState extends State<BloodDonationPage>
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => bar(userId: widget.userId, userRole: widget.userId,))),
-            title: Text('الرئيسية', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => bar(
+                          userId: widget.userId,
+                          userRole: widget.userId,
+                        ))),
+            title: Text('الرئيسية',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => universityTrainingPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
-            title: Text('تقديم طلب تدريب للخريجين', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.graduation_cap_solid, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => universityTrainingPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('تقديم طلب تدريب للخريجين',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
+                color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestionsPage(userId: widget.userId,userRole: widget.userRole))), // Add onTap functionality
-            title: Text('شاركنا باقتراحاتك وافكارك', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
-            trailing: Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SuggestionsPage(
+                        userId: widget.userId,
+                        userRole: widget.userRole))), // Add onTap functionality
+            title: Text('شاركنا باقتراحاتك وافكارك',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
+            trailing:
+                Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
-            title: Text('تسجيل خروج', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', fontSize: 16, color: Color(0xFF071533))),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(
+                          userId: widget.userId,
+                        ))), // Add onTap functionality for logout
+            title: Text('تسجيل خروج',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontFamily: 'Amiri',
+                    fontSize: 16,
+                    color: Color(0xFF071533))),
             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
           ),
         ],

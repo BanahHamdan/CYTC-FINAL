@@ -10,7 +10,7 @@
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 // class HomeTestGrey extends StatelessWidget {
-  
+
 //   final String userId;
 //   final String userRole;
 //   const HomeTestGrey({Key? key, required this.userId, required this.userRole}) : super(key: key);
@@ -40,8 +40,6 @@
 //   bool isSearchBarVisible = false;
 //   late AnimationController _animationController;
 //   late Animation<double> _animation;
-
-
 
 //   @override
 //   void initState() {
@@ -85,7 +83,7 @@
 //   const HomePage({Key? key, required this.userId, required userRole}) : super(key: key);
 //   @override
 //   _HomePageState createState() => _HomePageState();
-  
+
 // }
 
 // class _HomePageState extends State<HomePage> {
@@ -678,7 +676,6 @@
 //   );
 // }
 
-
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
@@ -694,7 +691,8 @@ class HomeTestGrey extends StatelessWidget {
   final String userId;
   final String userRole;
 
-  const HomeTestGrey({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const HomeTestGrey({Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -709,13 +707,15 @@ class HomeTest extends StatefulWidget {
   final String userId;
   final String userRole;
 
-  const HomeTest({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const HomeTest({Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 
   @override
   _HomeTestState createState() => _HomeTestState();
 }
 
-class _HomeTestState extends State<HomeTest> with SingleTickerProviderStateMixin {
+class _HomeTestState extends State<HomeTest>
+    with SingleTickerProviderStateMixin {
   TextEditingController textEditingController = TextEditingController();
   bool isSearchBarVisible = false;
   late AnimationController _animationController;
@@ -761,7 +761,8 @@ class HomePage extends StatefulWidget {
   final String userId;
   final String userRole;
 
-  const HomePage({Key? key, required this.userId, required this.userRole}) : super(key: key);
+  const HomePage({Key? key, required this.userId, required this.userRole})
+      : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -779,16 +780,21 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             Container(
-              height: 240, // Adjust height as needed to accommodate image and text
+              height:
+                  240, // Adjust height as needed to accommodate image and text
               color: Colors.white,
-              padding: EdgeInsets.only(top: 0.99, bottom: 40), // Adjust padding as needed
+              padding: EdgeInsets.only(
+                  top: 0.99, bottom: 40), // Adjust padding as needed
               child: CarouselSlider(
                 items: [
-                  _buildSliderItem("assets/homePage/slider10.jpg", "نشاط رقم 1"),
-                  _buildSliderItem("assets/homePage/slider1.jpg", "حفل تخريج طلاب دورة الاسعاف المتقدم"),
+                  _buildSliderItem(
+                      "assets/homePage/slider10.jpg", "نشاط رقم 1"),
+                  _buildSliderItem("assets/homePage/slider1.jpg",
+                      "حفل تخريج طلاب دورة الاسعاف المتقدم"),
                   _buildSliderItem("assets/homePage/slider8.jpg", "نشاط رقم 3"),
                   _buildSliderItem("assets/homePage/slider6.jpg", "نشاط رقم 4"),
-                  _buildSliderItem("assets/homePage/slider7.jpg", "مهرجان الربيع"),
+                  _buildSliderItem(
+                      "assets/homePage/slider7.jpg", "مهرجان الربيع"),
                 ],
                 options: CarouselOptions(
                   height: 240.0, // Adjusted height
@@ -804,7 +810,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               margin: EdgeInsets.only(top: 205),
-              padding: EdgeInsets.only(bottom: 0, top: 0), // Adjust padding as needed
+              padding: EdgeInsets.only(
+                  bottom: 0, top: 0), // Adjust padding as needed
               decoration: BoxDecoration(
                 color: Colors.white, // Rounded container color
                 borderRadius: BorderRadius.only(
@@ -914,11 +921,14 @@ class _HomePageState extends State<HomePage> {
               'assets/homePage/ambulance_icon.png',
               () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ParamedicsPage(userId: widget.userId, userRole: widget.userRole)),
+                MaterialPageRoute(
+                    builder: (context) => ParamedicsPage(
+                        userId: widget.userId, userRole: widget.userRole)),
               ),
             ),
           ),
-        if (!showSkillsNeeded) Expanded(child: SizedBox()), // Placeholder to maintain structure
+        if (!showSkillsNeeded)
+          Expanded(child: SizedBox()), // Placeholder to maintain structure
         if (showBloodDonation)
           Expanded(
             child: _buildCategoryCard(
@@ -926,11 +936,14 @@ class _HomePageState extends State<HomePage> {
               'assets/homePage/bloodBag_icon.png',
               () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BloodDonationPage(userId: widget.userId, userRole: widget.userRole)),
+                MaterialPageRoute(
+                    builder: (context) => BloodDonationPage(
+                        userId: widget.userId, userRole: widget.userRole)),
               ),
             ),
           ),
-        if (!showBloodDonation) Expanded(child: SizedBox()), // Placeholder to maintain structure
+        if (!showBloodDonation)
+          Expanded(child: SizedBox()), // Placeholder to maintain structure
       ],
     );
   }
@@ -960,7 +973,8 @@ class _HomePageState extends State<HomePage> {
         title: 'متطوع الشهر المثالي',
         subtitle: 'بانه خالد حمدان',
         imagePath: 'assets/banah.jpg', // Replace with your image asset
-        frontText: 'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
+        frontText:
+            'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر وكان الاكثر نشاطا وتفاعلا معنا في المركز. يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
       ),
     );
   }
@@ -988,7 +1002,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: 10),
         Container(
           width: 300,
-          height: 80,
+          height: 130,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -1008,24 +1022,30 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Amiri',
+                    Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Text(
+                        'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          // fontWeight: FontWeight.bold,
+                          fontFamily: 'Amiri',
+                        ),
                       ),
                     ),
                     SizedBox(width: 17),
                   ],
                 ),
-                Text(
-                  'مركز تدريب الشباب المجتمعي، هو مركز يهتم بتطوير الخ الخ الخ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Amiri',
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'مركز تدريب الشباب المجتمعي، هو مركز يهتم بتطوير مهارات الشباب القيادية والمجتمعية, لخلق جيل بناء قادر على افادة البيئة المحيطة به.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Amiri',
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -1069,7 +1089,7 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(
                   builder: (context) => MapPageHome(
                     destination: LatLng(32.2238, 35.2613),
-                    userId: widget.userId, 
+                    userId: widget.userId,
                     userRole: widget.userRole,
                   ),
                 ),
@@ -1220,7 +1240,8 @@ Widget _buildCategoryCard(String title, String imagePath, Function onTap) {
             SizedBox(height: 10),
             Text(
               title,
-              style: TextStyle(fontSize: 16, color: Colors.white, fontFamily: 'Amiri'),
+              style: TextStyle(
+                  fontSize: 16, color: Colors.white, fontFamily: 'Amiri'),
             ),
           ],
         ),
@@ -1234,7 +1255,8 @@ class BackgroundClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height * 0.3);
-    path.quadraticBezierTo(size.width / 2, size.height / 2, size.width, size.height * 0.3);
+    path.quadraticBezierTo(
+        size.width / 2, size.height / 2, size.width, size.height * 0.3);
     path.lineTo(size.width, 0);
     path.close();
     return path;

@@ -157,7 +157,7 @@ class _ActivitiesState extends State<Activities> {
                 _buildCategoryCard(
                   '     الانشطة\nوالدورات',
                   'Get your dream job here this week',
-                  'assets/homePage/activities.jpg',
+                  'assets/homePage/slider10.jpg',
                   () {
                     Navigator.push(
                       context,
@@ -168,7 +168,7 @@ class _ActivitiesState extends State<Activities> {
                 _buildCategoryCard(
                   '     حملاتنا\nالتطوعية',
                   'Don\'t miss out on the events',
-                  'assets/homePage/campaigns.jpg',
+                  'assets/homePage/campaignss.jpg',
                   () {
                     Navigator.push(
                       context,
@@ -179,7 +179,7 @@ class _ActivitiesState extends State<Activities> {
                 _buildCategoryCard(
                   '     المهرجانات\nوالاحتفالات',
                   'Learn new skills with our courses',
-                  'assets/homePage/celebration.jpg',
+                  'assets/homePage/fest2.jpg',
                   () {
                     Navigator.push(
                       context,
@@ -219,7 +219,7 @@ class _ActivitiesState extends State<Activities> {
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color(0xFF071533).withOpacity(0.3), // Overlay color
+              color: Color(0xFF071533).withOpacity(0.5), // Overlay color
             ),
             child: Align(
               alignment: Alignment.topRight,
@@ -227,7 +227,7 @@ class _ActivitiesState extends State<Activities> {
                 title,
                 style: TextStyle(
                   fontFamily: 'Amiri',
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

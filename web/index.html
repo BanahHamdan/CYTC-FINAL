@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head> 
+
+  <script type="application/javascript" src="/assets/packages/flutter_inappwebview_web/assets/web/web_support.js" defer></script>
+
+
   <!-- for map  -->
   <meta charset="UTF-8"> 
     <title>Your Flutter App</title>
@@ -43,8 +47,14 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
+    // var serviceWorkerVersion = null;//////////////
+    const serviceWorkerVersion = null;
   </script>
+
+<script type="text/javascript">
+  window.flutterWebRenderer = "html";
+</script>
+
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
@@ -68,5 +78,10 @@
       });
     });
   </script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
 </body>
 </html>
+
+
+

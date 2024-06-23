@@ -333,6 +333,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../../../main2.dart';
 import '../bottomBarPages/buttonBar.dart';
 //import '../../AdminPages/screen/AdminBar.dart'; // Import the AdminBar page
 
@@ -461,7 +462,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => main2(userId: widget.userId,)),
+                                );
+                          },
                           child: Icon(
                             LineAwesomeIcons.angle_right_solid,
                             color: Color(0xFF071533),
