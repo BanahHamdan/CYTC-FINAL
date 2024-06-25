@@ -428,7 +428,7 @@ Future<void> _launchFacebookPage() async {
                       Navigator.push(
                         context, 
                         MaterialPageRoute(
-                          builder: (context) => NotificationPage()
+                          builder: (context) => NotificationPage(userId: widget.userId,)
                           )
                           );
                       },

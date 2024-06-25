@@ -8,8 +8,6 @@ import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Sugg
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class ParamedicsPage extends StatefulWidget {

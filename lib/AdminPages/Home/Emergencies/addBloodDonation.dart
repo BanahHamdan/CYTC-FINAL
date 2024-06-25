@@ -1,16 +1,18 @@
-// // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields
+// // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+// import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 // import 'package:cytc/UserPages/screen/Emergencies/chooseeLocation.dart';
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 // class BloodRequests extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
+//       theme: ThemeData( 
 //         primaryColor: Color(0xFF071533),
 //         fontFamily: 'Amiri',
 //         textTheme: TextTheme(
@@ -33,6 +35,7 @@
 
 //   String? _hospitalName;
 //   String? _bloodType;
+//   String? _notificationType;
 //   int? _unitsRequired;
 //   bool _locationChosen = false;
 //   Map<int, bool> savedRequests = {};
@@ -46,6 +49,7 @@
 //         RescueRequest(
 //           hospitalName: _hospitalName!,
 //           bloodType: _bloodType!,
+//           notificationType: _notificationType!,
 //           unitsRequired: _unitsRequired!,
 //           announcementDate: DateTime.now(),
 //           announcementTime: TimeOfDay.now(),
@@ -59,6 +63,7 @@
 //       rescueRequests[index] = RescueRequest(
 //         hospitalName: _hospitalName!,
 //         bloodType: _bloodType!,
+//         notificationType: _notificationType!,
 //         unitsRequired: _unitsRequired!,
 //         announcementDate: rescueRequests[index].announcementDate,
 //         announcementTime: rescueRequests[index].announcementTime,
@@ -77,10 +82,12 @@
 //       _hospitalNameController.text = request.hospitalName;
 //       _unitsRequiredController.text = request.unitsRequired.toString();
 //       _bloodType = request.bloodType;
+//       _notificationType = request.notificationType;
 //     } else {
 //       _hospitalNameController.clear();
 //       _unitsRequiredController.clear();
 //       _bloodType = null;
+//       _notificationType = null;
 //     }
 
 //     showDialog(
@@ -313,6 +320,181 @@
 //                   iconSize: 24,
 //                   isExpanded: true,
 //                 ),
+//                 SizedBox(height: 12),
+//                 DropdownButtonFormField<String>(
+//                   value: _notificationType,
+//                   decoration: InputDecoration(
+//                     hintText: 'تحديد الاشعارات',
+//                     hintStyle: TextStyle(
+//                       color: Color(0xFF071533),
+//                       fontSize: 12,
+//                       fontFamily: 'Amiri',
+//                     ),
+//                     focusedBorder: UnderlineInputBorder(
+//                       borderSide: BorderSide(color: Color(0xFFffe145)),
+//                     ),
+//                   ),
+//                   style: TextStyle(
+//                     color: Color(0xFF071533),
+//                     fontSize: 12,
+//                     fontFamily: 'Amiri',
+//                   ),
+//                   items: [
+//                     DropdownMenuItem(
+//                       value: 'A+',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'A+',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'A-',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'A-',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'B+',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'B+',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'B-',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'B-',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'AB+',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'AB+',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'AB-',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'AB-',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'O+',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'O+',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'O-',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'O-',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     DropdownMenuItem(
+//                       value: 'الكل',
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: [
+//                           Text(
+//                             'الكل',
+//                             style: TextStyle(
+//                               color: Color(0xFF071533),
+//                               fontSize: 12,
+//                               fontFamily: 'Amiri',
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                   onChanged: (value) {
+//                     setState(() {
+//                       _notificationType = value;
+//                     });
+//                   },
+//                   validator: (value) =>
+//                       value == null ? 'يرجى اختيار تحديد الاشعارات' : null,
+//                   iconSize: 24,
+//                   isExpanded: true,
+//                 ),
 //               ],
 //             ),
 //           ),
@@ -393,9 +575,25 @@
 //           ),
 //           child: AppBar(
 //             backgroundColor: Color(0xFF071533),
-//             actions: [
-//               Center(
-//                 child: Text(
+//              actions: [
+//               IconButton(
+//               icon: Icon(
+//                 LineAwesomeIcons.angle_right_solid,
+//                 color: Colors.white,
+//                 size: 20,
+//               ),
+//               onPressed: () {
+//                 Navigator.push(
+//                         context, 
+//                         MaterialPageRoute(
+//                           builder: (context) => AdminBar(userId: '', userRole:'')
+//                           )
+//                           );
+//               } // Show dialog directly
+//             ),
+//             ],
+//             title:Center(
+//               child:Text(
 //                   '(إضافة حالة طوارئ جديدة (طلب وحدات دم',
 //                   textAlign: TextAlign.center,
 //                   style: TextStyle(
@@ -405,9 +603,7 @@
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
-//               ),
-//               SizedBox(width: 10),
-//             ],
+//             ),
 //             leading: IconButton(
 //               icon: Icon(
 //                 Icons.add,
@@ -434,6 +630,7 @@
 //                   4: FlexColumnWidth(1),
 //                   5: FlexColumnWidth(1),
 //                   6: FlexColumnWidth(1),
+//                   7: FlexColumnWidth(1),
 //                 },
 //                 children: [
 //                   TableRow(
@@ -474,6 +671,21 @@
 //                           padding: const EdgeInsets.all(8.0),
 //                           child: Text(
 //                             'عدد وحدات الدم المطلوبة',
+//                             textAlign: TextAlign.center,
+//                             style: TextStyle(
+//                               fontFamily: 'Amiri',
+//                               fontWeight: FontWeight.bold,
+//                               color: Color(0xFF071533),
+//                               fontSize: 14,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       TableCell(
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: Text(
+//                             'تحديد الاشعارات',
 //                             textAlign: TextAlign.center,
 //                             style: TextStyle(
 //                               fontFamily: 'Amiri',
@@ -631,6 +843,19 @@
 //                           child: Padding(
 //                             padding: const EdgeInsets.all(8.0),
 //                             child: Text(
+//                               request.notificationType,
+//                               textAlign: TextAlign.center,
+//                               style: TextStyle(
+//                                   fontSize: 12,
+//                                   color: Color(0xFF071533),
+//                                   fontFamily: 'Amiri'),
+//                             ),
+//                           ),
+//                         ),
+//                         TableCell(
+//                           child: Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Text(
 //                               request.bloodType,
 //                               textAlign: TextAlign.center,
 //                               style: TextStyle(
@@ -694,28 +919,31 @@
 // }
 
 // class RescueRequest {
-//   final String hospitalName;
-//   final String bloodType;
-//   final int unitsRequired;
-//   final DateTime announcementDate;
-//   final TimeOfDay announcementTime;
+//   String hospitalName;
+//   String bloodType;
+//   String notificationType;
+//   int unitsRequired;
+//   DateTime announcementDate;
+//   TimeOfDay announcementTime;
+
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 //   RescueRequest({
 //     required this.hospitalName,
 //     required this.bloodType,
+//     required this.notificationType,
 //     required this.unitsRequired,
 //     required this.announcementDate,
 //     required this.announcementTime,
 //   });
 // }
-
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
-import 'package:cytc/UserPages/screen/Emergencies/chooseeLocation.dart';
+import 'package:cytc/BloodAdminPages/BloodDonatorsInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class BloodRequests extends StatelessWidget {
@@ -743,6 +971,7 @@ class BloodRequestsPage extends StatefulWidget {
 class _BloodRequestsPageState extends State<BloodRequestsPage> {
   final List<RescueRequest> rescueRequests = [];
   final _formKey = GlobalKey<FormState>();
+  List<User> users = [];
 
   String? _hospitalName;
   String? _bloodType;
@@ -754,32 +983,108 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
   TextEditingController _hospitalNameController = TextEditingController();
   TextEditingController _unitsRequiredController = TextEditingController();
 
-  void _addRescueRequest() {
-    setState(() {
-      rescueRequests.add(
-        RescueRequest(
-          hospitalName: _hospitalName!,
-          bloodType: _bloodType!,
-          notificationType: _notificationType!,
-          unitsRequired: _unitsRequired!,
-          announcementDate: DateTime.now(),
-          announcementTime: TimeOfDay.now(),
-        ),
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsers();
+  }
+
+  Future<void> _fetchUsers() async {
+    final response =
+        await http.get(Uri.parse('http://127.0.0.1:9999/user/all'));
+    print(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      setState(() {
+        users = (jsonDecode(response.body) as List)
+            .map((data) => User.fromJson(data))
+            .toList();
+      });
+    } else {
+      // Handle error
+      print('Failed to fetch users');
+    }
+  }
+
+  Future<void> _saveRescueRequest(RescueRequest request) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:9999/blood-donation/create'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'hospitalName': request.hospitalName,
+        'bloodUnitsRequired': request.unitsRequired,
+        'bloodType': request.bloodType,
+        'date': DateFormat('yyyy-MM-dd').format(request.announcementDate),
+        'time': request.announcementTime.format(context),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Successfully saved the request
+      print('Rescue request saved successfully');
+    } else {
+      // Handle the error
+      print('Failed to save the rescue request');
+    }
+  }
+
+  Future<void> _createNotifications(
+      String bloodType, String title, String description) async {
+    final filteredUsers = users
+        .where((user) =>
+            user.bloodType.toLowerCase() == bloodType.toLowerCase() ||
+            bloodType == 'الكل')
+        .toList();
+
+    for (var user in filteredUsers) {
+      final response = await http.post(
+        Uri.parse('http://localhost:9999/notification/create'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_id': user.id,
+          'title': title,
+          'description': description,
+          'type': 'blood',
+        }),
       );
+
+      if (response.statusCode != 200) {
+        // Handle error
+        print('Failed to create notification for user: ${user.id}');
+      }
+    }
+  }
+
+  void _addRescueRequest() {
+    final newRequest = RescueRequest(
+      hospitalName: _hospitalName!,
+      bloodType: _bloodType!,
+      notificationType: _notificationType!,
+      unitsRequired: _unitsRequired!,
+      announcementDate: DateTime.now(),
+      announcementTime: TimeOfDay.now(),
+    );
+
+    setState(() {
+      rescueRequests.add(newRequest);
     });
   }
 
   void _editRescueRequest(int index) {
+    final updatedRequest = RescueRequest(
+      hospitalName: _hospitalName!,
+      bloodType: _bloodType!,
+      notificationType: _notificationType!,
+      unitsRequired: _unitsRequired!,
+      announcementDate: rescueRequests[index].announcementDate,
+      announcementTime: rescueRequests[index].announcementTime,
+    );
+
     setState(() {
-      rescueRequests[index] = RescueRequest(
-        hospitalName: _hospitalName!,
-        bloodType: _bloodType!,
-        notificationType: _notificationType!,
-        unitsRequired: _unitsRequired!,
-        announcementDate: rescueRequests[index].announcementDate,
-        announcementTime: rescueRequests[index].announcementTime,
-      );
+      rescueRequests[index] = updatedRequest;
     });
+
+    _saveRescueRequest(updatedRequest);
   }
 
   void _deleteRescueRequest(int index) {
@@ -1011,6 +1316,22 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                         children: [
                           Text(
                             'O-',
+                            style: TextStyle(
+                              color: Color(0xFF071533),
+                              fontSize: 12,
+                              fontFamily: 'Amiri',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: 'الكل',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'الكل',
                             style: TextStyle(
                               color: Color(0xFF071533),
                               fontSize: 12,
@@ -1274,6 +1595,13 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
     return now.difference(announcementDateTime).inHours < 1;
   }
 
+  void _showDonorInfo(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BloodDonatorsInfo()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1286,25 +1614,8 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
           ),
           child: AppBar(
             backgroundColor: Color(0xFF071533),
-             actions: [
-              IconButton(
-              icon: Icon(
-                LineAwesomeIcons.angle_right_solid,
-                color: Colors.white,
-                size: 20,
-              ),
-              onPressed: () {
-                Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => AdminBar(userId: '', userRole:'')
-                          )
-                          );
-              } // Show dialog directly
-            ),
-            ],
-            title:Center(
-              child:Text(
+            title: Center(
+                child: Text(
                   '(إضافة حالة طوارئ جديدة (طلب وحدات دم',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -1314,7 +1625,22 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
+            actions: [
+              IconButton(
+              icon: Icon(
+                LineAwesomeIcons.angle_right_solid,
+                color: Colors.white,
+                size: 25,
+              ),
+             onPressed: (){
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminBar(userId: '', userRole: '')));
+              }, // Show dialog directly
             ),
+            ],
             leading: IconButton(
               icon: Icon(
                 Icons.add,
@@ -1342,11 +1668,27 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                   5: FlexColumnWidth(1),
                   6: FlexColumnWidth(1),
                   7: FlexColumnWidth(1),
+                  8: FlexColumnWidth(1),
                 },
                 children: [
                   TableRow(
                     decoration: BoxDecoration(color: Color(0xFFe0e0e0)),
                     children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'معلومات المتبرعين',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Amiri',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF071533),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -1477,6 +1819,25 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                         TableCell(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () => _showDonorInfo(context),
+                              child: Text(
+                                'المعلومات',
+                                style: TextStyle(
+                                  fontFamily: 'Amiri',
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF071533),
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               savedRequests.containsKey(request.hashCode) &&
                                       savedRequests[request.hashCode]!
@@ -1531,6 +1892,12 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                                       setState(() {
                                         savedRequests[request.hashCode] = true;
                                       });
+                                      _saveRescueRequest(request);
+                                      _createNotifications(
+                                        _notificationType!,
+                                        'طلب وحدات دم',
+                                        'يوجد طلب جديد لوحدات دم من فصيلة ${request.bloodType}',
+                                      );
                                     },
                                   ),
                               ],
@@ -1544,9 +1911,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                               request.unitsRequired.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1557,9 +1925,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                               request.notificationType,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1570,9 +1939,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                               request.bloodType,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1583,9 +1953,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                               request.hospitalName,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1596,9 +1967,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                               request.announcementTime.format(context),
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1610,9 +1982,10 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                                   .format(request.announcementDate),
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF071533),
-                                  fontFamily: 'Amiri'),
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                                fontFamily: 'Amiri',
+                              ),
                             ),
                           ),
                         ),
@@ -1645,4 +2018,45 @@ class RescueRequest {
     required this.announcementDate,
     required this.announcementTime,
   });
+}
+
+class User {
+  String id;
+  String email;
+  String username;
+  String phoneNumber;
+  String city;
+  String bloodType;
+  String role;
+  int active;
+  String? birthDate;
+  String? imageUrl;
+
+  User({
+    required this.id,
+    required this.email,
+    required this.username,
+    required this.phoneNumber,
+    required this.city,
+    required this.bloodType,
+    required this.role,
+    required this.active,
+    this.birthDate,
+    this.imageUrl,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['_id'],
+      email: json['email'],
+      username: json['username'],
+      phoneNumber: json['phoneNumber'],
+      city: json['city'],
+      bloodType: json['bloodType'],
+      role: json['role'],
+      active: json['active'],
+      birthDate: json['birthDate'],
+      imageUrl: json['imageUrl'],
+    );
+  }
 }

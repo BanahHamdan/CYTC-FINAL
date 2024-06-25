@@ -570,7 +570,7 @@ class _SuggestionsPageState extends State<SuggestionsPage> {
               },
             ),
             title: Text(
-              'تعرف على الاحتفالات والمهرجانات القادمة',
+              'شاركنا باقتراحاتك لانشطة جديدة',
               style: TextStyle(
                 fontFamily: 'Amiri',
                 fontWeight: FontWeight.bold,

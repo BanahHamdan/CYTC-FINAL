@@ -767,7 +767,7 @@ class _AdminHomePageState extends State<AdminHome> {
               data: personData,
               fillPatternFn: (_, __) => charts.FillPatternType.solid,
               fillColorFn: (PersonEvent personEvent, __) =>
-                  charts.ColorUtil.fromDartColor(Color(0xFFffe145)),
+                  charts.ColorUtil.fromDartColor(Color(0xFFffe145),),
             ),
           ];
           isParticipantsLoading = false;
@@ -880,6 +880,7 @@ class _AdminHomePageState extends State<AdminHome> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFffe145),
+                    fontFamily: 'Amiri',
                   ),
                 ),
                 Image.asset(
@@ -928,6 +929,7 @@ class _AdminHomePageState extends State<AdminHome> {
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                 ),
               ),
               SizedBox(height: 8),
@@ -968,7 +970,8 @@ Widget _buildCardPopularActivities() {
               'الانشطة ذات الاقبال الاكبر',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xFF071533),
+              color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
@@ -987,7 +990,9 @@ Widget _buildCardPopularActivities() {
                       domainAxis: charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
                           labelStyle: charts.TextStyleSpec(
-                            fontSize: 10, // Adjust the font size as needed
+                            // color: Color(0xFF071533),
+                            fontFamily: 'Amiri',
+                            fontSize: 9, // Adjust the font size as needed
                             color: charts.MaterialPalette.black,
                           ),
                           labelRotation: 0, // No rotation
@@ -1085,6 +1090,7 @@ Widget _buildCardPopularActivities() {
                 'قم باختيار متطوع الشهر المثالي',
                 style: TextStyle(
                   color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1097,6 +1103,7 @@ Widget _buildCardPopularActivities() {
                 'طريقة الاختيار',
                 style: TextStyle(
                   color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1110,6 +1117,7 @@ Widget _buildCardPopularActivities() {
                     style: TextStyle(
                       fontSize: 10,
                       color: Color(0xFFE94444),
+        fontFamily: 'Amiri',
                       decoration: TextDecoration.underline,
                     )),
               ),
@@ -1119,6 +1127,7 @@ Widget _buildCardPopularActivities() {
                     style: TextStyle(
                       fontSize: 10,
                       color: Color(0xFFE94444),
+        fontFamily: 'Amiri',
                       decoration: TextDecoration.underline,
                     )),
               ),
@@ -1186,7 +1195,8 @@ Widget _buildCardPopularActivities() {
                     ),
                     child: Text(
                       'تأكيد',
-                      style: TextStyle(fontSize: 10, color: Color(0xFF071533)),
+                      style: TextStyle(fontSize: 10, color: Color(0xFF071533),
+        fontFamily: 'Amiri',),
                     ),
                   ),
                 ],
@@ -1217,6 +1227,7 @@ Widget _buildCardPopularActivities() {
                 'تعريف عن المركز',
                 style: TextStyle(
                   color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1228,7 +1239,8 @@ Widget _buildCardPopularActivities() {
                       controller: controller2,
                       textAlign: TextAlign.right,
                       maxLines: null,
-                      style: TextStyle(color: Color(0xFF071533), fontSize: 10),
+                      style: TextStyle(color: Color(0xFF071533),
+        fontFamily: 'Amiri', fontSize: 10),
                       cursorColor: Color(0xFFffe145),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -1245,6 +1257,8 @@ Widget _buildCardPopularActivities() {
                       controller2.text,
                       style: TextStyle(
                         fontSize: 10,
+                        color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                       ),
                     ),
               Spacer(),
@@ -1264,6 +1278,7 @@ Widget _buildCardPopularActivities() {
                         style: TextStyle(
                           fontSize: 10,
                           color: Colors.white,
+        fontFamily: 'Amiri',
                         )),
                   ),
                   ElevatedButton(
@@ -1283,6 +1298,7 @@ Widget _buildCardPopularActivities() {
                         style: TextStyle(
                           fontSize: 10,
                           color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                         )),
                   ),
                 ],
@@ -1323,6 +1339,7 @@ Widget _buildCardPopularActivities() {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1369,6 +1386,7 @@ Widget _buildCardPopularActivities() {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF071533),
+        fontFamily: 'Amiri',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),

@@ -1,4 +1,4 @@
-// // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 // import 'package:cytc/AdminPages/screen/MenuPages/Activities/events/EventsParticipantsView.dart';
 // import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
@@ -166,7 +166,7 @@
 //   }
 
 //   @override
-//   Widget build(BuildContext context) {
+//   Widget build(BuildContext context) { 
 //     return MaterialApp(
 //       debugShowCheckedModeBanner: false,
 //       theme: ThemeData(
@@ -250,9 +250,8 @@
 //                               5: FlexColumnWidth(1),
 //                               6: FlexColumnWidth(2),
 //                               7: FlexColumnWidth(1),
-//                               8: FlexColumnWidth(1),
-//                               9: FlexColumnWidth(0.9),
-//                               10: FlexColumnWidth(1),
+//                               8: FlexColumnWidth(0.9),
+//                               9: FlexColumnWidth(1),
 //                             },
 //                             children: [
 //                               TableRow(
@@ -266,7 +265,6 @@
 //                                 children: [
 //                                   _buildHeaderCell('معلومات المشاركين'),
 //                                   _buildHeaderCell('المشاركين المسجلين'),
-//                                   _buildHeaderCell('عدد المشاركين'),
 //                                   _buildHeaderCell('العدد الاقصى للمشاركين'),
 //                                   _buildHeaderCell('ظهوره للمستخدم'),
 //                                   _buildHeaderCell('تعديل'),
@@ -290,8 +288,6 @@
 //                                             event.id, context)),
 //                                     _buildTableCell(event.registeredParticipants
 //                                         .toString()),
-//                                     _buildTableCell(
-//                                         event.numberOfParticipants.toString()),
 //                                     _buildTableCell(
 //                                         event.maxParticipants.toString()),
 //                                     _buildTableCell(event.shownToUser
@@ -1004,6 +1000,10 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
   bool isEditing = false;
   int? editingIndex;
   List<String> categories = [];
+  List<String> notificationOptions = [
+    'لجميع المستخدمين',
+    'للمهتمين بهذا النوع من الانشطة فقط'
+  ];
 
   @override
   void initState() {
@@ -1038,6 +1038,8 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
               numberOfParticipants: item['maxParticipants'],
               shownToUser: false,
               isEditing: false,
+              notification: '',
+              participantAgeRange: '',
             );
           })
           .toList()
@@ -1229,10 +1231,12 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                               3: FlexColumnWidth(1),
                               4: FlexColumnWidth(1),
                               5: FlexColumnWidth(1),
-                              6: FlexColumnWidth(2),
+                              6: FlexColumnWidth(1),
                               7: FlexColumnWidth(1),
-                              8: FlexColumnWidth(0.9),
+                              8: FlexColumnWidth(2),
                               9: FlexColumnWidth(1),
+                              10: FlexColumnWidth(0.9),
+                              11: FlexColumnWidth(1),
                             },
                             children: [
                               TableRow(
@@ -1248,9 +1252,11 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                   _buildHeaderCell('المشاركين المسجلين'),
                                   _buildHeaderCell('العدد الاقصى للمشاركين'),
                                   _buildHeaderCell('ظهوره للمستخدم'),
-                                  _buildHeaderCell('تعديل'),
                                   _buildHeaderCell(
                                       'تاريخ بداية وانتهاء النشاط'),
+                                  _buildHeaderCell('وصول الاشعارات'),
+                                  _buildHeaderCell('اعمار المشاركين'),
+                                  _buildHeaderCell('تعديل'),
                                   _buildHeaderCell('الوصف'),
                                   _buildHeaderCell('تصنيف النشاط'),
                                   _buildHeaderCell('اسم النشاط'),
@@ -1274,13 +1280,15 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                                     _buildTableCell(event.shownToUser
                                         ? 'تم إظهاره للمستخدم'
                                         : ''),
-                                    _buildEditDeleteSaveButtons(index),
                                     _buildTableCell(
                                         '${event.startDate.toLocal()}'
                                                 .split(' ')[0] +
                                             ' - ' +
                                             '${event.endDate.toLocal()}'
                                                 .split(' ')[0]),
+                                    _buildTableCell(event.notification),
+                                    _buildTableCell(event.participantAgeRange),
+                                    _buildEditDeleteSaveButtons(index),
                                     _buildTableCell(event.description),
                                     _buildTableCell(event.category),
                                     _buildTableCell(event.name),
@@ -1368,30 +1376,25 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: Color(0xFFffe145),
-                ),
-                onPressed: () {
-                  setState(() {
-                    events[index].isEditing = true;
-                    editingIndex = index;
-                  });
-                  _showEditEventDialog(index, context);
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-                onPressed: () => _deleteEvent(index),
-              ),
-            ],
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: Color(0xFFffe145),
+            ),
+            onPressed: () {
+              setState(() {
+                events[index].isEditing = true;
+                editingIndex = index;
+              });
+              _showEditEventDialog(index, context);
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+            onPressed: () => _deleteEvent(index),
           ),
           if (!events[index].shownToUser)
             IconButton(
@@ -1420,6 +1423,8 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
         TextEditingController endDateController = TextEditingController();
         TextEditingController maxParticipantsController =
             TextEditingController();
+        TextEditingController ageRangeController = TextEditingController();
+        String notification = '';
         String errorMessage = '';
 
         return StatefulBuilder(
@@ -1574,6 +1579,56 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         ),
                       ),
                     ),
+                    DropdownButtonFormField(
+                      items: notificationOptions.map((String option) {
+                        return DropdownMenuItem(
+                          value: option,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              option,
+                              style: TextStyle(
+                                fontFamily: 'Amiri',
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          notification = value.toString();
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'وصول الاشعارات',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
+                      controller: ageRangeController,
+                      decoration: InputDecoration(
+                        hintText: 'اعمار المشاركين',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
                     if (errorMessage.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -1627,19 +1682,31 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         descriptionController.text.isEmpty ||
                         startDateController.text.isEmpty ||
                         endDateController.text.isEmpty ||
-                        maxParticipantsController.text.isEmpty) {
+                        maxParticipantsController.text.isEmpty ||
+                        notification.isEmpty ||
+                        ageRangeController.text.isEmpty) {
                       setState(() {
                         errorMessage = 'يرجى ملء جميع الحقول';
                       });
                     } else {
-                      await _createEvent(
-                        nameController.text,
-                        startDateController.text,
-                        endDateController.text,
-                        descriptionController.text,
-                        int.parse(maxParticipantsController.text),
-                        categoryController.text,
+                      Event newEvent = Event(
+                        id: '',
+                        date: DateTime.parse(startDateController.text),
+                        time: TimeOfDay.now(),
+                        name: nameController.text,
+                        category: categoryController.text,
+                        description: descriptionController.text,
+                        startDate: DateTime.parse(startDateController.text),
+                        endDate: DateTime.parse(endDateController.text),
+                        maxParticipants: int.parse(maxParticipantsController.text),
+                        registeredParticipants: 0,
+                        numberOfParticipants: int.parse(maxParticipantsController.text),
+                        shownToUser: false,
+                        isEditing: false,
+                        notification: notification,
+                        participantAgeRange: ageRangeController.text,
                       );
+                      _addEvent(newEvent);
                       Navigator.of(context).pop();
                     }
                   },
@@ -1669,6 +1736,9 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
             text: event.endDate.toLocal().toString().split(' ')[0]);
         TextEditingController maxParticipantsController =
             TextEditingController(text: event.maxParticipants.toString());
+        TextEditingController ageRangeController =
+            TextEditingController(text: event.participantAgeRange);
+        String notification = event.notification;
         String errorMessage = '';
 
         return StatefulBuilder(
@@ -1826,6 +1896,57 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         ),
                       ),
                     ),
+                    DropdownButtonFormField(
+                      value: notification.isNotEmpty ? notification : null,
+                      items: notificationOptions.map((String option) {
+                        return DropdownMenuItem(
+                          value: option,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              option,
+                              style: TextStyle(
+                                fontFamily: 'Amiri',
+                                fontSize: 12,
+                                color: Color(0xFF071533),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          notification = value.toString();
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'وصول الاشعارات',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      textAlign: TextAlign.end,
+                      cursorColor: Color(0xFFffe145),
+                      controller: ageRangeController,
+                      decoration: InputDecoration(
+                        hintText: 'اعمار المشاركين',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Amiri',
+                          fontSize: 12,
+                          color: Color(0xFF071533),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFffe145)),
+                        ),
+                      ),
+                    ),
                     if (errorMessage.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -1879,7 +2000,9 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                         descriptionController.text.isEmpty ||
                         startDateController.text.isEmpty ||
                         endDateController.text.isEmpty ||
-                        maxParticipantsController.text.isEmpty) {
+                        maxParticipantsController.text.isEmpty ||
+                        notification.isEmpty ||
+                        ageRangeController.text.isEmpty) {
                       setState(() {
                         errorMessage = 'يرجى ملء جميع الحقول';
                       });
@@ -1900,6 +2023,8 @@ class _ViewAddEventsPageState extends State<ViewAddEventsPage> {
                             int.parse(maxParticipantsController.text),
                         shownToUser: event.shownToUser,
                         isEditing: false,
+                        notification: notification,
+                        participantAgeRange: ageRangeController.text,
                       );
                       _editEvent(index, updatedEvent);
                       Navigator.of(context).pop();
@@ -1938,6 +2063,8 @@ class Event {
   int numberOfParticipants;
   bool shownToUser;
   bool isEditing;
+  String notification;
+  String participantAgeRange;
 
   Event({
     required this.id,
@@ -1953,6 +2080,7 @@ class Event {
     required this.numberOfParticipants,
     required this.shownToUser,
     required this.isEditing,
+    required this.notification,
+    required this.participantAgeRange,
   });
 }
-

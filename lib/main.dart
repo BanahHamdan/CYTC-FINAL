@@ -73,12 +73,13 @@ class _WelcomePageState extends State<WelcomePage>
     // Set up the timer to navigate after 10 seconds
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
-      Get.to(() => bar(userId: '123', userRole: '0'));
+      // Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage(userId: ''));
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
-      // Get.to(() => AdminBar(userId: '', userRole: '',));
+      Get.to(() => AdminBar(userId: '', userRole: '',));
       // Get.to(() => InterestsPage(userId: '',));
+      // Get.to(() => BloodAdminHome());
     });
   }
 
