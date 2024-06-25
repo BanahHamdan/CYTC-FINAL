@@ -440,14 +440,14 @@
 //                 ),
 //               );
 //             },
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: Colors.white,
-//               foregroundColor: Color(0xFF071533),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//               side: BorderSide(color: Colors.grey),
-//             ),
+            // style: ElevatedButton.styleFrom(
+            //   backgroundColor: Colors.white,
+            //   foregroundColor: Color(0xFF071533),
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(8),
+            //   ),
+            //   side: BorderSide(color: Colors.grey),
+            // ),
 //             child: Text(
 //               'اذهب للخريطة',
 //               style: TextStyle(
@@ -1009,7 +1009,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: 10),
         Container(
           width: 300,
-          height: 130,
+          height: 210,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -1033,7 +1033,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.only(top: 8),
                       child: Text(
                         'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية',
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 15,
                           // fontWeight: FontWeight.bold,
@@ -1047,7 +1047,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'مركز تدريب الشباب المجتمعي، هو مركز يهتم بتطوير مهارات الشباب القيادية والمجتمعية, لخلق جيل بناء قادر على افادة البيئة المحيطة به.',
+                    'مركز تدريب الشباب المجتمعي هو مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,

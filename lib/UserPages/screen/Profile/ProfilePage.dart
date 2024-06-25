@@ -1,936 +1,9 @@
-// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-// import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
-// import 'package:cytc/UserPages/screen/auth/login.dart';
-// import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
-// import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
-// import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
-// import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:cytc/linkapi.dart';
-
-// class ProfilePage extends StatefulWidget {
-//   final String userId;
-//   final String userRole;
-
-//   const ProfilePage({Key? key, required this.userId, required this.userRole})
-//       : super(key: key);
-
-//   @override
-//   _ProfilePageState createState() => _ProfilePageState();
-// }
-
-// class _ProfilePageState extends State<ProfilePage> {
-//   bool isReportsSelected = false;
-//   bool isSettingsSelected = false;
-
-//   String phoneNumber = '1234567890';
-//   String location = 'نابلس';
-//   String bloodType = 'AB+';
-//   String profileImagePath = 'assets/banah.jpg';
-//   DateTime birthDate = DateTime.now();
-//   String email = '';
-//   String username = ''; // New field for username
-
-//   final ImagePicker _picker = ImagePicker();
-//   final String correctCode = "123456";
-
-//   List events = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchUserData();
-//     fetchUserEvents();
-//   }
-
-//   Future<void> fetchUserData() async {
-//     final response =
-//         await http.get(Uri.parse('${LinkApi.user}/${widget.userId}'));
-
-//     if (response.statusCode == 200) {
-//       final data = json.decode(response.body);
-//       if (data['status']) {
-//         setState(() {
-//           phoneNumber = data['user']['phoneNumber'];
-//           location = data['user']['city'];
-//           bloodType = data['user']['bloodType'];
-//           birthDate = DateTime.parse(data['user']['birthDate']);
-//           email = data['user']['email'];
-//           username = data['user']['username']; // Fetch username
-//         });
-//       } else {
-//         // Handle the case where the API returns a failure status
-//       }
-//     } else {
-//       // Handle the case where the API call fails
-//     }
-//   }
-
-//   Future<void> fetchUserEvents() async {
-//     final response = await http.get(
-//         Uri.parse('http://localhost:9999/event-user/events/${widget.userId}'));
-
-//     if (response.statusCode == 200) {
-//       final data = json.decode(response.body);
-//       if (data['status']) {
-//         setState(() {
-//           events = data['events'];
-//         });
-//       } else {
-//         // Handle the case where the API returns a failure status
-//       }
-//     } else {
-//       // Handle the case where the API call fails
-//     }
-//   }
-
-//   Future<void> editUserData(String field, String newValue) async {
-//     final url = '${LinkApi.editUser}/${widget.userId}';
-//     final headers = {
-//       'Content-Type': 'application/json',
-//     };
-//     final body = json.encode({
-//       field: newValue,
-//     });
-
-//     print('Sending PUT request to $url with body: $body and headers: $headers');
-
-//     final response = await http.put(
-//       Uri.parse(url),
-//       headers: headers,
-//       body: body,
-//     );
-
-//     print('Response status: ${response.statusCode}');
-//     print('Response body: ${response.body}');
-
-//     if (response.statusCode == 200 || response.statusCode == 201) {
-//       final data = json.decode(response.body);
-//       if (data['status']) {
-//         fetchUserData(); // Fetch updated user data
-//       } else {
-//         print('Failed to update user information: ${data['message']}');
-//       }
-//     } else {
-//       print('Failed to update user information');
-//     }
-//   }
-
-//   Future<void> _unsubscribeEvent(String eventId) async {
-//     final url = 'http://localhost:9999/event-user/remove';
-//     final headers = {'Content-Type': 'application/json'};
-//     final body = json.encode({'eventId': eventId, 'userId': widget.userId});
-
-//     final response = await http.post(
-//       Uri.parse(url),
-//       headers: headers,
-//       body: body,
-//     );
-
-//     if (response.statusCode == 200 || response.statusCode == 201) {
-//       final data = json.decode(response.body);
-//       if (data['status']) {
-//         fetchUserEvents(); // Fetch updated events
-//       } else {
-//         print('Failed to unsubscribe from the event: ${data['message']}');
-//       }
-//     } else {
-//       print('Failed to unsubscribe from the event');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         backgroundColor: Color(0xFF071533).withOpacity(0.1),
-//         elevation: 0,
-//         actions: [
-//           IconButton(
-//           icon: Icon(
-//             LineAwesomeIcons.angle_right_solid,
-//             color: Color(0xFF071533),
-//             size: 20,
-//           ),
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         ),
-//         ],
-//         leading: Builder(
-//             builder: (context) {
-//               return IconButton(
-//                 icon: Icon(
-//                   Icons.menu,
-//                   color: Color(0xFF071533),
-//                   size: 20,
-//                 ),
-//                 onPressed: () {
-//                   Scaffold.of(context).openDrawer();
-//                 },
-//               );
-//             },
-//           ),
-//       ),
-//       drawer: _buildDrawer(),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             Stack(
-//               clipBehavior: Clip.none,
-//               children: [
-                // ClipPath(
-                //   clipper: BackgroundClipper(),
-                //   child: Container(
-                //     height: 160,
-                //     color: Color(0xFF071533).withOpacity(0.1),
-                //   ),
-                // ),
-//                 Positioned(
-//                   top: 70,
-//                   left: 0,
-//                   right: 0,
-//                   child: Column(
-//                     children: [
-//                       Stack(
-//                         alignment: Alignment.bottomRight,
-//                         children: [
-//                           CircleAvatar(
-//                             radius: 50,
-//                             backgroundImage: AssetImage(profileImagePath),
-//                           ),
-//                           Positioned(
-//                             right: 0,
-//                             bottom: 0,
-//                             child: GestureDetector(
-//                               onTap: _pickProfileImage,
-//                               child: Container(
-//                                 decoration: BoxDecoration(
-//                                   shape: BoxShape.circle,
-//                                   color: Color(0xFF071533).withOpacity(0.1),
-//                                 ),
-//                                 padding: EdgeInsets.all(4),
-//                                 child: Icon(
-//                                   Icons.edit,
-//                                   color: Colors.grey,
-//                                   size: 20,
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       SizedBox(height: 10),
-//                       Text(
-//                         username, // Display the fetched username
-//                         style: TextStyle(
-//                           fontSize: 20,
-//                           fontWeight: FontWeight.bold,
-//                           color: Color(0xFF071533),
-//                           fontFamily: 'Amiri',
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 80),
-//             Container(
-//               padding: EdgeInsets.symmetric(horizontal: 30.0),
-//               child: Column(
-//                 children: [
-//                   Container(
-//                     decoration: BoxDecoration(
-//                       color: Colors.white,
-//                       borderRadius: BorderRadius.circular(25),
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Colors.black12,
-//                           blurRadius: 10,
-//                           spreadRadius: 5,
-//                         ),
-//                       ],
-//                     ),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                       children: [
-//                         GestureDetector(
-//                           onTap: () {
-//                             setState(() {
-//                               isReportsSelected = true;
-//                               isSettingsSelected = false;
-//                             });
-//                           },
-//                           child: _buildTab('انجازاتي', isReportsSelected),
-//                         ),
-//                         GestureDetector(
-//                           onTap: () {
-//                             setState(() {
-//                               isReportsSelected = false;
-//                               isSettingsSelected = false;
-//                             });
-//                           },
-//                           child: _buildTab('معلوماتي',
-//                               !isReportsSelected && !isSettingsSelected),
-//                         ),
-//                         GestureDetector(
-//                           onTap: () {
-//                             setState(() {
-//                               isSettingsSelected = true;
-//                               isReportsSelected = false;
-//                             });
-//                           },
-//                           child: _buildTab('حسابي', isSettingsSelected),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   SizedBox(height: 20),
-//                   AnimatedSwitcher(
-//                     duration: Duration(milliseconds: 300),
-//                     child: isReportsSelected
-//                         ? _buildReportsContent()
-//                         : isSettingsSelected
-//                             ? _buildSettingsContent()
-//                             : _buildInfoContent(),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildDrawer() {
-//     return Drawer(
-//       child: ListView(
-//         padding: EdgeInsets.zero,
-//         children: <Widget>[
-//           Container(
-//             padding: EdgeInsets.only(top: 40, bottom: 20),
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//             ),
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.end,
-//                 children: [
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.end,
-//                     children: [
-//                       Text(
-//                         'بانه خالد حمدان',
-//                         style: TextStyle(
-//                             color: Color(0xFF071533),
-//                             fontWeight: FontWeight.bold,
-//                             fontSize: 20,
-//                             fontFamily: 'Amiri'),
-//                       ),
-//                     ],
-//                   ),
-//                   SizedBox(width: 16.0),
-//                   GestureDetector(
-//                     onTap: () {
-//                       Navigator.push(
-//                           context,
-//                           MaterialPageRoute(
-//                               builder: (context) => ProfilePage( userRole: widget.userRole, userId: widget.userId,)));
-//                     },
-//                     child: CircleAvatar(
-//                       radius: 30,
-//                       backgroundImage: AssetImage(
-//                           'assets/banah.jpg'), // Replace with your image path
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context) => bar(
-//                           userId: '',
-//                           userRole: '',
-//                         ))),
-//             title: Text('الرئيسية',
-//                 textAlign: TextAlign.right,
-//                 style: TextStyle(
-//                     fontFamily: 'Amiri',
-//                     fontSize: 16,
-//                     color: Color(0xFF071533))),
-//             trailing: Icon(Icons.home, color: Color(0xFFffe145)),
-//           ),
-//           ListTile(
-//             onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context) =>
-//                         universityTrainingPage( userRole: widget.userRole, userId: widget.userId,))), // Add onTap functionality
-//             title: Text('تقديم طلب تدريب للخريجين',
-//                 textAlign: TextAlign.right,
-//                 style: TextStyle(
-//                     fontFamily: 'Amiri',
-//                     fontSize: 16,
-//                     color: Color(0xFF071533))),
-//             trailing: Icon(LineAwesomeIcons.graduation_cap_solid,
-//                 color: Color(0xFFffe145)),
-//           ),
-//           ListTile(
-//             onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context) =>
-//                         SuggestionsPage( userRole: widget.userRole,userId: widget.userId,))), // Add onTap functionality
-//             title: Text('شاركنا باقتراحاتك وافكارك',
-//                 textAlign: TextAlign.right,
-//                 style: TextStyle(
-//                     fontFamily: 'Amiri',
-//                     fontSize: 16,
-//                     color: Color(0xFF071533))),
-//             trailing:
-//                 Icon(LineAwesomeIcons.comment_dots, color: Color(0xFFffe145)),
-//           ),
-//           ListTile(
-//             onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context) =>
-//                         LoginPage(userId: widget.userId,))), // Add onTap functionality for logout
-//             title: Text('تسجيل خروج',
-//                 textAlign: TextAlign.right,
-//                 style: TextStyle(
-//                     fontFamily: 'Amiri',
-//                     fontSize: 16,
-//                     color: Color(0xFF071533))),
-//             trailing: Icon(Icons.logout, color: Color(0xFFffe145)),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-
-//   Widget _buildTab(String label, bool isSelected) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 10),
-//       child: Column(
-//         children: [
-//           Text(
-//             label,
-//             style: TextStyle(
-//               fontSize: 16,
-//               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-//               color: isSelected ? Color(0xFFffe145) : Colors.grey,
-//               fontFamily: 'Amiri',
-//             ),
-//           ),
-//           if (isSelected)
-//             Container(
-//               height: 2,
-//               width: 40,
-//               color: Color(0xFFffe145),
-//               margin: EdgeInsets.only(top: 5),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildReportsContent() {
-//     return Column(
-//       key: ValueKey('تقاريري'),
-//       children: [
-//         Container(
-//           // width: 370,
-//           decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.circular(25),
-//             boxShadow: [
-//               BoxShadow(
-//                 color: Colors.black12,
-//                 blurRadius: 10,
-//                 spreadRadius: 5,
-//               ),
-//             ],
-//           ),
-//           padding: EdgeInsets.all(18),
-//           child: Table(
-            
-//             border: TableBorder.all(color: Colors.grey),
-//             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-//             columnWidths: {
-//               0: FractionColumnWidth(0.19),
-//               // 1: FractionColumnWidth(0.12),
-//               1: FractionColumnWidth(0.19),
-//               2: FractionColumnWidth(0.22),
-//               3: FractionColumnWidth(0.22),
-//               // 5: FractionColumnWidth(0.12),
-//               4: FractionColumnWidth(0.19),
-//             },
-//             children: [
-//               TableRow(
-//                 decoration: BoxDecoration(
-//                   color: Color(0xFF071533).withOpacity(0.1),
-//                 ),
-//                 children: [
-//                   _buildTableCell('إلغاء الاشتراك', true),
-//                   // _buildTableCell('استمرارية النشاط', true),
-//                   _buildTableCell('عدد الساعات'),
-//                   _buildTableCell('تاريخ النهاية'),
-//                   _buildTableCell('تاريخ البداية'),
-//                   // _buildTableCell('التصنيف'),
-//                   _buildTableCell('اسم النشاط'),
-//                 ],
-//               ),
-//               for (var event in events)
-//                 TableRow(
-//                   decoration: BoxDecoration(
-//                     color: Colors.white,
-//                   ),
-//                   children: [
-//                     _buildUnsubscribeCell(event),
-//                     _buildStatusCell(
-//                         DateTime.parse(event['eventId']['endDate'])
-//                                 .isAfter(DateTime.now())
-//                             ? 'مستمر'
-//                             : 'منتهي',
-//                         DateTime.parse(event['eventId']['endDate'])
-//                             .isAfter(DateTime.now())),
-//                     _buildTableCell((DateTime.parse(event['eventId']['endDate'])
-//                             .difference(
-//                                 DateTime.parse(event['eventId']['startDate'])))
-//                         .inHours
-//                         .toString()),
-//                     _buildTableCell(
-//                         event['eventId']['endDate'].substring(0, 10)),
-//                     _buildTableCell(
-//                         event['eventId']['startDate'].substring(0, 10)),
-//                     _buildTableCell(event['eventId']['interests']),
-//                     _buildTableCell(event['eventId']['name']),
-//                   ],
-//                 ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildUnsubscribeCell(event) {
-//     return Padding(
-//       padding: EdgeInsets.all(8.0),
-//       child: ElevatedButton(
-//         onPressed: () => _showUnsubscribeDialog(event['eventId']['_id']),
-//         child: Text(
-//           'إلغاء الاشتراك',
-//           style: TextStyle(
-//             fontSize: 10,
-//             fontFamily: 'Amiri',
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   void _showUnsubscribeDialog(String eventId) {
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(20),
-//           ),
-//           title: Text(
-//             'هل انت متاكد انك تريد سحب الاشتراك من هذا النشاط؟',
-//             textAlign: TextAlign.right,
-//             style: TextStyle(fontFamily: 'Amiri'),
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text('لا', style: TextStyle(fontFamily: 'Amiri')),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 _unsubscribeEvent(eventId);
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text('نعم', style: TextStyle(fontFamily: 'Amiri')),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-
-//   Widget _buildTableCell(String text, [bool isHeader = false]) {
-//     return Padding(
-//       padding: EdgeInsets.all(8.0),
-//       child: Text(
-//         text,
-//         textAlign: TextAlign.center,
-//         style: TextStyle(
-//           fontSize: 10,
-//           fontFamily: 'Amiri',
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildStatusCell(String text, bool isOngoing) {
-//     return Padding(
-//       padding: EdgeInsets.all(8.0),
-//       child: Text(
-//         text,
-//         textAlign: TextAlign.center,
-//         style: TextStyle(
-//           fontSize: 10,
-//           fontFamily: 'Amiri',
-//           color: isOngoing ? Colors.green : Color(0xFF071533),
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildInfoContent() {
-//     return Column(
-//       key: ValueKey('معلوماتي'),
-//       children: [
-//         _buildInfoCard('البريد الإلكتروني', email, Icons.email, false),
-//         _buildInfoCard('رقم الهاتف', phoneNumber, Icons.phone, true),
-//         _buildInfoCard(
-//             'تاريخ الميلاد',
-//             '${birthDate.year}/${birthDate.month}/${birthDate.day}',
-//             Icons.calendar_today,
-//             false),
-//         _buildInfoCard('مكان السكن', location, Icons.location_city, true),
-//         _buildInfoCard('فصيلة الدم', bloodType, Icons.bloodtype, true),
-//         _buildInfoCard(
-//             'تاريخ آخر تبرع بالدم', '2024/03/09', Icons.date_range, false),
-//       ],
-//     );
-//   }
-
-//   Widget _buildInfoCard(
-//       String title, String value, IconData icon, bool isEditable) {
-//     return Column(
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 8.0),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.end,
-//             children: [
-//               if (isEditable)
-//                 GestureDetector(
-//                   onTap: () {
-//                     _showEditDialog(title, value);
-//                   },
-//                   child: Icon(Icons.edit, color: Colors.grey),
-//                 ),
-//               if (isEditable) SizedBox(width: 10),
-//               Expanded(
-//                 child: Text(
-//                   value,
-//                   textAlign: TextAlign.right,
-//                   style: TextStyle(
-//                     fontSize: 16,
-//                     fontFamily: 'Amiri',
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(width: 10),
-//               Text(
-//                 title,
-//                 textAlign: TextAlign.right,
-//                 style: TextStyle(
-//                   fontSize: 16,
-//                   fontWeight: FontWeight.bold,
-//                   fontFamily: 'Amiri',
-//                 ),
-//               ),
-//               SizedBox(width: 10),
-//               Container(
-//                 width: 30,
-//                 height: 30,
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: Color(0xFF071533).withOpacity(0.1),
-//                 ),
-//                 child: Icon(icon, color: Color(0xFF071533), size: 20),
-//               ),
-//             ],
-//           ),
-//         ),
-//         Divider(color: Colors.grey[300]),
-//       ],
-//     );
-//   }
-
-//   Widget _buildSettingsContent() {
-//     return Column(
-//       key: ValueKey('إعدادات الحساب'),
-//       children: [
-//         ListTile(
-//           title: Text(
-//             'تسجيل الخروج',
-//             style: TextStyle(
-//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
-//             textAlign: TextAlign.right,
-//           ),
-//           trailing: Container(
-//             width: 30,
-//             height: 30,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               color: Color(0xFF071533).withOpacity(0.1),
-//             ),
-//             child: Icon(Icons.logout, color: Color(0xFF071533), size: 20),
-//           ),
-//           onTap: _logout,
-//         ),
-//         Divider(color: Colors.grey[300]),
-//         ListTile(
-//           title: Text(
-//             'إلغاء الحساب',
-//             style: TextStyle(
-//                 fontSize: 16, fontFamily: 'Amiri', color: Color(0xFF071533)),
-//             textAlign: TextAlign.right,
-//           ),
-//           trailing: Container(
-//             width: 30,
-//             height: 30,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               color: Color(0xFF071533).withOpacity(0.1),
-//             ),
-//             child: Icon(Icons.delete, color: Color(0xFF071533), size: 20),
-//           ),
-//           onTap: _showDeleteAccountDialog,
-//         ),
-//         Divider(color: Colors.grey[300]),
-//       ],
-//     );
-//   }
-
-//   void _showEditDialog(String title, String currentValue) {
-//     TextEditingController controller =
-//         TextEditingController(text: currentValue);
-
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(20),
-//           ),
-//           titlePadding: EdgeInsets.only(top: 10, left: 10, right: 10),
-//           title: Stack(
-//             children: [
-//               Align(
-//                 alignment: Alignment.topRight,
-//                 child: Text(
-//                   'تعديل $title',
-//                   textAlign: TextAlign.right,
-//                   style: TextStyle(fontFamily: 'Amiri'),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: 0,
-//                 left: 0,
-//                 child: IconButton(
-//                   icon: Icon(Icons.close),
-//                   onPressed: () {
-//                     Navigator.of(context).pop();
-//                   },
-//                 ),
-//               ),
-//             ],
-//           ),
-//           content: TextField(
-//             controller: controller,
-//             textAlign: TextAlign.right,
-//             cursorColor: Color(0xFFffe145),
-//             decoration: InputDecoration(
-//               hintText: "أدخل القيمة الجديدة",
-//               hintTextDirection: TextDirection.rtl,
-//               hintStyle: TextStyle(fontFamily: 'Amiri'),
-//               focusedBorder: UnderlineInputBorder(
-//                 borderSide: BorderSide(color: Color(0xFFffe145)),
-//               ),
-//             ),
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 setState(() {
-//                   if (title == 'رقم الهاتف') {
-//                     editUserData('phoneNumber', controller.text);
-//                   } else if (title == 'مكان السكن') {
-//                     editUserData('city', controller.text);
-//                   } else if (title == 'فصيلة الدم') {
-//                     editUserData('bloodType', controller.text);
-//                   }
-//                 });
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text('حفظ',
-//                   style:
-//                       TextStyle(fontFamily: 'Amiri', color: Color(0xFFffe145))),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-
-//   void _showDeleteAccountDialog() {
-//     TextEditingController codeController = TextEditingController();
-//     bool isError = false;
-
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return StatefulBuilder(
-//           builder: (context, setState) {
-//             return AlertDialog(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(20),
-//               ),
-//               titlePadding: EdgeInsets.only(top: 10, left: 10, right: 10),
-//               title: Stack(
-//                 children: [
-//                   Align(
-//                     alignment: Alignment.topRight,
-//                     child: Text(
-//                       'إلغاء الحساب',
-//                       textAlign: TextAlign.right,
-//                       style: TextStyle(fontFamily: 'Amiri'),
-//                     ),
-//                   ),
-//                   Positioned(
-//                     top: 0,
-//                     left: 0,
-//                     child: IconButton(
-//                       icon: Icon(Icons.close),
-//                       onPressed: () {
-//                         Navigator.of(context).pop();
-//                       },
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               content: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   Text(
-//                     'أدخل الكود الذي تم إرساله إلى بريدك الإلكتروني',
-//                     textAlign: TextAlign.right,
-//                     style: TextStyle(fontFamily: 'Amiri'),
-//                   ),
-//                   TextField(
-//                     controller: codeController,
-//                     textAlign: TextAlign.right,
-//                     cursorColor: Color(0xFFffe145),
-//                     decoration: InputDecoration(
-//                       hintText: "أدخل الكود",
-//                       hintStyle: TextStyle(fontFamily: 'Amiri'),
-//                       hintTextDirection: TextDirection.rtl,
-//                       focusedBorder: UnderlineInputBorder(
-//                         borderSide: BorderSide(color: Color(0xFFffe145)),
-//                       ),
-//                       errorText:
-//                           isError ? "الكود غير صحيح. حاول مرة أخرى" : null,
-//                       errorStyle: TextStyle(fontFamily: 'Amiri'),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               actions: [
-//                 TextButton(
-//                   onPressed: () {
-//                     if (codeController.text == correctCode) {
-//                       // Perform account deletion and navigate to login page
-//                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-//                           builder: (context) => LoginPage(
-//                                 userId: widget.userId,
-//                               )));
-//                     } else {
-//                       setState(() {
-//                         isError = true;
-//                       });
-//                     }
-//                   },
-//                   child: Text('حذف',
-//                       style: TextStyle(
-//                           fontFamily: 'Amiri', color: Color(0xFFffe145))),
-//                 ),
-//               ],
-//             );
-//           },
-//         );
-//       },
-//     );
-//   }
-
-//   void _logout() {
-//     // Perform logout and navigate to login page
-//     Navigator.of(context).pushReplacement(MaterialPageRoute(
-//         builder: (context) => LoginPage(
-//               userId: widget.userId,
-//             )));
-//   }
-
-//   void _pickProfileImage() async {
-//     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-//     if (pickedFile != null) {
-//       setState(() {
-//         profileImagePath = pickedFile.path;
-//       });
-//     }
-//   }
-// }
-
-// class BackgroundClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     Path path = Path();
-//     path.lineTo(0, size.height * 0.6);
-//     path.quadraticBezierTo(
-//       size.width / 2,
-//       size.height,
-//       size.width,
-//       size.height * 0.6,
-//     );
-//     path.lineTo(size.width, 0);
-//     path.close();
-//     return path;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) {
-//     return false;
-//   }
-// }
-
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, library_private_types_in_public_api, use_key_in_widget_constructors
 import 'dart:io' show Platform; // Import this at the top of your file
+import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
+import 'package:cytc/UserPages/screen/auth/login.dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
+import 'package:cytc/UserPages/screen/bottomBarPages/activities/university/University_main(1).dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -978,49 +51,70 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchUserData();
     fetchUserEvents();
   }
+//////////////////////////
+Future<void> fetchUserData() async {
+  final response = await http.get(Uri.parse('http://127.0.0.1:9999/user/${widget.userId}'));
 
-  Future<void> fetchUserData() async {
-    final response = await http
-        .get(Uri.parse('http://127.0.0.1:9999/user/${widget.userId}'));
-
-    if (response.statusCode == 200) {
+  if (response.statusCode == 200) {
+    try {
+      print('Response body: ${response.body}');
       final data = json.decode(response.body);
-      if (data['status']) {
-        setState(() {
-          phoneNumber = data['user']['phoneNumber'];
-          location = data['user']['city'];
-          bloodType = data['user']['bloodType'];
-          birthDate = DateTime.parse(data['user']['birthDate']);
-          email = data['user']['email'];
-          username = data['user']['username'];
-          profileImagePath = data['user']['imageUrl'] ??
-              'https://path-to-your-default-image.jpg';
-        });
+
+      if (data is Map && data['status'] == true) {
+        final user = data['user'];
+        if (user is Map) {
+          setState(() {
+            phoneNumber = user['phoneNumber'] ?? phoneNumber;
+            location = user['city'] ?? location;
+            bloodType = user['bloodType'] ?? bloodType;
+            birthDate = user['birthDate'] != null ? DateTime.parse(user['birthDate']) : birthDate;
+            email = user['email'] ?? email;
+            username = user['username'] ?? username;
+            profileImagePath = user['imageUrl'] ?? 'https://path-to-your-default-image.jpg';
+          });
+        } else {
+          print('User data is not a valid map');
+        }
       } else {
         print('Failed to fetch user data: ${data['message']}');
       }
-    } else {
-      print('Failed to fetch user data: ${response.statusCode}');
+    } catch (e) {
+      print('Error decoding user data: $e');
     }
+  } else {
+    print('Failed to fetch user data: ${response.statusCode}');
   }
+}
 
-  Future<void> fetchUserEvents() async {
-    final response = await http.get(
-        Uri.parse('http://localhost:9999/event-user/events/${widget.userId}'));
+Future<void> fetchUserEvents() async {
+  final response = await http.get(Uri.parse('http://localhost:9999/event-user/events/${widget.userId}'));
 
-    if (response.statusCode == 200) {
+  if (response.statusCode == 200) {
+    try {
+      print('Response body: ${response.body}');
       final data = json.decode(response.body);
-      if (data['status']) {
-        setState(() {
-          events = data['events'];
-        });
+
+      if (data is Map && data['status'] == true) {
+        final eventsData = data['events'];
+        if (eventsData is List) {
+          setState(() {
+            events = eventsData;
+          });
+        } else {
+          print('Events data is not a valid list');
+        }
       } else {
         print('Failed to fetch user events: ${data['message']}');
       }
-    } else {
-      print('Failed to fetch user events: ${response.statusCode}');
+    } catch (e) {
+      print('Error decoding user events: $e');
     }
+  } else {
+    print('Failed to fetch user events: ${response.statusCode}');
   }
+}
+
+////////////////////////////////
 
   Future<void> editUserData(String field, String newValue) async {
     final url = 'http://localhost:9999/user/edit-user/${widget.userId}';
@@ -1384,7 +478,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           ListTile(
             onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Container())),
+                context, MaterialPageRoute(builder: (context) => HomeTestGrey(userId: widget.userId, userRole: widget.userRole))),
             title: Text('الرئيسية',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1398,7 +492,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        Container())), // Add onTap functionality
+                        SuggestionsPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
             title: Text('تقديم طلب تدريب للخريجين',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1413,7 +507,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        Container())), // Add onTap functionality
+                        universityTrainingPage(userId: widget.userId, userRole: widget.userRole))), // Add onTap functionality
             title: Text('شاركنا باقتراحاتك وافكارك',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1428,7 +522,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        Container())), // Add onTap functionality for logout
+                        LoginPage(userId: widget.userId))), // Add onTap functionality for logout
             title: Text('تسجيل خروج',
                 textAlign: TextAlign.right,
                 style: TextStyle(
@@ -1468,78 +562,84 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildReportsContent() {
-    return Column(
-      key: ValueKey('تقاريري'),
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                spreadRadius: 5,
+Widget _buildReportsContent() {
+  return Column(
+    key: ValueKey('انجازاتي'),
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              spreadRadius: 5,
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(18),
+        child: Table(
+          border: TableBorder.all(color: Colors.grey),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          columnWidths: {
+            0: FractionColumnWidth(0.25),
+            1: FractionColumnWidth(0.25),
+            2: FractionColumnWidth(0.25),
+            3: FractionColumnWidth(0.25),
+          },
+          children: [
+            TableRow(
+              decoration: BoxDecoration(
+                color: Color(0xFF071533).withOpacity(0.1),
               ),
-            ],
-          ),
-          padding: EdgeInsets.all(18),
-          child: Table(
-            border: TableBorder.all(color: Colors.grey),
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            columnWidths: {
-              0: FractionColumnWidth(0.25),
-              1: FractionColumnWidth(0.25),
-              2: FractionColumnWidth(0.25),
-              3: FractionColumnWidth(0.25),
-            },
-            children: [
+              children: [
+                _buildTableCell('اسم النشاط'),
+                _buildTableCell('تاريخ البداية'),
+                _buildTableCell('تاريخ النهاية'),
+                _buildTableCell('إلغاء الاشتراك'),
+              ],
+            ),
+            for (var event in events)
               TableRow(
                 decoration: BoxDecoration(
-                  color: Color(0xFF071533).withOpacity(0.1),
+                  color: Colors.white,
                 ),
                 children: [
-                  _buildTableCell('اسم النشاط'),
-                  _buildTableCell('تاريخ البداية'),
-                  _buildTableCell('تاريخ النهاية'),
-                  _buildTableCell('عدد الساعات'),
+                  _buildTableCell(event['eventId']['name']),
+                  _buildTableCell(
+                      event['eventId']['startDate'].substring(0, 10)),
+                  _buildTableCell(
+                      event['eventId']['endDate'].substring(0, 10)),
+                  _buildUnsubscribeCell(event),  // Add this line
                 ],
               ),
-              for (var event in events)
-                TableRow(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  children: [
-                    _buildTableCell(event['eventId']['name']),
-                    _buildTableCell(
-                        event['eventId']['startDate'].substring(0, 10)),
-                    _buildTableCell(
-                        event['eventId']['endDate'].substring(0, 10)),
-                    _buildTableCell((DateTime.parse(event['eventId']['endDate'])
-                            .difference(
-                                DateTime.parse(event['eventId']['startDate'])))
-                        .inHours
-                        .toString()),
-                  ],
-                ),
-            ],
-          ),
+          ],
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
+
 
   Widget _buildUnsubscribeCell(event) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () => _showUnsubscribeDialog(event['eventId']['_id']),
+        style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF071533),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              // side: BorderSide(color: Colors.grey),
+            ),
         child: Text(
-          'إلغاء الاشتراك',
+          'إلغاء',
           style: TextStyle(
-            fontSize: 10,
+            fontSize: 8,
             fontFamily: 'Amiri',
           ),
         ),
@@ -1875,7 +975,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _logout() {
     // Perform logout and navigate to login page
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => Container()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage(userId: widget.userId,)));
   }
 }
 

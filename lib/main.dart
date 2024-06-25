@@ -3,6 +3,7 @@ import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 import 'package:cytc/BloodAdminPages/BloodAdminHome.dart';
 import 'package:cytc/UserPages/Home/notification.dart';
 import 'package:cytc/UserPages/interests.dart';
+import 'package:cytc/UserPages/screen/auth/verify.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
 import 'package:cytc/main2.dart';
 import 'package:flutter/foundation.dart';
@@ -73,13 +74,13 @@ class _WelcomePageState extends State<WelcomePage>
     // Set up the timer to navigate after 10 seconds
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
-      // Get.to(() => bar(userId: '123', userRole: '0'));
+      Get.to(() => bar(userId: '123', userRole: '0'));
       // Get.to(() => LoginPage(userId: ''));
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
-      Get.to(() => AdminBar(userId: '', userRole: '',));
+      // Get.to(() => AdminBar(userId: '', userRole: '',));
       // Get.to(() => InterestsPage(userId: '',));
-      // Get.to(() => BloodAdminHome());
+      // Get.to(() => VerifyPage(code: '', email: '', userId: '',));
     });
   }
 

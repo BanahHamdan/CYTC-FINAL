@@ -318,7 +318,9 @@ class _EventsListState extends State<EventsList> {
             Flexible(
               child: Text(
                 event['name'],
+                textAlign: TextAlign.right,
                 style: TextStyle(
+                  fontSize: 15,
                   fontFamily: 'Amiri',
                   color: Color(0xFF071533),
                 ),
