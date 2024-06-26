@@ -1,3 +1,4 @@
+
 // // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 // import 'package:flutter/material.dart';
@@ -102,6 +103,8 @@
 //                               3: FlexColumnWidth(1),
 //                               4: FlexColumnWidth(1),
 //                               5: FlexColumnWidth(1),
+//                               6: FlexColumnWidth(1), // New column width
+//                               7: FlexColumnWidth(1), // New column width
 //                             },
 //                             children: [
 //                               TableRow(
@@ -114,6 +117,8 @@
 //                                 ),
 //                                 children: [
 //                                   _buildHeaderCell('السيرة الذاتية'),
+//                                   _buildHeaderCell('معدلك الجامعي'), // New column header
+//                                   _buildHeaderCell('اخبرنا عن مهاراتك'), // New column header
 //                                   _buildHeaderCell('عدد ساعات التدريب'),
 //                                   _buildHeaderCell('التخصص'),
 //                                   _buildHeaderCell('اسم الجامعة'),
@@ -125,6 +130,8 @@
 //                                 return TableRow(
 //                                   children: [
 //                                     _buildCvCell(request.cv ?? 'No CV available'),
+//                                     _buildTableCell(request.gpa ?? 'N/A'), // New field
+//                                     _buildTableCell(request.skills ?? 'N/A'), // New field
 //                                     _buildTableCell(
 //                                         request.trainingHours?.toString() ?? 'N/A'),
 //                                     _buildTableCell(request.major ?? 'N/A'),
@@ -221,6 +228,8 @@
 //   final String? major;
 //   final int? trainingHours;
 //   final String? cv;
+//   final String? gpa; // New field
+//   final String? skills; // New field
 
 //   TrainingRequest({
 //     this.name,
@@ -229,6 +238,8 @@
 //     this.major,
 //     this.trainingHours,
 //     this.cv,
+//     this.gpa, // New field
+//     this.skills, // New field
 //   });
 
 //   factory TrainingRequest.fromJson(Map<String, dynamic> json) {
@@ -239,11 +250,19 @@
 //       major: json['field'] as String?,
 //       trainingHours: json['trainingHours'] as int?,
 //       cv: json['cv'] as String?,
+//       gpa: json['gpa'] as String?, // New field
+//       skills: json['skills'] as String?, // New field
 //     );
 //   }
 // }
 
+
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -361,8 +380,10 @@ class _ViewTrainingRequestsPageState extends State<ViewTrainingRequestsPage> {
                                 ),
                                 children: [
                                   _buildHeaderCell('السيرة الذاتية'),
-                                  _buildHeaderCell('معدلك الجامعي'), // New column header
-                                  _buildHeaderCell('اخبرنا عن مهاراتك'), // New column header
+                                  _buildHeaderCell(
+                                      'معدلك الجامعي'), // New column header
+                                  _buildHeaderCell(
+                                      'اخبرنا عن مهاراتك'), // New column header
                                   _buildHeaderCell('عدد ساعات التدريب'),
                                   _buildHeaderCell('التخصص'),
                                   _buildHeaderCell('اسم الجامعة'),
@@ -373,13 +394,18 @@ class _ViewTrainingRequestsPageState extends State<ViewTrainingRequestsPage> {
                               ...trainingRequests.map((request) {
                                 return TableRow(
                                   children: [
-                                    _buildCvCell(request.cv ?? 'No CV available'),
-                                    _buildTableCell(request.gpa ?? 'N/A'), // New field
-                                    _buildTableCell(request.skills ?? 'N/A'), // New field
+                                    _buildCvCell(
+                                        request.cv ?? 'No CV available'),
+                                    _buildTableCell(request.gpa?.toString() ??
+                                        'N/A'), // New field
                                     _buildTableCell(
-                                        request.trainingHours?.toString() ?? 'N/A'),
+                                        request.skills ?? 'N/A'), // New field
+                                    _buildTableCell(
+                                        request.trainingHours?.toString() ??
+                                            'N/A'),
                                     _buildTableCell(request.major ?? 'N/A'),
-                                    _buildTableCell(request.university ?? 'N/A'),
+                                    _buildTableCell(
+                                        request.university ?? 'N/A'),
                                     _buildTableCell(request.email ?? 'N/A'),
                                     _buildTableCell(request.name ?? 'N/A'),
                                   ],
@@ -472,8 +498,8 @@ class TrainingRequest {
   final String? major;
   final int? trainingHours;
   final String? cv;
-  final String? gpa; // New field
-  final String? skills; // New field
+  final double? gpa; // Changed to double
+  final String? skills;
 
   TrainingRequest({
     this.name,
@@ -482,8 +508,8 @@ class TrainingRequest {
     this.major,
     this.trainingHours,
     this.cv,
-    this.gpa, // New field
-    this.skills, // New field
+    this.gpa,
+    this.skills,
   });
 
   factory TrainingRequest.fromJson(Map<String, dynamic> json) {
@@ -494,8 +520,8 @@ class TrainingRequest {
       major: json['field'] as String?,
       trainingHours: json['trainingHours'] as int?,
       cv: json['cv'] as String?,
-      gpa: json['gpa'] as String?, // New field
-      skills: json['skills'] as String?, // New field
+      gpa: (json['gpa'] as num?)?.toDouble(), // Cast to double
+      skills: json['skills'] as String?,
     );
   }
 }

@@ -437,6 +437,8 @@
 //   }
 // }
 
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
@@ -508,7 +510,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
           ),
           textAlign: TextAlign.center,
         ),
-        centerTitle: true,
+        centerTitle: true, 
         actions: [
           IconButton(
             icon: Icon(LineAwesomeIcons.check_solid, color: Colors.white),

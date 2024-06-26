@@ -2,11 +2,15 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
 // class CampaignDetails extends StatefulWidget {
 //   final Map<String, dynamic> campaign;
+//   final String userId;
 
-//   const CampaignDetails({super.key, required this.campaign});
+//   const CampaignDetails(
+//       {super.key, required this.campaign, required this.userId});
 
 //   @override
 //   _CampaignDetailsState createState() => _CampaignDetailsState();
@@ -20,14 +24,14 @@
 //       appBar: AppBar(
 //         backgroundColor: Colors.transparent,
 //         elevation: 0,
-//         actions:[  
+//         actions: [
 //           IconButton(
-//           alignment: Alignment.centerRight,
-//           icon: Icon(Icons.close, color: Colors.grey),
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         ),
+//             alignment: Alignment.centerRight,
+//             icon: Icon(Icons.close, color: Colors.grey),
+//             onPressed: () {
+//               Navigator.pop(context);
+//             },
+//           ),
 //         ],
 //       ),
 //       body: SingleChildScrollView(
@@ -89,8 +93,27 @@
 //                       ),
 //                       Divider(thickness: 1, height: 20),
 //                       _buildInfoColumn(
-//                           'الحد الاقصى لعدد المتبرعين في اليوم الواحد',
+//                           'الحد الاقصى لعدد المتطوعين',
 //                           'فرداً ${widget.campaign['maxParticipants']}'),
+//                       // SizedBox(height: 10),
+//                       // Text(
+//                       //   'User ID: ${widget.userId}',
+//                       //   textAlign: TextAlign.right,
+//                       //   style: TextStyle(
+//                       //     fontSize: 14,
+//                       //     color: Color(0xFF071533),
+//                       //     fontFamily: 'Amiri',
+//                       //   ),
+//                       // ),
+//                       // Text(
+//                       //   'Event ID: ${widget.campaign['_id']}',
+//                       //   textAlign: TextAlign.right,
+//                       //   style: TextStyle(
+//                       //     fontSize: 14,
+//                       //     color: Color(0xFF071533),
+//                       //     fontFamily: 'Amiri',
+//                       //   ),
+//                       // ),
 //                     ],
 //                   ),
 //                 ),
@@ -104,7 +127,7 @@
 //                 crossAxisSpacing: 10,
 //                 children: [
 //                   _buildStatCard(
-//                       'عدد المسجلين للان',
+//                       'اعمار المشاركين في هذا النشاط',
 //                       '${widget.campaign['registeredParticipants']}',
 //                       'فرد',
 //                       Icons.person),
@@ -120,7 +143,6 @@
 //               ElevatedButton(
 //                 onPressed: () {
 //                   _showParticipationDialog(context);
-//                   // Add functionality for the register button
 //                 },
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: Color(0xFF071533),
@@ -149,6 +171,59 @@
 //         ),
 //       ),
 //     );
+//   }
+
+//   Future<void> registerForCampaign(BuildContext context) async {
+//     final url = Uri.parse('http://localhost:9999/event-user/register');
+//     final body = jsonEncode({
+//       'userId': widget.userId,
+//       'eventId': widget.campaign['_id'],
+//     });
+
+//     try {
+//       final response = await http.post(
+//         url,
+//         headers: {'Content-Type': 'application/json'},
+//         body: body,
+//       );
+
+//       // Logging the request and response details
+//       print('Request URL: $url');
+//       print('Request Body: $body');
+//       print('Response Status Code: ${response.statusCode}');
+//       print('Response Body: ${response.body}');
+
+//       if (response.statusCode == 200 || response.statusCode == 201) {
+//         // Successfully registered
+//         Navigator.pop(context); // Close the dialog
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('تم التسجيل بنجاح')),
+//         );
+//       } else if (response.statusCode == 400) {
+//         final responseBody = json.decode(response.body);
+//         if (responseBody['status'] == false &&
+//             responseBody['error'] ==
+//                 'You have already registered for this event') {
+//           ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(content: Text('انت فعلا مسجل في هذا النشاط')),
+//           );
+//         } else {
+//           ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(content: Text('فشل التسجيل: ${response.body}')),
+//           );
+//         }
+//       } else {
+//         // Other error
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('فشل التسجيل: ${response.body}')),
+//         );
+//       }
+//     } catch (e) {
+//       print('Error: $e');
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('فشل التسجيل: $e')),
+//       );
+//     }
 //   }
 
 //   String _formatDate(String dateStr) {
@@ -206,7 +281,6 @@
 //                 fontFamily: 'Amiri',
 //               ),
 //             ),
-//             // SizedBox(height: 5),
 //             Text(
 //               count,
 //               textAlign: TextAlign.center,
@@ -217,24 +291,13 @@
 //                 fontFamily: 'Amiri',
 //               ),
 //             ),
-//             // Text(
-//             //   unit,
-//             //   textAlign: TextAlign.right,
-//             //   style: TextStyle(
-//             //     fontSize: 16,
-//             //     color: Color(0xFFffe145),
-//             //     fontFamily: 'Amiri',
-//             //   ),
-//             // ),
 //           ],
 //         ),
 //       ),
 //     );
 //   }
-// }
 
-
-// void _showParticipationDialog(BuildContext context) {
+//   void _showParticipationDialog(BuildContext context) {
 //     showModalBottomSheet(
 //       context: context,
 //       isScrollControlled: true,
@@ -256,11 +319,11 @@
 //                   fontWeight: FontWeight.bold,
 //                   fontFamily: 'Amiri',
 //                 ),
-//               ),         
+//               ),
 //               SizedBox(height: 20),
 //               ElevatedButton(
 //                 onPressed: () {
-//                   // Handle donate button press
+//                   registerForCampaign(context);
 //                 },
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: Color(0xFF071533),
@@ -283,6 +346,7 @@
 //       },
 //     );
 //   }
+// }
 
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
@@ -379,27 +443,12 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                       ),
                       Divider(thickness: 1, height: 20),
                       _buildInfoColumn(
-                          'الحد الاقصى لعدد المتبرعين في اليوم الواحد',
+                          'الحد الاقصى لعدد المتطوعين',
                           'فرداً ${widget.campaign['maxParticipants']}'),
-                      SizedBox(height: 10),
-                      Text(
-                        'User ID: ${widget.userId}',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF071533),
-                          fontFamily: 'Amiri',
-                        ),
-                      ),
-                      Text(
-                        'Event ID: ${widget.campaign['_id']}',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF071533),
-                          fontFamily: 'Amiri',
-                        ),
-                      ),
+                      Divider(thickness: 1, height: 20),
+                      _buildInfoColumn(
+                          'اعمار المشاركين في هذا النشاط',
+                          '${widget.campaign['ageRange']} بين الاعمار التالية'),
                     ],
                   ),
                 ),
@@ -413,9 +462,9 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                 crossAxisSpacing: 10,
                 children: [
                   _buildStatCard(
-                      'عدد المسجلين للان',
-                      '${widget.campaign['registeredParticipants']}',
-                      'فرد',
+                      'اعمار المشاركين في هذا النشاط',
+                      widget.campaign['ageRange'],
+                      'بين الاعمار التالية',
                       Icons.person),
                   _buildStatCard(
                     'تاريخ بداية وانتهاء النشاط',

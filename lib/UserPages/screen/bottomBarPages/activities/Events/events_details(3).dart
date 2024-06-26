@@ -2,11 +2,14 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
 // class EventDetails extends StatelessWidget {
 //   final Map<String, dynamic> event;
+//   final String userId;
 
-//   const EventDetails({super.key, required this.event});
+//   const EventDetails({super.key, required this.event, required this.userId});
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -15,14 +18,14 @@
 //       appBar: AppBar(
 //         backgroundColor: Colors.transparent,
 //         elevation: 0,
-//         actions:[  
+//         actions: [
 //           IconButton(
-//           alignment: Alignment.centerRight,
-//           icon: Icon(Icons.close, color: Colors.grey),
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         ),
+//             alignment: Alignment.centerRight,
+//             icon: Icon(Icons.close, color: Colors.grey),
+//             onPressed: () {
+//               Navigator.pop(context);
+//             },
+//           ),
 //         ],
 //       ),
 //       body: SingleChildScrollView(
@@ -52,6 +55,28 @@
 //                   child: Column(
 //                     crossAxisAlignment: CrossAxisAlignment.end,
 //                     children: [
+//                       // Text(
+//                       //   'رقم النشاط',
+//                       //   textAlign: TextAlign.right,
+//                       //   style: TextStyle(
+//                       //     fontSize: 16,
+//                       //     color: Color(0xFFffe145),
+//                       //     fontFamily: 'Amiri',
+//                       //   ),
+//                       // ),
+//                       // SizedBox(height: 5),
+//                       // Text(
+//                       //   event['_id']
+//                       //       .toString(), // Corrected key to access event ID
+//                       //   textAlign: TextAlign.right,
+//                       //   style: TextStyle(
+//                       //     fontSize: 16,
+//                       //     fontWeight: FontWeight.bold,
+//                       //     color: Color(0xFF071533),
+//                       //     fontFamily: 'Amiri',
+//                       //   ),
+//                       // ),
+//                       // Divider(thickness: 1, height: 20),
 //                       Text(
 //                         'اسم النشاط',
 //                         textAlign: TextAlign.right,
@@ -111,7 +136,6 @@
 //               ElevatedButton(
 //                 onPressed: () {
 //                   _showParticipationDialog(context);
-//                   // Add functionality for the register button
 //                 },
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: Color(0xFF071533),
@@ -140,6 +164,31 @@
 //         ),
 //       ),
 //     );
+//   }
+
+//   Future<void> registerForEvent(BuildContext context) async {
+//     final url = Uri.parse('http://localhost:9999/event-user/register');
+//     final response = await http.post(
+//       url,
+//       headers: {'Content-Type': 'application/json'},
+//       body: jsonEncode({
+//         'userId': userId,
+//         'eventId': event['_id'],
+//       }),
+//     );
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       // Successfully registered
+//       Navigator.pop(context); // Close the dialog
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('تم التسجيل بنجاح')),
+//       );
+//     } else {
+//       // Error registering
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('فشل التسجيل')),
+//       );
+//     }
 //   }
 
 //   String _formatDate(String dateStr) {
@@ -197,7 +246,6 @@
 //                 fontFamily: 'Amiri',
 //               ),
 //             ),
-//             // SizedBox(height: 5),
 //             Text(
 //               count,
 //               textAlign: TextAlign.center,
@@ -208,23 +256,13 @@
 //                 fontFamily: 'Amiri',
 //               ),
 //             ),
-//             // Text(
-//             //   unit,
-//             //   textAlign: TextAlign.right,
-//             //   style: TextStyle(
-//             //     fontSize: 16,
-//             //     color: Color(0xFFffe145),
-//             //     fontFamily: 'Amiri',
-//             //   ),
-//             // ),
 //           ],
 //         ),
 //       ),
 //     );
 //   }
-// }
 
-// void _showParticipationDialog(BuildContext context) {
+//   void _showParticipationDialog(BuildContext context) {
 //     showModalBottomSheet(
 //       context: context,
 //       isScrollControlled: true,
@@ -246,11 +284,11 @@
 //                   fontWeight: FontWeight.bold,
 //                   fontFamily: 'Amiri',
 //                 ),
-//               ),         
+//               ),
 //               SizedBox(height: 20),
 //               ElevatedButton(
 //                 onPressed: () {
-//                   // Handle donate button press
+//                   registerForEvent(context);
 //                 },
 //                 style: ElevatedButton.styleFrom(
 //                   backgroundColor: Color(0xFF071533),
@@ -273,6 +311,7 @@
 //       },
 //     );
 //   }
+// }
 
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
@@ -331,28 +370,6 @@ class EventDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // Text(
-                      //   'رقم النشاط',
-                      //   textAlign: TextAlign.right,
-                      //   style: TextStyle(
-                      //     fontSize: 16,
-                      //     color: Color(0xFFffe145),
-                      //     fontFamily: 'Amiri',
-                      //   ),
-                      // ),
-                      // SizedBox(height: 5),
-                      // Text(
-                      //   event['_id']
-                      //       .toString(), // Corrected key to access event ID
-                      //   textAlign: TextAlign.right,
-                      //   style: TextStyle(
-                      //     fontSize: 16,
-                      //     fontWeight: FontWeight.bold,
-                      //     color: Color(0xFF071533),
-                      //     fontFamily: 'Amiri',
-                      //   ),
-                      // ),
-                      // Divider(thickness: 1, height: 20),
                       Text(
                         'اسم النشاط',
                         textAlign: TextAlign.right,
@@ -386,6 +403,9 @@ class EventDetails extends StatelessWidget {
                       Divider(thickness: 1, height: 20),
                       _buildInfoColumn('الحد الاقصى لعدد المشاركين',
                           'فرداً ${event['maxParticipants']}'),
+                      Divider(thickness: 1, height: 20),
+                      _buildInfoColumn('اعمار المشاركين في هذا النشاط',
+                          '${event['ageRange']} بين الاعمار التالية'),
                     ],
                   ),
                 ),
@@ -398,8 +418,12 @@ class EventDetails extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 children: [
-                  _buildStatCard('اعمار المشاركين في هذا النشاط', '15-25',
-                      'بين الاعمار التالية', Icons.person),
+                  _buildStatCard(
+                    'اعمار المشاركين في هذا النشاط',
+                    event['ageRange'],
+                    'بين الاعمار التالية',
+                    Icons.person,
+                  ),
                   _buildStatCard(
                     'تاريخ بداية وانتهاء النشاط',
                     '${_formatDate(event['startDate'])} - ${_formatDate(event['endDate'])}',

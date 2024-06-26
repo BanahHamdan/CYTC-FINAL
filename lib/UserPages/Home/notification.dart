@@ -2,14 +2,31 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+// import 'package:flutter/material.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+// import '../screen/Emergencies/Paramedics.dart';
+// import '../screen/Emergencies/bloodDonation.dart';
+// import '../screen/bottomBarPages/activities/Events/events_main(1).dart';
+
+// import 'package:flutter/material.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+
+// // Import your pages here
 
 // class NotificationPage extends StatefulWidget {
+//   final String userId;
+//   const NotificationPage({Key? key, required this.userId}) : super(key: key);
 //   @override
 //   _NotificationPageState createState() => _NotificationPageState();
 // }
 
 // class _NotificationPageState extends State<NotificationPage> {
 //   List<NotificationItemData> notifications = [];
+//   bool isLoading = true;
 
 //   @override
 //   void initState() {
@@ -17,29 +34,69 @@
 //     fetchNotifications();
 //   }
 
-//   void fetchNotifications() {
-//     // Simulate fetching data from a backend
-//     Future.delayed(Duration(seconds: 1), () {
+//   Future<void> fetchNotifications() async {
+//     try {
+//       final response = await http.get(Uri.parse(
+//           'http://localhost:9999/notification/user/${widget.userId}'));
+//       if (response.statusCode == 200) {
+//         final data = json.decode(response.body);
+//         if (data['status']) {
+//           setState(() {
+//             notifications = (data['notifications'] as List)
+//                 .map((notification) => NotificationItemData(
+//                       id: notification['_id'],
+//                       title: notification['title'],
+//                       subtitle: notification['description'],
+//                       type: notification['type'],
+//                       imagePath: 'assets/Logo.png', // Use a default image path
+//                     ))
+//                 .toList();
+//             isLoading = false;
+//           });
+//         } else {
+//           setState(() {
+//             isLoading = false;
+//           });
+//         }
+//       } else {
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     } catch (e) {
 //       setState(() {
-//         notifications = [
-//           NotificationItemData(
-//             title: 'المنتجات الجديدة وصلت',
-//             subtitle: 'اكتشف المنتجات الجديدة الآن!',
-//             imagePath: 'assets/Logo.png',
-//           ),
-//           NotificationItemData(
-//             title: 'تم شحن الطلب',
-//             subtitle: 'تم شحن طلبك.',
-//             imagePath: 'assets/Logo.png',
-//           ),
-//           NotificationItemData(
-//             title: 'مرحبًا بك في Aurora',
-//             subtitle: 'التجارة الإلكترونية.',
-//             imagePath: 'assets/Logo.png',
-//           ),
-//         ];
+//         isLoading = false;
 //       });
-//     });
+//     }
+//   }
+
+//   void handleNotificationTap(NotificationItemData notification) {
+//     if (notification.type == 'blood') {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) => BloodDonationPage(
+//                   userId: widget.userId,
+//                   userRole: '',
+//                 )), // Replace with actual page
+//       );
+//     } else if (notification.type == 'emergency') {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) => ParamedicsPage(
+//                 userId: widget.userId,
+//                 userRole: '')), // Replace with actual page
+//       );
+//     } else if (notification.type == 'event') {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) => EventsPage(
+//                 userId: widget.userId,
+//                 userRole: '')), // Replace with actual page
+//       );
+//     }
 //   }
 
 //   @override
@@ -53,15 +110,14 @@
 //           'الإشعارات',
 //           textAlign: TextAlign.center,
 //           style: TextStyle(
-//             color: Color(0xFF071533),
-//             fontFamily: 'Amiri',
-//             fontSize: 23,
-//             fontWeight: FontWeight.bold
-//           ),
+//               color: Color(0xFF071533),
+//               fontFamily: 'Amiri',
+//               fontSize: 23,
+//               fontWeight: FontWeight.bold),
 //         ),
 //         centerTitle: true,
 //         actions: [
-//            IconButton(
+//           IconButton(
 //             icon: Icon(
 //               LineAwesomeIcons.angle_right_solid,
 //               color: Color(0xFF071533),
@@ -75,24 +131,39 @@
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
-//         child: notifications.isEmpty
+//         child: isLoading
 //             ? Center(
 //                 child: CircularProgressIndicator(
 //                   color: Color(0xFF071533),
 //                 ),
 //               )
-//             : ListView.separated(
-//                 itemCount: notifications.length,
-//                 itemBuilder: (context, index) {
-//                   final notification = notifications[index];
-//                   return NotificationItem(
-//                     title: notification.title,
-//                     subtitle: notification.subtitle,
-//                     imagePath: notification.imagePath,
-//                   );
-//                 },
-//                 separatorBuilder: (context, index) => Divider(color: Colors.grey),
-//               ),
+//             : notifications.isEmpty
+//                 ? Center(
+//                     child: Text(
+//                       'لا توجد إشعارات',
+//                       style: TextStyle(
+//                         color: Color(0xFF071533),
+//                         fontFamily: 'Amiri',
+//                         fontSize: 18,
+//                       ),
+//                     ),
+//                   )
+//                 : ListView.separated(
+//                     itemCount: notifications.length,
+//                     itemBuilder: (context, index) {
+//                       final notification = notifications[index];
+//                       return GestureDetector(
+//                         onTap: () => handleNotificationTap(notification),
+//                         child: NotificationItem(
+//                           title: notification.title,
+//                           subtitle: notification.subtitle,
+//                           imagePath: notification.imagePath,
+//                         ),
+//                       );
+//                     },
+//                     separatorBuilder: (context, index) =>
+//                         Divider(color: Colors.grey),
+//                   ),
 //       ),
 //     );
 //   }
@@ -148,13 +219,17 @@
 // }
 
 // class NotificationItemData {
+//   final String id;
 //   final String title;
 //   final String subtitle;
+//   final String type;
 //   final String imagePath;
 
 //   NotificationItemData({
+//     required this.id,
 //     required this.title,
 //     required this.subtitle,
+//     required this.type,
 //     required this.imagePath,
 //   });
 // }
@@ -170,17 +245,23 @@ import 'dart:convert';
 import '../screen/Emergencies/Paramedics.dart';
 import '../screen/Emergencies/bloodDonation.dart';
 import '../screen/bottomBarPages/activities/Events/events_main(1).dart';
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-// Import your pages here
+import '../screen/Emergencies/Paramedics.dart';
+import '../screen/Emergencies/bloodDonation.dart';
+import '../screen/bottomBarPages/activities/Events/events_main(1).dart';
 
 class NotificationPage extends StatefulWidget {
   final String userId;
-  const NotificationPage({Key? key, required this.userId}) : super(key: key);
+  const NotificationPage(
+      {Key? key,
+      required this.userId,
+      required Future<void> Function() onNotificationsRead})
+      : super(key: key);
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
@@ -192,7 +273,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
-    fetchNotifications();
+    fetchNotifications().then((_) => markNotificationsAsRead());
   }
 
   Future<void> fetchNotifications() async {
@@ -228,6 +309,19 @@ class _NotificationPageState extends State<NotificationPage> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  Future<void> markNotificationsAsRead() async {
+    try {
+      for (var notification in notifications) {
+        final url = Uri.parse(
+            'http://localhost:9999/notification/read/${notification.id}');
+        await http.patch(
+            url); // Assuming the API uses POST to mark notifications as read
+      }
+    } catch (e) {
+      print('Error marking notifications as read: $e');
     }
   }
 
@@ -335,11 +429,12 @@ class NotificationItem extends StatelessWidget {
   final String subtitle;
   final String imagePath;
 
-  NotificationItem({
+  const NotificationItem({
+    Key? key,
     required this.title,
     required this.subtitle,
     required this.imagePath,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -382,7 +477,7 @@ class NotificationItem extends StatelessWidget {
 class NotificationItemData {
   final String id;
   final String title;
-  final String subtitle;
+  final String subtitle; 
   final String type;
   final String imagePath;
 

@@ -894,78 +894,54 @@ Widget _buildReportsContent() {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+             return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        titlePadding: EdgeInsets.only(top: 10, left: 10, right: 10),
+        title: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                'إلغاء الحساب',
+                textAlign: TextAlign.right,
+                style: TextStyle(fontFamily: 'Amiri'),
               ),
-              titlePadding: EdgeInsets.only(top: 10, left: 10, right: 10),
-              title: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      'إلغاء الحساب',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontFamily: 'Amiri'),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ],
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'أدخل الكود الذي تم إرساله إلى بريدك الإلكتروني',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(fontFamily: 'Amiri'),
-                  ),
-                  TextField(
-                    controller: codeController,
-                    textAlign: TextAlign.right,
-                    cursorColor: Color(0xFFffe145),
-                    decoration: InputDecoration(
-                      hintText: "أدخل الكود",
-                      hintStyle: TextStyle(fontFamily: 'Amiri'),
-                      hintTextDirection: TextDirection.rtl,
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFFffe145)),
-                      ),
-                      errorText:
-                          isError ? "الكود غير صحيح. حاول مرة أخرى" : null,
-                      errorStyle: TextStyle(fontFamily: 'Amiri'),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    if (codeController.text == correctCode) {
-                      // Perform account deletion and navigate to login page
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Container()));
-                    } else {
-                      setState(() {
-                        isError = true;
-                      });
-                    }
-                  },
-                  child: Text('حذف',
-                      style: TextStyle(
-                          fontFamily: 'Amiri', color: Color(0xFFffe145))),
-                ),
-              ],
-            );
+            ),
+          ],
+        ),
+        content: Text(
+          'هل تريد تأكيد حذف الحساب؟',
+          textAlign: TextAlign.right,
+          style: TextStyle(fontFamily: 'Amiri'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('إلغاء', style: TextStyle(fontFamily: 'Amiri')),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('تأكيد',
+                style: TextStyle(fontFamily: 'Amiri', color: Color(0xFFffe145))),
+          ),
+        ],
+      );
           },
         );
       },

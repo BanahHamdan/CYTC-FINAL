@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 // import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 // import 'package:cytc/UserPages/screen/auth/login.dart';
 // import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
@@ -35,6 +33,8 @@
 //   final TextEditingController universityController = TextEditingController();
 //   final TextEditingController majorController = TextEditingController();
 //   final TextEditingController trainingHoursController = TextEditingController();
+//   final TextEditingController gpaController = TextEditingController(); // New Controller
+//   final TextEditingController skillsController = TextEditingController(); // New Controller
 //   final TextEditingController cvController = TextEditingController();
 
 //   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -67,6 +67,8 @@
 //       universityController.clear();
 //       majorController.clear();
 //       trainingHoursController.clear();
+//       gpaController.clear(); // Clear new field
+//       skillsController.clear(); // Clear new field
 //       cvController.clear();
 //     } else {
 //       // Error occurred
@@ -152,6 +154,18 @@
 //                 controller: trainingHoursController,
 //                 icon: Icons.timer,
 //                 hintText: 'عدد ساعات التدريب',
+//               ),
+//               SizedBox(height: 16),
+//               _buildInputField(
+//                 controller: gpaController,
+//                 icon: Icons.grade,
+//                 hintText: 'معدلك الجامعي:',
+//               ),
+//               SizedBox(height: 16),
+//               _buildInputField(
+//                 controller: skillsController,
+//                 icon: Icons.build,
+//                 hintText: 'اخبرنا عن مهاراتك:',
 //               ),
 //               SizedBox(height: 16),
 //               _buildInputField(
@@ -430,6 +444,8 @@
 // }
 
 
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
 import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
@@ -439,12 +455,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 ////////////////////////////////////////////
 ///
-import 'package:cytc/UserPages/screen/Profile/ProfilePage.dart';
-import 'package:cytc/UserPages/screen/auth/login.dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/activities/Suggestions/Suggestions_main(1).dart';
-import 'package:cytc/UserPages/screen/bottomBarPages/buttonBar.dart';
+///
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -465,8 +477,10 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
   final TextEditingController universityController = TextEditingController();
   final TextEditingController majorController = TextEditingController();
   final TextEditingController trainingHoursController = TextEditingController();
-  final TextEditingController gpaController = TextEditingController(); // New Controller
-  final TextEditingController skillsController = TextEditingController(); // New Controller
+  final TextEditingController gpaController =
+      TextEditingController(); // New Controller
+  final TextEditingController skillsController =
+      TextEditingController(); // New Controller
   final TextEditingController cvController = TextEditingController();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -481,10 +495,13 @@ class _universityTrainingPageState extends State<universityTrainingPage> {
       },
       body: json.encode({
         "fullName": nameController.text,
+        "email": emailController.text, // Add email to request body
         "universityName": universityController.text,
         "field": majorController.text,
         "trainingHours": trainingHoursController.text,
         "cv": cvController.text,
+        "gpa": gpaController.text, // Add GPA to request body
+        "skills": skillsController.text, // Add skills to request body
       }),
     );
 
@@ -874,3 +891,4 @@ class CustomAppBarClipper extends CustomClipper<Path> {
     return false;
   }
 }
+
