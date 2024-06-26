@@ -1,19 +1,22 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 // // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
+// import 'dart:convert';
 // import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
 // import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 // import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:charts_flutter/flutter.dart' as charts;
+// import 'VolunteerOfTheMonth.dart';
+// /////////////////////////////
+// import 'dart:convert';
+// import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
+// import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
 // import 'package:charts_flutter/flutter.dart' as charts;
 // import 'VolunteerOfTheMonth.dart';
 
 // class AdminHomePage extends StatelessWidget {
-//   final String userId;
-//   final Widget child;
-
-//   const AdminHomePage({Key? key, required this.userId, required this.child})
-//       : super(key: key);
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
@@ -21,11 +24,10 @@
 //       theme: ThemeData(
 //         primaryColor: Color(0xFF071533),
 //         fontFamily: 'Amiri',
-//         textTheme: TextTheme(
-//             // : TextStyle(color: Colors.black),
-//             ),
+//         textTheme: TextTheme(),
 //       ),
-//       home: AdminHome(),
+//       home: AdminHome(userId: '',
+//       child: Text(''),),
 //     );
 //   }
 // }
@@ -33,11 +35,19 @@
 // class AdminHome extends StatefulWidget {
 //   @override
 //   _AdminHomePageState createState() => _AdminHomePageState();
+
+//     final String userId;
+//   final Widget child;
+
+//   const AdminHome({Key? key, required this.userId, required this.child})
+//       : super(key: key);
 // }
 
 // class _AdminHomePageState extends State<AdminHome> {
 //   late List<charts.Series<PersonEvent, String>> _seriesData;
 //   late List<charts.Series<EventParticipants, String>> _seriesEventData;
+//   bool isLoading = true;
+//   bool isParticipantsLoading = true;
 
 //   List<Volunteer> adminVolunteers = [
 //     Volunteer(
@@ -85,48 +95,97 @@
 //     });
 //   }
 
-//   _generateData() {
-//     var personData = [
-//       PersonEvent('Person 1', 10),
-//       PersonEvent('Person 2', 15),
-//       PersonEvent('Person 3', 20),
-//       PersonEvent('Person 4', 25),
-//       PersonEvent('Person 5', 30),
-//     ];
+//   Future<void> _fetchTopParticipants() async {
+//     final response = await http
+//         .get(Uri.parse('http://localhost:9999/event-user/top-participants'));
 
-//     _seriesData.add(
-//       charts.Series(
-//         domainFn: (PersonEvent personEvent, _) => personEvent.person,
-//         measureFn: (PersonEvent personEvent, _) => personEvent.events,
-//         id: 'Events',
-//         data: personData,
-//         fillPatternFn: (, _) => charts.FillPatternType.solid,
-//         fillColorFn: (PersonEvent personEvent, _) =>
-//             charts.ColorUtil.fromDartColor(Color(0xFFffe145)),
-//       ),
-//     );
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//       if (data['status']) {
+//         List<PersonEvent> personData = [];
 
-//     var eventData = [
-//       EventParticipants('Event 1', 10),
-//       EventParticipants('Event 2', 20),
-//       EventParticipants('Event 3', 30),
-//       EventParticipants('Event 4', 40),
-//       EventParticipants('Event 5', 50),
-//     ];
+//         for (var participant in data['topParticipants']) {
+//           final userId = participant['userId'];
+//           final eventCount = participant['eventCount'];
+//           final userResponse =
+//               await http.get(Uri.parse('http://localhost:9999/user/$userId'));
+//           // .get(Uri.parse('http://127.0.0.1:9999/user/${widget.userId}'));
 
-//     _seriesEventData.add(
-//       charts.Series(
-//         domainFn: (EventParticipants eventParticipants, _) =>
-//             eventParticipants.event,
-//         measureFn: (EventParticipants eventParticipants, _) =>
-//             eventParticipants.participants,
-//         id: 'Participants',
-//         data: eventData,
-//         fillPatternFn: (, _) => charts.FillPatternType.solid,
-//         fillColorFn: (EventParticipants eventParticipants, _) =>
-//             charts.ColorUtil.fromDartColor(Color.fromRGBO(17, 36, 78, 0.576)),
-//       ),
-//     );
+//           if (userResponse.statusCode == 200) {
+//             final userData = jsonDecode(userResponse.body);
+//             if (userData['status']) {
+//               final username = userData['user']['username'];
+//               personData.add(PersonEvent(username, eventCount));
+//             } else {
+//               print('Error: Failed to get user data for userId: $userId');
+//             }
+//           } else {
+//             print(
+//                 'Error: Failed to fetch user data for userId: $userId, StatusCode: ${userResponse.statusCode}');
+//           }
+//         }
+
+//                setState(() {
+//           _seriesData = [
+//             charts.Series(
+//               domainFn: (PersonEvent personEvent, _) => personEvent.person,
+//               measureFn: (PersonEvent personEvent, _) => personEvent.events,
+//               id: 'Events',
+//               data: personData,
+//               fillPatternFn: (_, __) => charts.FillPatternType.solid,
+//               fillColorFn: (PersonEvent personEvent, __) =>
+//                   charts.ColorUtil.fromDartColor(Color(0xFFffe145),),
+//             ),
+//           ];
+//           isParticipantsLoading = false;
+//         });
+
+//       } else {
+//         print('Error: Failed to fetch top participants');
+//       }
+//     } else {
+//       print(
+//           'Error: Failed to fetch top participants, StatusCode: ${response.statusCode}');
+//     }
+//   }
+
+//   Future<void> _fetchTopEvents() async {
+//     final response = await http
+//         .get(Uri.parse('http://localhost:9999/event-user/top-events'));
+
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//       if (data['status']) {
+//         final List<EventParticipants> eventData = (data['topEvents'] as List)
+//             .map((event) =>
+//                 EventParticipants(event['name'], event['participantCount']))
+//             .toList();
+
+//                 setState(() {
+//           _seriesEventData = [
+//             charts.Series(
+//               domainFn: (EventParticipants eventParticipants, _) =>
+//                   eventParticipants.event,
+//               measureFn: (EventParticipants eventParticipants, _) =>
+//                   eventParticipants.participants,
+//               id: 'Participants',
+//               data: eventData,
+//               fillPatternFn: (_, __) => charts.FillPatternType.solid,
+//               fillColorFn: (EventParticipants eventParticipants, __) =>
+//                   charts.ColorUtil.fromDartColor(
+//                       Color.fromRGBO(17, 36, 78, 0.576)),
+//             ),
+//           ];
+//           isLoading = false;
+//         });
+
+//       } else {
+//         print('Error: Failed to fetch top events');
+//       }
+//     } else {
+//       print(
+//           'Error: Failed to fetch top events, StatusCode: ${response.statusCode}');
+//     }
 //   }
 
 //   @override
@@ -134,7 +193,8 @@
 //     super.initState();
 //     _seriesData = <charts.Series<PersonEvent, String>>[];
 //     _seriesEventData = <charts.Series<EventParticipants, String>>[];
-//     _generateData();
+//     _fetchTopParticipants();
+//     _fetchTopEvents();
 //   }
 
 //   void _chooseVolunteerAutomatically() {
@@ -147,15 +207,15 @@
 
 //   void _chooseVolunteerManually() {
 //     Navigator.of(context).push(
-      // MaterialPageRoute(
-      //   builder: (context) => VolunteerOfTheMonth(
-      //     onSelected: (volunteer) {
-      //       setState(() {
-      //         selectedVolunteer = volunteer;
-      //       });
-      //     },
-      //   ),
-      // ),
+//       MaterialPageRoute(
+//         builder: (context) => VolunteerOfTheMonth(
+//           onSelected: (volunteer) {
+//             setState(() {
+//               // selectedVolunteer = volunteer;
+//             });
+//           },
+//         ),
+//       ),
 //     );
 //   }
 
@@ -187,6 +247,7 @@
 //                     fontSize: 18,
 //                     fontWeight: FontWeight.bold,
 //                     color: Color(0xFFffe145),
+//                     fontFamily: 'Amiri',
 //                   ),
 //                 ),
 //                 Image.asset(
@@ -235,19 +296,23 @@
 //                   fontSize: 15,
 //                   fontWeight: FontWeight.bold,
 //                   color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                 ),
 //               ),
 //               SizedBox(height: 8),
-//               SizedBox(
-//                 height: 150, // Adjust the height to make the chart smaller
-//                 width: 350,
-//                 child: charts.BarChart(
-//                   _seriesData,
-//                   animate: true,
-//                   barGroupingType: charts.BarGroupingType.grouped,
-//                   animationDuration: Duration(seconds: 5),
-//                 ),
-//               ),
+//               isParticipantsLoading
+//                   ? Center(child: CircularProgressIndicator())
+//                   : SizedBox(
+//                       height:
+//                           150, // Adjust the height to make the chart smaller
+//                       width: 350,
+//                       child: charts.BarChart(
+//                         _seriesData,
+//                         animate: true,
+//                         barGroupingType: charts.BarGroupingType.grouped,
+//                         animationDuration: Duration(seconds: 5),
+//                       ),
+//                     ),
 //             ],
 //           ),
 //         ),
@@ -255,45 +320,123 @@
 //     );
 //   }
 
-//   Widget _buildCardPopularActivities() {
-//     return SizedBox(
-//       width: 300, // Adjust the width as needed
-//       height: 220, // Adjust the height as needed
-//       child: Card(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(11.25),
-//         ),
-//         child: Container(
-//           padding: EdgeInsets.all(10.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.end,
-//             children: [
-//               Text(
-//                 'الانشطة ذات الاقبال الاكبر',
-//                 textAlign: TextAlign.center,
-//                 style: TextStyle(
-//                   color: Color(0xFF071533),
-//                   fontSize: 15,
-//                   fontWeight: FontWeight.bold,
-//                 ),
+// Widget _buildCardPopularActivities() {
+//   return SizedBox(
+//     width: 500, // Increase the width to utilize empty space
+//     height: 220, // Adjust the height as needed
+//     child: Card(
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(11.25),
+//       ),
+//       child: Container(
+//         padding: EdgeInsets.all(10.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           children: [
+//             Text(
+//               'الانشطة ذات الاقبال الاكبر',
+//               textAlign: TextAlign.center,
+//               style: TextStyle(
+//               color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
+//                 fontSize: 15,
+//                 fontWeight: FontWeight.bold,
 //               ),
-//               SizedBox(height: 8),
-//               SizedBox(
-//                 height: 150, // Adjust the height to make the chart smaller
-//                 width: 350,
-//                 child: charts.BarChart(
-//                   _seriesEventData,
-//                   animate: true,
-//                   barGroupingType: charts.BarGroupingType.grouped,
-//                   animationDuration: Duration(seconds: 5),
-//                 ),
-//               ),
-//             ],
-//           ),
+//             ),
+//             SizedBox(height: 8),
+//             isLoading
+//                 ? Center(child: CircularProgressIndicator())
+//                 : SizedBox(
+//                     height: 150, // Adjust the height to make the chart smaller
+//                     width: 480, // Adjust the width to fit within the card
+//                     child: charts.BarChart(
+//                       _seriesEventData,
+//                       animate: true,
+//                       barGroupingType: charts.BarGroupingType.grouped,
+//                       animationDuration: Duration(seconds: 5),
+//                       domainAxis: charts.OrdinalAxisSpec(
+//                         renderSpec: charts.SmallTickRendererSpec(
+//                           labelStyle: charts.TextStyleSpec(
+//                             // color: Color(0xFF071533),
+//                             fontFamily: 'Amiri',
+//                             fontSize: 9, // Adjust the font size as needed
+//                             color: charts.MaterialPalette.black,
+//                           ),
+//                           labelRotation: 0, // No rotation
+//                           labelAnchor: charts.TickLabelAnchor.centered,
+//                         ),
+//                         tickProviderSpec: charts.StaticOrdinalTickProviderSpec(
+//                           _seriesEventData.first.data.map((e) {
+//                             String formattedLabel = e.event
+//                                 .replaceAllMapped(
+//                                   RegExp(r'(\S{8})'),
+//                                   (match) => '${match[1]}\n',
+//                                 )
+//                                 .trim();
+//                             return charts.TickSpec(formattedLabel);
+//                           }).toList(),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//           ],
 //         ),
 //       ),
-//     );
-//   }
+//     ),
+//   );
+// }
+
+//   // Widget _buildCardPopularActivities() {
+//   //   return SizedBox(
+//   //     width: 500, // Increase the width to utilize empty space
+//   //     height: 220, // Adjust the height as needed
+//   //     child: Card(
+//   //       shape: RoundedRectangleBorder(
+//   //         borderRadius: BorderRadius.circular(11.25),
+//   //       ),
+//   //       child: Container(
+//   //         padding: EdgeInsets.all(10.0),
+//   //         child: Column(
+//   //           crossAxisAlignment: CrossAxisAlignment.end,
+//   //           children: [
+//   //             Text(
+//   //               'الانشطة ذات الاقبال الاكبر',
+//   //               textAlign: TextAlign.center,
+//   //               style: TextStyle(
+//   //                 color: Color(0xFF071533),
+//   //                 fontSize: 15,
+//   //                 fontWeight: FontWeight.bold,
+//   //               ),
+//   //             ),
+//   //             SizedBox(height: 8),
+//   //             isLoading
+//   //                 ? Center(child: CircularProgressIndicator())
+//   //                 : SizedBox(
+//   //                     height:
+//   //                         150, // Adjust the height to make the chart smaller
+//   //                     width: 480, // Adjust the width to fit within the card
+//   //                     child: charts.BarChart(
+//   //                       _seriesEventData,
+//   //                       animate: true,
+//   //                       barGroupingType: charts.BarGroupingType.grouped,
+//   //                       animationDuration: Duration(seconds: 5),
+//   //                       domainAxis: charts.OrdinalAxisSpec(
+//   //                         renderSpec: charts.SmallTickRendererSpec(
+//   //                           labelRotation: 45,
+//   //                           labelStyle: charts.TextStyleSpec(
+//   //                             fontSize: 10, // Adjust the font size as needed
+//   //                             color: charts.MaterialPalette.black,
+//   //                           ),
+//   //                         ),
+//   //                       ),
+//   //                     ),
+//   //                   ),
+//   //           ],
+//   //         ),
+//   //       ),
+//   //     ),
+//   //   );
+//   // }
 
 //   Widget _buildEditableCardVolunteerOfTheMonth() {
 //     return SizedBox(
@@ -314,6 +457,7 @@
 //                 'قم باختيار متطوع الشهر المثالي',
 //                 style: TextStyle(
 //                   color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                   fontSize: 15,
 //                   fontWeight: FontWeight.bold,
 //                 ),
@@ -326,6 +470,7 @@
 //                 'طريقة الاختيار',
 //                 style: TextStyle(
 //                   color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                   fontSize: 12,
 //                   fontWeight: FontWeight.bold,
 //                 ),
@@ -339,6 +484,7 @@
 //                     style: TextStyle(
 //                       fontSize: 10,
 //                       color: Color(0xFFE94444),
+//         fontFamily: 'Amiri',
 //                       decoration: TextDecoration.underline,
 //                     )),
 //               ),
@@ -348,6 +494,7 @@
 //                     style: TextStyle(
 //                       fontSize: 10,
 //                       color: Color(0xFFE94444),
+//         fontFamily: 'Amiri',
 //                       decoration: TextDecoration.underline,
 //                     )),
 //               ),
@@ -415,7 +562,8 @@
 //                     ),
 //                     child: Text(
 //                       'تأكيد',
-//                       style: TextStyle(fontSize: 10, color: Color(0xFF071533)),
+//                       style: TextStyle(fontSize: 10, color: Color(0xFF071533),
+//         fontFamily: 'Amiri',),
 //                     ),
 //                   ),
 //                 ],
@@ -446,6 +594,7 @@
 //                 'تعريف عن المركز',
 //                 style: TextStyle(
 //                   color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                   fontSize: 15,
 //                   fontWeight: FontWeight.bold,
 //                 ),
@@ -457,7 +606,8 @@
 //                       controller: controller2,
 //                       textAlign: TextAlign.right,
 //                       maxLines: null,
-//                       style: TextStyle(color: Color(0xFF071533), fontSize: 10),
+//                       style: TextStyle(color: Color(0xFF071533),
+//         fontFamily: 'Amiri', fontSize: 10),
 //                       cursorColor: Color(0xFFffe145),
 //                       decoration: InputDecoration(
 //                         border: OutlineInputBorder(
@@ -474,6 +624,8 @@
 //                       controller2.text,
 //                       style: TextStyle(
 //                         fontSize: 10,
+//                         color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                       ),
 //                     ),
 //               Spacer(),
@@ -493,6 +645,7 @@
 //                         style: TextStyle(
 //                           fontSize: 10,
 //                           color: Colors.white,
+//         fontFamily: 'Amiri',
 //                         )),
 //                   ),
 //                   ElevatedButton(
@@ -512,6 +665,7 @@
 //                         style: TextStyle(
 //                           fontSize: 10,
 //                           color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                         )),
 //                   ),
 //                 ],
@@ -528,10 +682,12 @@
 //       width: 80, // Adjust the width as needed
 //       height: 150, // Adjust the height as needed
 //       child: InkWell(
-//         onTap: () {
+//         onTap: () { 
 //           Navigator.push(
 //             context,
-//             MaterialPageRoute(builder: (context) => ParamedicsRequests()),
+//             MaterialPageRoute(
+//               builder: (context) => ParamedicsRequests()
+//               ),
 //           );
 //         },
 //         child: Card(
@@ -550,6 +706,7 @@
 //                     textAlign: TextAlign.center,
 //                     style: TextStyle(
 //                       color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                       fontSize: 15,
 //                       fontWeight: FontWeight.bold,
 //                     ),
@@ -596,6 +753,7 @@
 //                     textAlign: TextAlign.center,
 //                     style: TextStyle(
 //                       color: Color(0xFF071533),
+//         fontFamily: 'Amiri',
 //                       fontSize: 15,
 //                       fontWeight: FontWeight.bold,
 //                     ),
@@ -631,6 +789,29 @@
 //   EventParticipants(this.event, this.participants);
 // }
 
+// class Volunteer {
+//   final String name;
+//   final String email;
+//   final String phoneNumber;
+//   final String address;
+//   final String bloodType;
+//   final String birthDate;
+//   final String imageUrl;
+//   bool isSelected;
+
+//   Volunteer({
+//     required this.name,
+//     required this.email,
+//     required this.phoneNumber,
+//     required this.address,
+//     required this.bloodType,
+//     required this.birthDate,
+//     required this.imageUrl,
+//     this.isSelected = false,
+//   });
+// }
+
+
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
 import 'dart:convert';
@@ -642,8 +823,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'VolunteerOfTheMonth.dart';
 /////////////////////////////
 import 'dart:convert';
-import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
-import 'package:cytc/AdminPages/Home/Emergencies/addParamedics.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -659,8 +838,10 @@ class AdminHomePage extends StatelessWidget {
         fontFamily: 'Amiri',
         textTheme: TextTheme(),
       ),
-      home: AdminHome(userId: '',
-      child: Text(''),),
+      home: AdminHome(
+        userId: '',
+        child: Text(''),
+      ),
     );
   }
 }
@@ -669,7 +850,7 @@ class AdminHome extends StatefulWidget {
   @override
   _AdminHomePageState createState() => _AdminHomePageState();
 
-    final String userId;
+  final String userId;
   final Widget child;
 
   const AdminHome({Key? key, required this.userId, required this.child})
@@ -691,6 +872,7 @@ class _AdminHomePageState extends State<AdminHome> {
       bloodType: 'O+',
       birthDate: '01/01/1990',
       imageUrl: 'assets/banah.jpg',
+      id: '1',
     ),
     Volunteer(
       name: 'Person 2',
@@ -700,6 +882,7 @@ class _AdminHomePageState extends State<AdminHome> {
       bloodType: 'A-',
       birthDate: '02/02/1985',
       imageUrl: 'assets/images/person2.png',
+      id: '2',
     ),
     Volunteer(
       name: 'Person 3',
@@ -709,6 +892,7 @@ class _AdminHomePageState extends State<AdminHome> {
       bloodType: 'B+',
       birthDate: '03/03/1980',
       imageUrl: 'assets/images/person3.png',
+      id: '3',
     ),
   ];
 
@@ -721,11 +905,50 @@ class _AdminHomePageState extends State<AdminHome> {
       text:
           'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية الشباب ومهاراتهم الخ الخ الخ');
 
-  void _saveEdit() {
-    setState(() {
-      isEditing1 = false;
-      isEditing2 = false;
-    });
+  void _saveEdit() async {
+    if (selectedVolunteer != null) {
+      final now = DateTime.now();
+      final month =
+          '${now.month.toString().padLeft(2, '0')}'; // Formats month as "YYYY-MM"
+
+      final url = Uri.parse('http://localhost:9999/volunteer/add');
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'userId': selectedVolunteer!
+              .id, // Assuming 'id' field exists in your Volunteer model
+          'username': selectedVolunteer!.name,
+          'userImageUrl': selectedVolunteer!.imageUrl,
+          'month': month,
+        }),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Handle successful response
+        final responseData = jsonDecode(response.body);
+        if (responseData['status']) {
+          // Show a success message or update your UI
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Volunteer added successfully')),
+          );
+        } else {
+          // Handle error response
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text(
+                    'Failed to add volunteer: ${responseData['message']}')),
+          );
+        }
+      } else {
+        // Handle error in request
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error occurred while adding volunteer')),
+        );
+      }
+    }
   }
 
   Future<void> _fetchTopParticipants() async {
@@ -758,7 +981,7 @@ class _AdminHomePageState extends State<AdminHome> {
           }
         }
 
-               setState(() {
+        setState(() {
           _seriesData = [
             charts.Series(
               domainFn: (PersonEvent personEvent, _) => personEvent.person,
@@ -767,12 +990,13 @@ class _AdminHomePageState extends State<AdminHome> {
               data: personData,
               fillPatternFn: (_, __) => charts.FillPatternType.solid,
               fillColorFn: (PersonEvent personEvent, __) =>
-                  charts.ColorUtil.fromDartColor(Color(0xFFffe145),),
+                  charts.ColorUtil.fromDartColor(
+                Color(0xFFffe145),
+              ),
             ),
           ];
           isParticipantsLoading = false;
         });
-
       } else {
         print('Error: Failed to fetch top participants');
       }
@@ -785,6 +1009,8 @@ class _AdminHomePageState extends State<AdminHome> {
   Future<void> _fetchTopEvents() async {
     final response = await http
         .get(Uri.parse('http://localhost:9999/event-user/top-events'));
+    print('t0p events ');
+    print(response.body);
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -794,7 +1020,7 @@ class _AdminHomePageState extends State<AdminHome> {
                 EventParticipants(event['name'], event['participantCount']))
             .toList();
 
-                setState(() {
+        setState(() {
           _seriesEventData = [
             charts.Series(
               domainFn: (EventParticipants eventParticipants, _) =>
@@ -811,7 +1037,6 @@ class _AdminHomePageState extends State<AdminHome> {
           ];
           isLoading = false;
         });
-
       } else {
         print('Error: Failed to fetch top events');
       }
@@ -830,12 +1055,51 @@ class _AdminHomePageState extends State<AdminHome> {
     _fetchTopEvents();
   }
 
-  void _chooseVolunteerAutomatically() {
-    // Replace with your logic for automated selection
-    Volunteer automatedVolunteer = adminVolunteers[0]; // Example
-    setState(() {
-      selectedVolunteer = automatedVolunteer;
-    });
+  void _chooseVolunteerAutomatically() async {
+    final topParticipantUrl =
+        Uri.parse('http://localhost:9999/event-user/top-one');
+    try {
+      final topParticipantResponse = await http.get(topParticipantUrl);
+      if (topParticipantResponse.statusCode == 200) {
+        final topParticipantData = jsonDecode(topParticipantResponse.body);
+        if (topParticipantData['status'] &&
+            topParticipantData['topParticipants'].isNotEmpty) {
+          final userId = topParticipantData['topParticipants'][0]['userId'];
+
+          final userDetailsUrl =
+              Uri.parse('http://localhost:9999/user/$userId');
+          final userDetailsResponse = await http.get(userDetailsUrl);
+          if (userDetailsResponse.statusCode == 200) {
+            final userData = jsonDecode(userDetailsResponse.body);
+            if (userData['status']) {
+              final user = userData['user'];
+              setState(() {
+                selectedVolunteer = Volunteer(
+                  name: user['username'],
+                  email: user['email'],
+                  phoneNumber: user['phoneNumber'],
+                  address:
+                      user['city'], // Assuming city is used as address here
+                  bloodType: user['bloodType'],
+                  birthDate:
+                      user['birthDate'].substring(0, 10), // Format the date
+                  imageUrl: user['imageUrl'],
+                  id: user['id'],
+                );
+              });
+            }
+          } else {
+            print('Failed to fetch user details');
+          }
+        } else {
+          print('No active participants found');
+        }
+      } else {
+        print('Failed to fetch top participant');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+    }
   }
 
   void _chooseVolunteerManually() {
@@ -929,7 +1193,7 @@ class _AdminHomePageState extends State<AdminHome> {
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                  fontFamily: 'Amiri',
                 ),
               ),
               SizedBox(height: 8),
@@ -953,123 +1217,73 @@ class _AdminHomePageState extends State<AdminHome> {
     );
   }
 
-Widget _buildCardPopularActivities() {
-  return SizedBox(
-    width: 500, // Increase the width to utilize empty space
-    height: 220, // Adjust the height as needed
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(11.25),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              'الانشطة ذات الاقبال الاكبر',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-              color: Color(0xFF071533),
-        fontFamily: 'Amiri',
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+  Widget _buildCardPopularActivities() {
+    return SizedBox(
+      width: 500, // Increase the width to utilize empty space
+      height: 220, // Adjust the height as needed
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(11.25),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'الانشطة ذات الاقبال الاكبر',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF071533),
+                  fontFamily: 'Amiri',
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            isLoading
-                ? Center(child: CircularProgressIndicator())
-                : SizedBox(
-                    height: 150, // Adjust the height to make the chart smaller
-                    width: 480, // Adjust the width to fit within the card
-                    child: charts.BarChart(
-                      _seriesEventData,
-                      animate: true,
-                      barGroupingType: charts.BarGroupingType.grouped,
-                      animationDuration: Duration(seconds: 5),
-                      domainAxis: charts.OrdinalAxisSpec(
-                        renderSpec: charts.SmallTickRendererSpec(
-                          labelStyle: charts.TextStyleSpec(
-                            // color: Color(0xFF071533),
-                            fontFamily: 'Amiri',
-                            fontSize: 9, // Adjust the font size as needed
-                            color: charts.MaterialPalette.black,
+              SizedBox(height: 8),
+              isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : SizedBox(
+                      height:
+                          150, // Adjust the height to make the chart smaller
+                      width: 480, // Adjust the width to fit within the card
+                      child: charts.BarChart(
+                        _seriesEventData,
+                        animate: true,
+                        barGroupingType: charts.BarGroupingType.grouped,
+                        animationDuration: Duration(seconds: 5),
+                        domainAxis: charts.OrdinalAxisSpec(
+                          renderSpec: charts.SmallTickRendererSpec(
+                            labelStyle: charts.TextStyleSpec(
+                              // color: Color(0xFF071533),
+                              fontFamily: 'Amiri',
+                              fontSize: 9, // Adjust the font size as needed
+                              color: charts.MaterialPalette.black,
+                            ),
+                            labelRotation: 0, // No rotation
+                            labelAnchor: charts.TickLabelAnchor.centered,
                           ),
-                          labelRotation: 0, // No rotation
-                          labelAnchor: charts.TickLabelAnchor.centered,
-                        ),
-                        tickProviderSpec: charts.StaticOrdinalTickProviderSpec(
-                          _seriesEventData.first.data.map((e) {
-                            String formattedLabel = e.event
-                                .replaceAllMapped(
-                                  RegExp(r'(\S{8})'),
-                                  (match) => '${match[1]}\n',
-                                )
-                                .trim();
-                            return charts.TickSpec(formattedLabel);
-                          }).toList(),
+                          tickProviderSpec:
+                              charts.StaticOrdinalTickProviderSpec(
+                            _seriesEventData.first.data.map((e) {
+                              String formattedLabel = e.event
+                                  .replaceAllMapped(
+                                    RegExp(r'(\S{8})'),
+                                    (match) => '${match[1]}\n',
+                                  )
+                                  .trim();
+                              return charts.TickSpec(formattedLabel);
+                            }).toList(),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
-  // Widget _buildCardPopularActivities() {
-  //   return SizedBox(
-  //     width: 500, // Increase the width to utilize empty space
-  //     height: 220, // Adjust the height as needed
-  //     child: Card(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(11.25),
-  //       ),
-  //       child: Container(
-  //         padding: EdgeInsets.all(10.0),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.end,
-  //           children: [
-  //             Text(
-  //               'الانشطة ذات الاقبال الاكبر',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(
-  //                 color: Color(0xFF071533),
-  //                 fontSize: 15,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             SizedBox(height: 8),
-  //             isLoading
-  //                 ? Center(child: CircularProgressIndicator())
-  //                 : SizedBox(
-  //                     height:
-  //                         150, // Adjust the height to make the chart smaller
-  //                     width: 480, // Adjust the width to fit within the card
-  //                     child: charts.BarChart(
-  //                       _seriesEventData,
-  //                       animate: true,
-  //                       barGroupingType: charts.BarGroupingType.grouped,
-  //                       animationDuration: Duration(seconds: 5),
-  //                       domainAxis: charts.OrdinalAxisSpec(
-  //                         renderSpec: charts.SmallTickRendererSpec(
-  //                           labelRotation: 45,
-  //                           labelStyle: charts.TextStyleSpec(
-  //                             fontSize: 10, // Adjust the font size as needed
-  //                             color: charts.MaterialPalette.black,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+    );
+  }
 
   Widget _buildEditableCardVolunteerOfTheMonth() {
     return SizedBox(
@@ -1090,7 +1304,7 @@ Widget _buildCardPopularActivities() {
                 'قم باختيار متطوع الشهر المثالي',
                 style: TextStyle(
                   color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                  fontFamily: 'Amiri',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1103,7 +1317,7 @@ Widget _buildCardPopularActivities() {
                 'طريقة الاختيار',
                 style: TextStyle(
                   color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                  fontFamily: 'Amiri',
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1117,7 +1331,7 @@ Widget _buildCardPopularActivities() {
                     style: TextStyle(
                       fontSize: 10,
                       color: Color(0xFFE94444),
-        fontFamily: 'Amiri',
+                      fontFamily: 'Amiri',
                       decoration: TextDecoration.underline,
                     )),
               ),
@@ -1127,7 +1341,7 @@ Widget _buildCardPopularActivities() {
                     style: TextStyle(
                       fontSize: 10,
                       color: Color(0xFFE94444),
-        fontFamily: 'Amiri',
+                      fontFamily: 'Amiri',
                       decoration: TextDecoration.underline,
                     )),
               ),
@@ -1158,7 +1372,7 @@ Widget _buildCardPopularActivities() {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(
                                 15.0), // Adjust the radius as needed
-                            child: Image.asset(
+                            child: Image.network(
                               selectedVolunteer!.imageUrl,
                               height: 70,
                               width: 70,
@@ -1195,8 +1409,11 @@ Widget _buildCardPopularActivities() {
                     ),
                     child: Text(
                       'تأكيد',
-                      style: TextStyle(fontSize: 10, color: Color(0xFF071533),
-        fontFamily: 'Amiri',),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Color(0xFF071533),
+                        fontFamily: 'Amiri',
+                      ),
                     ),
                   ),
                 ],
@@ -1227,7 +1444,7 @@ Widget _buildCardPopularActivities() {
                 'تعريف عن المركز',
                 style: TextStyle(
                   color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                  fontFamily: 'Amiri',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -1239,8 +1456,10 @@ Widget _buildCardPopularActivities() {
                       controller: controller2,
                       textAlign: TextAlign.right,
                       maxLines: null,
-                      style: TextStyle(color: Color(0xFF071533),
-        fontFamily: 'Amiri', fontSize: 10),
+                      style: TextStyle(
+                          color: Color(0xFF071533),
+                          fontFamily: 'Amiri',
+                          fontSize: 10),
                       cursorColor: Color(0xFFffe145),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -1258,7 +1477,7 @@ Widget _buildCardPopularActivities() {
                       style: TextStyle(
                         fontSize: 10,
                         color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                        fontFamily: 'Amiri',
                       ),
                     ),
               Spacer(),
@@ -1278,7 +1497,7 @@ Widget _buildCardPopularActivities() {
                         style: TextStyle(
                           fontSize: 10,
                           color: Colors.white,
-        fontFamily: 'Amiri',
+                          fontFamily: 'Amiri',
                         )),
                   ),
                   ElevatedButton(
@@ -1298,7 +1517,7 @@ Widget _buildCardPopularActivities() {
                         style: TextStyle(
                           fontSize: 10,
                           color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                          fontFamily: 'Amiri',
                         )),
                   ),
                 ],
@@ -1315,12 +1534,10 @@ Widget _buildCardPopularActivities() {
       width: 80, // Adjust the width as needed
       height: 150, // Adjust the height as needed
       child: InkWell(
-        onTap: () { 
+        onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => ParamedicsRequests()
-              ),
+            MaterialPageRoute(builder: (context) => ParamedicsRequests()),
           );
         },
         child: Card(
@@ -1339,7 +1556,7 @@ Widget _buildCardPopularActivities() {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                      fontFamily: 'Amiri',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1386,7 +1603,7 @@ Widget _buildCardPopularActivities() {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF071533),
-        fontFamily: 'Amiri',
+                      fontFamily: 'Amiri',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1430,6 +1647,7 @@ class Volunteer {
   final String bloodType;
   final String birthDate;
   final String imageUrl;
+  final String id; // Added id field
   bool isSelected;
 
   Volunteer({
@@ -1440,6 +1658,7 @@ class Volunteer {
     required this.bloodType,
     required this.birthDate,
     required this.imageUrl,
+    required this.id, // Added id field
     this.isSelected = false,
   });
 }

@@ -1,12 +1,13 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
-// import 'package:flutter/material.dart';
+// // import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
+// import 'package:flutter/material.dart'; 
 // import 'package:cytc/UserPages/Home/locationMap.dart';
 // import 'package:cytc/UserPages/screen/Emergencies/Paramedics.dart';
 // import 'package:cytc/UserPages/screen/Emergencies/bloodDonation.dart';
 // import 'package:flip_card/flip_card.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
 // class HomeTestGrey extends StatelessWidget {
 //   final String userId;
@@ -92,6 +93,27 @@
 // class _HomePageState extends State<HomePage> {
 //   bool showBloodDonation = true;
 //   bool showSkillsNeeded = true;
+//   List<Post> posts = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchPosts();
+//   }
+
+//   Future<void> fetchPosts() async {
+//     final response = await http.get(Uri.parse('http://localhost:9999/posts/all'));
+
+//     if (response.statusCode == 200) {
+//       final List<dynamic> data = jsonDecode(response.body);
+//       setState(() {
+//         posts = data.map((postJson) => Post.fromJson(postJson)).toList();
+//         posts.sort((a, b) => b.id.compareTo(a.id));
+//       });
+//     } else {
+//       print('Failed to load posts');
+//     }
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -107,16 +129,11 @@
 //               padding: EdgeInsets.only(
 //                   top: 0.99, bottom: 40), // Adjust padding as needed
 //               child: CarouselSlider(
-//                 items: [
-//                   _buildSliderItem(
-//                       "assets/homePage/slider10.jpg", "نشاط رقم 1"),
-//                   _buildSliderItem("assets/homePage/slider1.jpg",
-//                       "حفل تخريج طلاب دورة الاسعاف المتقدم"),
-//                   _buildSliderItem("assets/homePage/slider8.jpg", "نشاط رقم 3"),
-//                   _buildSliderItem("assets/homePage/slider6.jpg", "نشاط رقم 4"),
-//                   _buildSliderItem(
-//                       "assets/homePage/slider7.jpg", "مهرجان الربيع"),
-//                 ],
+//                 items: posts.isEmpty
+//                     ? [_buildSliderItem("assets/homePage/slider1.jpg", "No Posts Available", "")]
+//                     : posts.take(3).map((post) {
+//                         return _buildSliderItem(post.imageUrl, post.title, post.id);
+//                       }).toList(),
 //                 options: CarouselOptions(
 //                   height: 240.0, // Adjusted height
 //                   enlargeCenterPage: true,
@@ -195,35 +212,49 @@
 //     );
 //   }
 
-//   Widget _buildSliderItem(String imagePath, String text) {
-//     return Stack(
-//       children: [
-//         Container(
-//           margin: EdgeInsets.all(6.0),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8.0),
-//             image: DecorationImage(
-//               image: AssetImage(imagePath),
-//               fit: BoxFit.cover,
+//   Widget _buildSliderItem(String imagePath, String text, String postId) {
+//     return GestureDetector(
+//       onTap: () {
+//         if (postId.isNotEmpty) {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => ViewPost(postId: postId, userId: widget.userId),
 //             ),
-//           ),
-//         ),
-//         Padding(
-//           padding: EdgeInsets.only(bottom: 10),
-//           child: Align(
-//             alignment: Alignment.bottomCenter,
-//             child: Text(
-//               text,
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontFamily: 'Amiri',
-//                 fontSize: 20,
-//                 fontWeight: FontWeight.bold,
+//           );
+//         }
+//       },
+//       child: Stack(
+//         children: [
+//           Container(
+//             margin: EdgeInsets.all(6.0),
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(8.0),
+//               image: DecorationImage(
+//                 image: imagePath.startsWith('http')
+//                     ? NetworkImage(imagePath) as ImageProvider<Object>
+//                     : AssetImage(imagePath) as ImageProvider<Object>,
+//                 fit: BoxFit.cover,
 //               ),
 //             ),
 //           ),
-//         ),
-//       ],
+//           Padding(
+//             padding: EdgeInsets.only(bottom: 10),
+//             child: Align(
+//               alignment: Alignment.bottomCenter,
+//               child: Text(
+//                 text,
+//                 style: TextStyle(
+//                   color: Colors.white,
+//                   fontFamily: 'Amiri',
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
 //     );
 //   }
 
@@ -316,10 +347,10 @@
 //     return Center(
 //       child: CustomVolunteerCard(
 //         title: 'متطوع الشهر المثالي',
-//         subtitle: 'بانه خالد حمدان',
-//         imagePath: 'assets/banah.jpg', // Replace with your image asset
+//         subtitle: 'عامر كنعان',
+//         imagePath: 'assets/amir.jpg', // Replace with your image asset
 //         frontText:
-//             'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر وكان الاكثر نشاطا وتفاعلا معنا في المركز. يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
+//             'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر وكان الاكثر نشاطا وتفاعلا معنا في المركز . يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
 //       ),
 //     );
 //   }
@@ -347,7 +378,7 @@
 //         SizedBox(height: 10),
 //         Container(
 //           width: 300,
-//           height: 130,
+//           height: 210,
 //           decoration: BoxDecoration(
 //             color: Colors.white,
 //             borderRadius: BorderRadius.circular(10),
@@ -371,7 +402,7 @@
 //                       padding: EdgeInsets.only(top: 8),
 //                       child: Text(
 //                         'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية',
-//                         textAlign: TextAlign.center,
+//                         textAlign: TextAlign.right,
 //                         style: TextStyle(
 //                           fontSize: 15,
 //                           // fontWeight: FontWeight.bold,
@@ -385,7 +416,7 @@
 //                 Padding(
 //                   padding: EdgeInsets.all(10),
 //                   child: Text(
-//                     'مركز تدريب الشباب المجتمعي، هو مركز يهتم بتطوير مهارات الشباب القيادية والمجتمعية, لخلق جيل بناء قادر على افادة البيئة المحيطة به.',
+//                     'مركز تدريب الشباب المجتمعي هو مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
 //                     textAlign: TextAlign.center,
 //                     style: TextStyle(
 //                       fontSize: 14,
@@ -440,14 +471,14 @@
 //                 ),
 //               );
 //             },
-            // style: ElevatedButton.styleFrom(
-            //   backgroundColor: Colors.white,
-            //   foregroundColor: Color(0xFF071533),
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(8),
-            //   ),
-            //   side: BorderSide(color: Colors.grey),
-            // ),
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: Colors.white,
+//               foregroundColor: Color(0xFF071533),
+//               shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(8),
+//               ),
+//               side: BorderSide(color: Colors.grey),
+//             ),
 //             child: Text(
 //               'اذهب للخريطة',
 //               style: TextStyle(
@@ -628,9 +659,36 @@
 //   }
 // }
 
+// class Post {
+//   final String id;
+//   final String title;
+//   final String description;
+//   final String imageUrl;
+//   int likesCounter;
+//   bool liked;
+
+//   Post({
+//     required this.id,
+//     required this.title,
+//     required this.description,
+//     required this.imageUrl,
+//     this.likesCounter = 0,
+//     this.liked = false,
+//   });
+
+//   factory Post.fromJson(Map<String, dynamic> json) {
+//     return Post(
+//       id: json['_id'],
+//       title: json['title'],
+//       description: json['description'],
+//       imageUrl: json['imageUrl'],
+//       likesCounter: json['likesCounter'] ?? 0,
+//     );
+//   }
+// }
 
 import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:cytc/UserPages/Home/locationMap.dart';
 import 'package:cytc/UserPages/screen/Emergencies/Paramedics.dart';
 import 'package:cytc/UserPages/screen/Emergencies/bloodDonation.dart';
@@ -725,15 +783,18 @@ class _HomePageState extends State<HomePage> {
   bool showBloodDonation = true;
   bool showSkillsNeeded = true;
   List<Post> posts = [];
+  Volunteer? volunteer;
 
   @override
   void initState() {
     super.initState();
     fetchPosts();
+    fetchVolunteerOfMonth();
   }
 
   Future<void> fetchPosts() async {
-    final response = await http.get(Uri.parse('http://localhost:9999/posts/all'));
+    final response =
+        await http.get(Uri.parse('http://localhost:9999/posts/all'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -743,6 +804,21 @@ class _HomePageState extends State<HomePage> {
       });
     } else {
       print('Failed to load posts');
+    }
+  }
+
+  Future<void> fetchVolunteerOfMonth() async {
+    final month = DateTime.now().month.toString().padLeft(2, '0');
+    final response =
+        await http.get(Uri.parse('http://localhost:9999/volunteer/$month'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        volunteer = Volunteer.fromJson(data);
+      });
+    } else {
+      print('Failed to load volunteer of the month');
     }
   }
 
@@ -761,9 +837,13 @@ class _HomePageState extends State<HomePage> {
                   top: 0.99, bottom: 40), // Adjust padding as needed
               child: CarouselSlider(
                 items: posts.isEmpty
-                    ? [_buildSliderItem("assets/homePage/slider1.jpg", "No Posts Available", "")]
+                    ? [
+                        _buildSliderItem("assets/homePage/slider1.jpg",
+                            "No Posts Available", "")
+                      ]
                     : posts.take(3).map((post) {
-                        return _buildSliderItem(post.imageUrl, post.title, post.id);
+                        return _buildSliderItem(
+                            post.imageUrl, post.title, post.id);
                       }).toList(),
                 options: CarouselOptions(
                   height: 240.0, // Adjusted height
@@ -796,7 +876,9 @@ class _HomePageState extends State<HomePage> {
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         bool isWeb = constraints.maxWidth > 680;
-                        double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+                        double adjustedWidth = isWeb
+                            ? constraints.maxWidth * 0.5
+                            : constraints.maxWidth;
                         return SingleChildScrollView(
                           child: Column(
                             children: [
@@ -850,7 +932,8 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ViewPost(postId: postId, userId: widget.userId),
+              builder: (context) =>
+                  ViewPost(postId: postId, userId: widget.userId),
             ),
           );
         }
@@ -975,11 +1058,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCustomVolunteerCard() {
+    if (volunteer == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Center(
       child: CustomVolunteerCard(
         title: 'متطوع الشهر المثالي',
-        subtitle: 'عامر كنعان',
-        imagePath: 'assets/amir.jpg', // Replace with your image asset
+        subtitle: volunteer!.username,
+        imagePath: volunteer!.userImageUrl,
         frontText:
             'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر وكان الاكثر نشاطا وتفاعلا معنا في المركز . يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
       ),
@@ -1142,7 +1231,8 @@ class CustomVolunteerCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         bool isWeb = constraints.maxWidth > 680;
-        double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+        double adjustedWidth =
+            isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
         return Container(
           width: adjustedWidth,
           child: Stack(
@@ -1193,7 +1283,11 @@ class CustomVolunteerCard extends StatelessWidget {
                             width: 2,
                           ),
                           image: DecorationImage(
-                            image: AssetImage(imagePath),
+                            image: imagePath.startsWith('http')
+                                ? NetworkImage(imagePath)
+                                    as ImageProvider<Object>
+                                : AssetImage(imagePath)
+                                    as ImageProvider<Object>,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -1241,7 +1335,8 @@ Widget _buildCategoryCard(String title, String imagePath, Function onTap) {
   return LayoutBuilder(
     builder: (context, constraints) {
       bool isWeb = constraints.maxWidth > 680;
-      double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+      double adjustedWidth =
+          isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
       return GestureDetector(
         onTap: () => onTap(),
         child: Card(
@@ -1256,7 +1351,8 @@ Widget _buildCategoryCard(String title, String imagePath, Function onTap) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(imagePath, width: 45, height: 45), // Display the image
+                Image.asset(imagePath,
+                    width: 45, height: 45), // Display the image
                 SizedBox(height: 10),
                 Text(
                   title,
@@ -1314,6 +1410,32 @@ class Post {
       description: json['description'],
       imageUrl: json['imageUrl'],
       likesCounter: json['likesCounter'] ?? 0,
+    );
+  }
+}
+
+class Volunteer {
+  final String id;
+  final String userId;
+  final String username;
+  final String userImageUrl;
+  final String month;
+
+  Volunteer({
+    required this.id,
+    required this.userId,
+    required this.username,
+    required this.userImageUrl,
+    required this.month,
+  });
+
+  factory Volunteer.fromJson(Map<String, dynamic> json) {
+    return Volunteer(
+      id: json['_id'],
+      userId: json['userId'],
+      username: json['username'],
+      userImageUrl: json['userImageUrl'],
+      month: json['month'],
     );
   }
 }
