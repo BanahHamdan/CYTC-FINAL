@@ -1,4 +1,4 @@
- // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 // import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 // import 'package:cytc/BloodAdminPages/BloodDonatorsInfo.dart';
@@ -49,8 +49,27 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     _fetchRescueRequests();
 //     _fetchUsers();
+//     _fetchRescueRequests();
+//   }
+
+//   Future<void> _fetchUsers() async {
+//     final response =
+//         await http.get(Uri.parse('http://127.0.0.1:9999/user/all'));
+//         print("start response 1212"); 
+//     print(response.body);
+//      print("end response 1212");
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       setState(() {
+//         users = (jsonDecode(response.body) as List)
+//             .map((data) => User.fromJson(data))
+//             .toList();
+//       });
+//     } else {
+//       // Handle error
+//       print('Failed to fetch users');
+//     }
 //   }
 
 //   Future<void> _fetchRescueRequests() async {
@@ -64,7 +83,7 @@
 //           rescueRequests.add(RescueRequest(
 //             hospitalName: item['hospitalName'],
 //             bloodType: item['bloodType'],
-//             notificationType: 'notificationType', // Assuming this should be set
+//             // notificationType: 'notificationType', // Assuming this should be set
 //             unitsRequired: item['bloodUnitsRequired'],
 //             announcementDate: DateTime.parse(item['date']),
 //             announcementTime: TimeOfDay(
@@ -77,22 +96,6 @@
 //       });
 //     } else {
 //       throw Exception('Failed to load rescue requests');
-//     }
-//   }
-
-//   Future<void> _fetchUsers() async {
-//     final response = await http.get(Uri.parse('http://127.0.0.1:9999/user/all'));
-//     print(response.body);
-
-//     if (response.statusCode == 200 || response.statusCode == 201) {
-//       setState(() {
-//         users = (jsonDecode(response.body) as List)
-//             .map((data) => User.fromJson(data))
-//             .toList();
-//       });
-//     } else {
-//       // Handle error
-//       print('Failed to fetch users');
 //     }
 //   }
 
@@ -109,8 +112,9 @@
 //       }),
 //     );
 
-//     if (response.statusCode == 200 || response.statusCode == 201) {
-//       _fetchRescueRequests(); // Fetch rescue requests again to refresh the list
+//     if (response.statusCode == 200) {
+//       // Successfully saved the request
+//       _fetchRescueRequests();
 //       print('Rescue request saved successfully');
 //     } else {
 //       // Handle the error
@@ -118,7 +122,8 @@
 //     }
 //   }
 
-//   Future<void> _createNotifications(String bloodType, String title, String description) async {
+//   Future<void> _createNotifications(
+//       String bloodType, String title, String description) async {
 //     final filteredUsers = users
 //         .where((user) =>
 //             user.bloodType.toLowerCase() == bloodType.toLowerCase() ||
@@ -148,7 +153,7 @@
 //     final newRequest = RescueRequest(
 //       hospitalName: _hospitalName!,
 //       bloodType: _bloodType!,
-//       notificationType: _notificationType!,
+//       // notificationType: _notificationType!,
 //       unitsRequired: _unitsRequired!,
 //       announcementDate: DateTime.now(),
 //       announcementTime: TimeOfDay.now(),
@@ -157,15 +162,13 @@
 //     setState(() {
 //       rescueRequests.add(newRequest);
 //     });
-
-//     _saveRescueRequest(newRequest);
 //   }
 
 //   void _editRescueRequest(int index) {
 //     final updatedRequest = RescueRequest(
 //       hospitalName: _hospitalName!,
 //       bloodType: _bloodType!,
-//       notificationType: _notificationType!,
+//       // notificationType: _notificationType!,
 //       unitsRequired: _unitsRequired!,
 //       announcementDate: rescueRequests[index].announcementDate,
 //       announcementTime: rescueRequests[index].announcementTime,
@@ -189,7 +192,7 @@
 //       _hospitalNameController.text = request.hospitalName;
 //       _unitsRequiredController.text = request.unitsRequired.toString();
 //       _bloodType = request.bloodType;
-//       _notificationType = request.notificationType;
+//       // _notificationType = request.notificationType;
 //     } else {
 //       _hospitalNameController.clear();
 //       _unitsRequiredController.clear();
@@ -825,21 +828,21 @@
 //                           ),
 //                         ),
 //                       ),
-//                       TableCell(
-//                         child: Padding(
-//                           padding: const EdgeInsets.all(8.0),
-//                           child: Text(
-//                             'تحديد الاشعارات',
-//                             textAlign: TextAlign.center,
-//                             style: TextStyle(
-//                               fontFamily: 'Amiri',
-//                               fontWeight: FontWeight.bold,
-//                               color: Color(0xFF071533),
-//                               fontSize: 14,
-//                             ),
-//                           ),
-//                         ),
-//                       ),
+//                       // TableCell(
+//                       //   child: Padding(
+//                       //     padding: const EdgeInsets.all(8.0),
+//                       //     child: Text(
+//                       //       'تحديد الاشعارات',
+//                       //       textAlign: TextAlign.center,
+//                       //       style: TextStyle(
+//                       //         fontFamily: 'Amiri',
+//                       //         fontWeight: FontWeight.bold,
+//                       //         color: Color(0xFF071533),
+//                       //         fontSize: 14,
+//                       //       ),
+//                       //     ),
+//                       //   ),
+//                       // ),
 //                       TableCell(
 //                         child: Padding(
 //                           padding: const EdgeInsets.all(8.0),
@@ -1009,20 +1012,21 @@
 //                             ),
 //                           ),
 //                         ),
-//                         TableCell(
-//                           child: Padding(
-//                             padding: const EdgeInsets.all(8.0),
-//                             child: Text(
-//                               request.notificationType,
-//                               textAlign: TextAlign.center,
-//                               style: TextStyle(
-//                                 fontSize: 12,
-//                                 color: Color(0xFF071533),
-//                                 fontFamily: 'Amiri',
-//                               ),
-//                             ),
-//                           ),
-//                         ),
+//                         // TableCell(
+//                         //   child: Padding(
+//                         //     padding: const EdgeInsets.all(8.0),
+//                         //     child: Text(
+//                         //       'lolololo',
+//                         //       // request.notificationType,
+//                         //       textAlign: TextAlign.center,
+//                         //       style: TextStyle(
+//                         //         fontSize: 12,
+//                         //         color: Color(0xFF071533),
+//                         //         fontFamily: 'Amiri',
+//                         //       ),
+//                         //     ),
+//                         //   ),
+//                         // ),
 //                         TableCell(
 //                           child: Padding(
 //                             padding: const EdgeInsets.all(8.0),
@@ -1096,7 +1100,7 @@
 // class RescueRequest {
 //   String hospitalName;
 //   String bloodType;
-//   String notificationType;
+//   // String notificationType;
 //   int unitsRequired;
 //   DateTime announcementDate;
 //   TimeOfDay announcementTime;
@@ -1104,7 +1108,7 @@
 //   RescueRequest({
 //     required this.hospitalName,
 //     required this.bloodType,
-//     required this.notificationType,
+//     // required this.notificationType,
 //     required this.unitsRequired,
 //     required this.announcementDate,
 //     required this.announcementTime,
@@ -1152,7 +1156,7 @@
 //   }
 // }
 
-
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cytc/AdminPages/screen/MenuPages/navBar.dart';
 import 'package:cytc/BloodAdminPages/BloodDonatorsInfo.dart';
@@ -1162,6 +1166,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class BloodRequests extends StatelessWidget {
   @override
@@ -1204,12 +1211,15 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
   void initState() {
     super.initState();
     _fetchUsers();
+    _fetchRescueRequests();
   }
 
   Future<void> _fetchUsers() async {
     final response =
         await http.get(Uri.parse('http://127.0.0.1:9999/user/all'));
+    print("start response 1212");
     print(response.body);
+    print("end response 1212");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       setState(() {
@@ -1220,6 +1230,34 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
     } else {
       // Handle error
       print('Failed to fetch users');
+    }
+  }
+
+  Future<void> _fetchRescueRequests() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:9999/blood-donation/all'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        rescueRequests.clear(); // Clear the list before adding new data
+        for (var item in data) {
+          rescueRequests.add(RescueRequest(
+            id: item['_id'], // Assuming the ID field is named '_id'
+            hospitalName: item['hospitalName'],
+            bloodType: item['bloodType'],
+            unitsRequired: item['bloodUnitsRequired'],
+            announcementDate: DateTime.parse(item['date']),
+            announcementTime: TimeOfDay(
+              hour: int.parse(item['time'].split(':')[0]),
+              minute: int.parse(item['time'].split(':')[1].split(' ')[0]),
+            ),
+          ));
+          savedRequests[rescueRequests.last.hashCode] = true;
+        }
+      });
+    } else {
+      throw Exception('Failed to load rescue requests');
     }
   }
 
@@ -1238,6 +1276,7 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
 
     if (response.statusCode == 200) {
       // Successfully saved the request
+      _fetchRescueRequests();
       print('Rescue request saved successfully');
     } else {
       // Handle the error
@@ -1274,9 +1313,9 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
 
   void _addRescueRequest() {
     final newRequest = RescueRequest(
+      id: '', // Add a temporary ID for the new request
       hospitalName: _hospitalName!,
       bloodType: _bloodType!,
-      notificationType: _notificationType!,
       unitsRequired: _unitsRequired!,
       announcementDate: DateTime.now(),
       announcementTime: TimeOfDay.now(),
@@ -1289,9 +1328,9 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
 
   void _editRescueRequest(int index) {
     final updatedRequest = RescueRequest(
+      id: rescueRequests[index].id,
       hospitalName: _hospitalName!,
       bloodType: _bloodType!,
-      notificationType: _notificationType!,
       unitsRequired: _unitsRequired!,
       announcementDate: rescueRequests[index].announcementDate,
       announcementTime: rescueRequests[index].announcementTime,
@@ -1315,7 +1354,6 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
       _hospitalNameController.text = request.hospitalName;
       _unitsRequiredController.text = request.unitsRequired.toString();
       _bloodType = request.bloodType;
-      _notificationType = request.notificationType;
     } else {
       _hospitalNameController.clear();
       _unitsRequiredController.clear();
@@ -1812,10 +1850,12 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
     return now.difference(announcementDateTime).inHours < 1;
   }
 
-  void _showDonorInfo(BuildContext context) {
+  void _showDonorInfo(BuildContext context, String donationCaseId) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BloodDonatorsInfo()),
+      MaterialPageRoute(
+          builder: (context) =>
+              BloodDonatorsInfoPage(donationCaseId: donationCaseId)),
     );
   }
 
@@ -1832,31 +1872,32 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
           child: AppBar(
             backgroundColor: Color(0xFF071533),
             title: Center(
-                child: Text(
-                  '(إضافة حالة طوارئ جديدة (طلب وحدات دم',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Amiri',
-                    fontSize: 17,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              child: Text(
+                '(إضافة حالة طوارئ جديدة (طلب وحدات دم',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Amiri',
+                  fontSize: 17,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
             actions: [
               IconButton(
-              icon: Icon(
-                LineAwesomeIcons.angle_right_solid,
-                color: Colors.white,
-                size: 25,
+                icon: Icon(
+                  LineAwesomeIcons.angle_right_solid,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AdminBar(userId: '', userRole: '')));
+                }, // Show dialog directly
               ),
-             onPressed: (){
-                 Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AdminBar(userId: '', userRole: '')));
-              }, // Show dialog directly
-            ),
             ],
             leading: IconButton(
               icon: Icon(
@@ -1955,21 +1996,6 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'تحديد الاشعارات',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Amiri',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF071533),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
                             'نوع فصيلة الدم',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -2037,7 +2063,8 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
-                              onPressed: () => _showDonorInfo(context),
+                              onPressed: () =>
+                                  _showDonorInfo(context, request.id),
                               child: Text(
                                 'المعلومات',
                                 style: TextStyle(
@@ -2139,20 +2166,6 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              request.notificationType,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF071533),
-                                fontFamily: 'Amiri',
-                              ),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
                               request.bloodType,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -2220,17 +2233,17 @@ class _BloodRequestsPageState extends State<BloodRequestsPage> {
 }
 
 class RescueRequest {
+  String id; // Add the ID field here
   String hospitalName;
   String bloodType;
-  String notificationType;
   int unitsRequired;
   DateTime announcementDate;
   TimeOfDay announcementTime;
 
   RescueRequest({
+    required this.id, // Add the ID field here
     required this.hospitalName,
     required this.bloodType,
-    required this.notificationType,
     required this.unitsRequired,
     required this.announcementDate,
     required this.announcementTime,

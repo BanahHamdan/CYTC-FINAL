@@ -1,5 +1,5 @@
-// // import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
-// import 'package:flutter/material.dart'; 
+// import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
+// import 'package:flutter/material.dart';
 // import 'package:cytc/UserPages/Home/locationMap.dart';
 // import 'package:cytc/UserPages/screen/Emergencies/Paramedics.dart';
 // import 'package:cytc/UserPages/screen/Emergencies/bloodDonation.dart';
@@ -94,15 +94,18 @@
 //   bool showBloodDonation = true;
 //   bool showSkillsNeeded = true;
 //   List<Post> posts = [];
+//   Volunteer? volunteer;
 
 //   @override
 //   void initState() {
 //     super.initState();
 //     fetchPosts();
+//     fetchVolunteerOfMonth();
 //   }
 
 //   Future<void> fetchPosts() async {
-//     final response = await http.get(Uri.parse('http://localhost:9999/posts/all'));
+//     final response =
+//         await http.get(Uri.parse('http://localhost:9999/posts/all'));
 
 //     if (response.statusCode == 200) {
 //       final List<dynamic> data = jsonDecode(response.body);
@@ -112,6 +115,23 @@
 //       });
 //     } else {
 //       print('Failed to load posts');
+//     }
+//   }
+
+//   Future<void> fetchVolunteerOfMonth() async {
+//     final month = DateTime.now().month.toString().padLeft(2, '0');
+//     final response =
+//         await http.get(Uri.parse('http://localhost:9999/volunteer/$month'));
+//         print('volenteer of the month:');
+//         print(response.body);
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       final data = jsonDecode(response.body);
+//       setState(() {
+//         volunteer = Volunteer.fromJson(data);
+//       });
+//     } else {
+//       print('Failed to load volunteer of the month');
 //     }
 //   }
 
@@ -130,9 +150,13 @@
 //                   top: 0.99, bottom: 40), // Adjust padding as needed
 //               child: CarouselSlider(
 //                 items: posts.isEmpty
-//                     ? [_buildSliderItem("assets/homePage/slider1.jpg", "No Posts Available", "")]
+//                     ? [
+//                         _buildSliderItem("assets/homePage/slider1.jpg",
+//                             "No Posts Available", "")
+//                       ]
 //                     : posts.take(3).map((post) {
-//                         return _buildSliderItem(post.imageUrl, post.title, post.id);
+//                         return _buildSliderItem(
+//                             post.imageUrl, post.title, post.id);
 //                       }).toList(),
 //                 options: CarouselOptions(
 //                   height: 240.0, // Adjusted height
@@ -165,7 +189,9 @@
 //                     child: LayoutBuilder(
 //                       builder: (context, constraints) {
 //                         bool isWeb = constraints.maxWidth > 680;
-//                         double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+//                         double adjustedWidth = isWeb
+//                             ? constraints.maxWidth * 0.5
+//                             : constraints.maxWidth;
 //                         return SingleChildScrollView(
 //                           child: Column(
 //                             children: [
@@ -219,7 +245,8 @@
 //           Navigator.push(
 //             context,
 //             MaterialPageRoute(
-//               builder: (context) => ViewPost(postId: postId, userId: widget.userId),
+//               builder: (context) =>
+//                   ViewPost(postId: postId, userId: widget.userId),
 //             ),
 //           );
 //         }
@@ -344,11 +371,17 @@
 //   }
 
 //   Widget _buildCustomVolunteerCard() {
+//     if (volunteer == null) {
+//       return Center(
+//         child: CircularProgressIndicator(),
+//       );
+//     }
+
 //     return Center(
 //       child: CustomVolunteerCard(
 //         title: 'متطوع الشهر المثالي',
-//         subtitle: 'عامر كنعان',
-//         imagePath: 'assets/amir.jpg', // Replace with your image asset
+//         subtitle: volunteer!.username,
+//         imagePath: volunteer!.userImageUrl,
 //         frontText:
 //             'متطوع الشهر المثالي هو المتطوع الذي اثبت كفائته هذا الشهر وكان الاكثر نشاطا وتفاعلا معنا في المركز . يمكنك ان تكون المتطوع المثالي للشهر القادم! انضم الينا ولا تتردد',
 //       ),
@@ -511,7 +544,8 @@
 //     return LayoutBuilder(
 //       builder: (context, constraints) {
 //         bool isWeb = constraints.maxWidth > 680;
-//         double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+//         double adjustedWidth =
+//             isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
 //         return Container(
 //           width: adjustedWidth,
 //           child: Stack(
@@ -562,7 +596,11 @@
 //                             width: 2,
 //                           ),
 //                           image: DecorationImage(
-//                             image: AssetImage(imagePath),
+//                             image: imagePath.startsWith('http')
+//                                 ? NetworkImage(imagePath)
+//                                     as ImageProvider<Object>
+//                                 : AssetImage(imagePath)
+//                                     as ImageProvider<Object>,
 //                             fit: BoxFit.cover,
 //                           ),
 //                         ),
@@ -610,7 +648,8 @@
 //   return LayoutBuilder(
 //     builder: (context, constraints) {
 //       bool isWeb = constraints.maxWidth > 680;
-//       double adjustedWidth = isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
+//       double adjustedWidth =
+//           isWeb ? constraints.maxWidth * 0.5 : constraints.maxWidth;
 //       return GestureDetector(
 //         onTap: () => onTap(),
 //         child: Card(
@@ -625,7 +664,8 @@
 //             child: Column(
 //               mainAxisAlignment: MainAxisAlignment.center,
 //               children: [
-//                 Image.asset(imagePath, width: 45, height: 45), // Display the image
+//                 Image.asset(imagePath,
+//                     width: 45, height: 45), // Display the image
 //                 SizedBox(height: 10),
 //                 Text(
 //                   title,
@@ -686,6 +726,36 @@
 //     );
 //   }
 // }
+
+// class Volunteer {
+//   final String id;
+//   final String userId;
+//   final String username;
+//   final String userImageUrl;
+//   final String month;
+
+//   Volunteer({
+//     required this.id,
+//     required this.userId,
+//     required this.username,
+//     required this.userImageUrl,
+//     required this.month,
+//   });
+
+//   factory Volunteer.fromJson(Map<String, dynamic> json) {
+//     return Volunteer(
+//       id: json['_id'],
+//       userId: json['userId'],
+//       username: json['username'], 
+//       userImageUrl: json['userImageUrl'],
+//       month: json['month'],
+//     );
+//   }
+// }
+
+
+
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cytc/UserPages/screen/bottomBarPages/posts/viewpost.dart';
 import 'package:flutter/material.dart';
@@ -811,8 +881,10 @@ class _HomePageState extends State<HomePage> {
     final month = DateTime.now().month.toString().padLeft(2, '0');
     final response =
         await http.get(Uri.parse('http://localhost:9999/volunteer/$month'));
+        print('volenteer of the month:');
+        print(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final data = jsonDecode(response.body);
       setState(() {
         volunteer = Volunteer.fromJson(data);
@@ -1000,11 +1072,68 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+// Widget _buildEmergencyCards() {
+//   return Row(
+//     children: [
+//       if (widget.userRole == '1') ...[
+//         Expanded(
+//           child: _buildCategoryCard(
+//             'بحاجة لمسعفين',
+//             'assets/homePage/ambulance_icon.png',
+//             () => Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                   builder: (context) => ParamedicsPage(
+//                       userId: widget.userId, userRole: widget.userRole)),
+//             ),
+//           ),
+//         ),
+//         Expanded(
+//           child: _buildCategoryCard(
+//             'بحاجة لوحدات دم',
+//             'assets/homePage/bloodBag_icon.png',
+//             () => Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                   builder: (context) => BloodDonationPage(
+//                       userId: widget.userId, userRole: widget.userRole)),
+//             ),
+//           ),
+//         ),
+//       ] else if (widget.userRole == '0') ...[
+//         Expanded(
+//           child: _buildCategoryCard(
+//             'بحاجة لمسعفين',
+//             'assets/homePage/ambulance_icon.png',
+//             () => Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                   builder: (context) => ParamedicsPage(
+//                       userId: widget.userId, userRole: widget.userRole)),
+//             ),
+//           ),
+//         ),
+//         Expanded(
+//           child: _buildCategoryCard(
+//             'بحاجة لوحدات دم',
+//             'assets/homePage/bloodBag_icon.png',
+//             () => Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                   builder: (context) => BloodDonationPage(
+//                       userId: widget.userId, userRole: widget.userRole)),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ],
+//   );
+// }
 
   Widget _buildEmergencyCards() {
     return Row(
       children: [
-        if (showSkillsNeeded)
+        if (widget.userRole == '1')
           Expanded(
             child: _buildCategoryCard(
               'بحاجة لمسعفين',
@@ -1017,9 +1146,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        if (!showSkillsNeeded)
-          Expanded(child: SizedBox()), // Placeholder to maintain structure
-        if (showBloodDonation)
+        // if (widget.userRole == '0')
+        //   Expanded(child: SizedBox()), // Placeholder to maintain structure
+        if (widget.userRole == '1')
           Expanded(
             child: _buildCategoryCard(
               'بحاجة لوحدات دم',
@@ -1032,8 +1161,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        if (!showBloodDonation)
-          Expanded(child: SizedBox()), // Placeholder to maintain structure
+        if (widget.userRole == '0')
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            width: 320,
+            child: _buildCategoryCard(
+              'بحاجة لوحدات دم',
+              'assets/homePage/bloodBag_icon.png',
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BloodDonationPage(
+                        userId: widget.userId, userRole: widget.userRole)),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -1136,7 +1280,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'مركز تدريب الشباب المجتمعي هو مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
+                    'مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -1433,9 +1577,10 @@ class Volunteer {
     return Volunteer(
       id: json['_id'],
       userId: json['userId'],
-      username: json['username'],
+      username: json['username'], 
       userImageUrl: json['userImageUrl'],
       month: json['month'],
     );
   }
 }
+

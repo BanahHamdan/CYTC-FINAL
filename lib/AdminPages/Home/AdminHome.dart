@@ -903,7 +903,8 @@ class _AdminHomePageState extends State<AdminHome> {
       TextEditingController(text: 'اسم المتطوع:');
   TextEditingController controller2 = TextEditingController(
       text:
-          'مركز تدريب الشباب المجتمعي التابع للاغاثة الطبية هو مركز يهتم بتنمية الشباب ومهاراتهم الخ الخ الخ');
+      'مركز تدريب الشباب المجتمعي هو مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
+);
 
   void _saveEdit() async {
     if (selectedVolunteer != null) {
@@ -932,7 +933,7 @@ class _AdminHomePageState extends State<AdminHome> {
         if (responseData['status']) {
           // Show a success message or update your UI
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Volunteer added successfully')),
+            SnackBar(content: Text('تم اضافة المتطوع الجديد بنجاح')),
           );
         } else {
           // Handle error response
@@ -1442,6 +1443,7 @@ class _AdminHomePageState extends State<AdminHome> {
             children: [
               Text(
                 'تعريف عن المركز',
+                textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Color(0xFF071533),
                   fontFamily: 'Amiri',
@@ -1474,6 +1476,7 @@ class _AdminHomePageState extends State<AdminHome> {
                     )
                   : Text(
                       controller2.text,
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                         fontSize: 10,
                         color: Color(0xFF071533),
@@ -1485,7 +1488,11 @@ class _AdminHomePageState extends State<AdminHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: _saveEdit,
+                    onPressed:(){
+                      ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('تم تعديل تعريف المركز')),
+          );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF071533),
                       shape: RoundedRectangleBorder(

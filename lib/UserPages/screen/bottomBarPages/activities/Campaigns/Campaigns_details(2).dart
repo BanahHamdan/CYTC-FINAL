@@ -445,10 +445,10 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                       _buildInfoColumn(
                           'الحد الاقصى لعدد المتطوعين',
                           'فرداً ${widget.campaign['maxParticipants']}'),
-                      Divider(thickness: 1, height: 20),
-                      _buildInfoColumn(
-                          'اعمار المشاركين في هذا النشاط',
-                          '${widget.campaign['ageRange']} بين الاعمار التالية'),
+                      // Divider(thickness: 1, height: 20),
+                      // _buildInfoColumn(
+                      //     'اعمار المشاركين في هذا النشاط',
+                      //     '${widget.campaign['ageRange']} بين الاعمار التالية'),
                     ],
                   ),
                 ),

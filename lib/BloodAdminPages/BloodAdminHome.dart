@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
 
 import 'package:cytc/AdminPages/Home/Emergencies/addBloodDonation.dart';
-import 'package:cytc/BloodAdminPages/Table.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -84,7 +82,7 @@ class _BloodAdminHomeState extends State<BloodAdminHome> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BloodAdminBloodRequests()),
+                  MaterialPageRoute(builder: (context) => BloodRequests()),
                 );
               },
               child: Card(
