@@ -75,10 +75,10 @@ class _WelcomePageState extends State<WelcomePage>
     Timer(Duration(seconds: 5), () {
       // Use Get.to to navigate to the next page
       // Get.to(() => bar(userId: '', userRole: ''));
-      // Get.to(() => LoginPage(userId: ''));
+      Get.to(() => LoginPage(userId: ''));
       // Get.to(() => Adminviewpost(userId: '',));
       // Get.to(() => AdminChatPage(adminId: '', adminName: '', userId: '',));
-      Get.to(() => AdminBar(userId: '', userRole: '',));
+      // Get.to(() => AdminBar(userId: '', userRole: '',));
       // Get.to(() => InterestsPage(userId: '',));
       // Get.to(() => VerifyPage(code: '', email: '', userId: '',));
       // Get.to(() => main2(userId: '',));

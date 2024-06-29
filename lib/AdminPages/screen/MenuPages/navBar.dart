@@ -356,27 +356,27 @@ class _AdminBarState extends State<AdminBar> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF071533).withOpacity(0.1),
-                              borderRadius:
-                                  BorderRadius.circular(8.0), // Circular edges
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.notifications,
-                                  color: Color(0xFF071533), size: 15),
-                              onPressed: () {
-                                // Handle notification click
-                              },
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        //   child: Container(
+                        //     width: 20,
+                        //     height: 20,
+                        //     decoration: BoxDecoration(
+                        //       color: Color(0xFF071533).withOpacity(0.1),
+                        //       borderRadius:
+                        //           BorderRadius.circular(8.0), // Circular edges
+                        //     ),
+                        //     child: IconButton(
+                        //       icon: Icon(Icons.notifications,
+                        //           color: Color(0xFF071533), size: 15),
+                        //       onPressed: () {
+                        //         // Handle notification click
+                        //       },
+                        //       padding: EdgeInsets.zero,
+                        //       constraints: BoxConstraints(),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                           child: Container(
                             height: 20,

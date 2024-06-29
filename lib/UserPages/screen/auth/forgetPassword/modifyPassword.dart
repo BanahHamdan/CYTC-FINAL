@@ -312,6 +312,7 @@
 //   }
 // }
 
+import 'package:cytc/UserPages/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -454,7 +455,7 @@ class _ModifyPasswordPageState extends State<ModifyPasswordPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          bar(userId: '', userRole: '')),
+                                          LoginPage(userId: '')),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

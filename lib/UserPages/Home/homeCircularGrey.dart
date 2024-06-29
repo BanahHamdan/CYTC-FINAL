@@ -1072,63 +1072,6 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-// Widget _buildEmergencyCards() {
-//   return Row(
-//     children: [
-//       if (widget.userRole == '1') ...[
-//         Expanded(
-//           child: _buildCategoryCard(
-//             'بحاجة لمسعفين',
-//             'assets/homePage/ambulance_icon.png',
-//             () => Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => ParamedicsPage(
-//                       userId: widget.userId, userRole: widget.userRole)),
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           child: _buildCategoryCard(
-//             'بحاجة لوحدات دم',
-//             'assets/homePage/bloodBag_icon.png',
-//             () => Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => BloodDonationPage(
-//                       userId: widget.userId, userRole: widget.userRole)),
-//             ),
-//           ),
-//         ),
-//       ] else if (widget.userRole == '0') ...[
-//         Expanded(
-//           child: _buildCategoryCard(
-//             'بحاجة لمسعفين',
-//             'assets/homePage/ambulance_icon.png',
-//             () => Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => ParamedicsPage(
-//                       userId: widget.userId, userRole: widget.userRole)),
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           child: _buildCategoryCard(
-//             'بحاجة لوحدات دم',
-//             'assets/homePage/bloodBag_icon.png',
-//             () => Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => BloodDonationPage(
-//                       userId: widget.userId, userRole: widget.userRole)),
-//             ),
-//           ),
-//         ),
-//       ],
-//     ],
-//   );
-// }
 
   Widget _buildEmergencyCards() {
     return Row(
@@ -1146,8 +1089,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        // if (widget.userRole == '0')
-        //   Expanded(child: SizedBox()), // Placeholder to maintain structure
+        if (widget.userRole == '0')
+          Expanded(child: SizedBox()), // Placeholder to maintain structure
         if (widget.userRole == '1')
           Expanded(
             child: _buildCategoryCard(
@@ -1281,7 +1224,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(10),
                   child: Text(
                     'مؤسسة تهدف إلى تطوير مهارات الشباب في مختلف المجالات، وتمكينهم من أداء دورهم القيادي في المجتمع بفعالية، وتعزيز مواهبهم في الفنون والإبداع، ودعمهم من خلال الدورات التدريبية والمبادرات المجتمعية، وذلك بهدف إعداد جيل قادر على إحداث التغيير الإيجابي في المجتمع.',
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.right,
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'Amiri',

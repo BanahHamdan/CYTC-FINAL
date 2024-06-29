@@ -405,12 +405,12 @@ class _LoginPageState extends State<LoginPage> {
             context: context,
             builder: (_) {
               return AlertDialog(
-                title: const Text('Error Message'),
+                title: const Text('خطأ', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', color: Color(0xFF071533)),),
                 content: Text(jsonResponse['message']),
                 actions: [
                   TextButton(
                     onPressed: Navigator.of(context).pop,
-                    child: Text('Ok'),
+                    child: Text('اغلاق', style: TextStyle(fontFamily: 'Amiri', color: Color(0xFFffe145)),),
                   ),
                 ],
               );
@@ -422,12 +422,12 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (_) {
             return AlertDialog(
-              title: const Text('Error Message'),
-              content: Text(jsonResponse['message']),
+              title: const Text('خطأ', textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', color: Color(0xFF071533)),),
+              content: Text(jsonResponse['message'], textAlign: TextAlign.right, style: TextStyle(fontFamily: 'Amiri', color: Color(0xFF071533)),),
               actions: [
                 TextButton(
                   onPressed: Navigator.of(context).pop,
-                  child: Text('Ok'),
+                  child: Text('اغلاق', style: TextStyle(fontFamily: 'Amiri', color: Color(0xFFffe145)),),
                 ),
               ],
             );
