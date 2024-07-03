@@ -355,6 +355,8 @@
   
 // }
 
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cytc/UserPages/Home/homeCircularGrey.dart';
 import 'package:cytc/UserPages/Home/notification.dart';
